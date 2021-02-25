@@ -1,0 +1,41 @@
+<div class="row m-0 promotionalmodal align-items-center" *ngIf="!requestSuccess">
+    <div class="col-12 col-md-5">
+        <h2 class="text-center font-weight-bold">INGRESA TU CÓDIGO</h2>
+
+        <form [formGroup]="formData" novalidate autocomplete="off" (ngSubmit)="validateCupon()" class="mb-3">
+            <input 
+            formControlName="cuponCode"
+            class="form-control" type="text">
+            <p *ngIf="isSubmited && formData.controls.cuponCode.hasError('required')" class="text-danger mb-0">Ingresa tu cupón</p>
+            <div class="text-center mt-3">
+                <div class="loadingButtonContent">
+                    <button class="btn btn-orange" *ngIf="!isLoading && !requestSuccess" type="submit" style="min-width: 200px;">ACTIVAR</button>
+                    <button class="btn btn-info" *ngIf="isLoading" type="button">  <i class="fas fa-sync fa-spin"></i> Validando Cupón </button>
+                    <button class="btn btn-success" *ngIf="!isLoading && requestSuccess" type="button"> <i class="fas fa-check"></i> {{successMessage}} </button>
+                </div>
+            </div>
+        </form>
+        <div class="text-center mb-3">
+            <button (click)="close()" class="btn-close-s">Salir</button>
+        </div>
+        <div class="alert alert-danger" *ngIf="error != ''">
+            {{ error }}
+        </div>
+    </div>
+    <div class="col-12 col-md-7 h-100">
+        <img class="gift_image d-none d-md-block" src="../../../../assets/img/gift.png" alt="">
+    </div>
+</div>
+
+<div class="promotionalmodal_success" *ngIf="requestSuccess">
+    <div class="succes-header font-weight-bold text-center">
+        Redime promociones
+    </div>
+    <div class="success-body">
+        <h1 class="text-center font-weight-bold text-blue-primary">¡Hola {{ name }}!</h1>
+        <p style="font-size: 1.2em;" class="text-justify">¡Felicitaciones! Tu apuesta gratis fue redimida con éxito, recuerda que tienes 5 días de vigencia. Ahora usala para apostarle a tu evento favorito.</p>
+        <div class="text-center mt-3">
+            <a href="/apuestas#bonus-offers"><button class="btn btn-orange font-weight-bold w-100">¡APUESTA YA!</button></a>
+        </div>
+    </div>
+</div>

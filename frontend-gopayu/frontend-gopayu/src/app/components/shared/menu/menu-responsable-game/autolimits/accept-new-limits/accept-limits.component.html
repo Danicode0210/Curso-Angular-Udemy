@@ -1,0 +1,36 @@
+<div class="p-3 text-center">
+    <p class="text-blue font-weight-bold">CONFIRMAR CAMBIO DE LÍMITES</p>
+    <mat-divider class="white_divider"></mat-divider>
+    <p class="w-100" style="text-align: justify;">
+        Su solicitud de cambio de limites fue aceptada. Sus límites quedarán de la siguiente manera:
+    </p>
+    <table style = "margin-left: auto; margin-right: auto; width: 100%">
+        <tr>
+            <th>Tipo límite</th>
+            <th>Valor actual</th>
+            <th>Nuevo valor</th>
+        </tr>
+        <tr *ngFor = "let lim of limitsRequests">
+            <td>{{ tipoLimites[lim.tiempoLimite] }}</td>
+            <td>${{ numberFormat(lim.valorActual) }}</td>
+            <td>${{ numberFormat(lim.valorSolicitud) }}</td>
+        </tr>
+    </table>  
+    <p class="text-blue font-weight-bold">
+        ¿Acepta el cambio de limites?
+    </p>
+    <ul>
+        <li>Si acepta el cambio de limites se actualizarán y podrá usarlos inmediatamente.</li>
+        <li>Si no acepta no se actualizarán los limites y usará los que tiene actualmente.</li>
+    </ul>
+    <div class="contentButtons row m-0">  
+        <div class="col-12 col-md-6 mt-3 mt-md-0">
+            <button (click)="declineNewLimits()" [mat-dialog-close]="data.isVerified"type="button" class="w-100 btn btn-secondary">
+                No Acepto
+            </button>
+        </div>
+        <div class="col-12 col-md-6 mt-3 mt-md-0">
+            <button (click)="acceptNewLimits()" class="w-100 btn btn-orange">Acepto</button>
+        </div>
+    </div>
+</div>

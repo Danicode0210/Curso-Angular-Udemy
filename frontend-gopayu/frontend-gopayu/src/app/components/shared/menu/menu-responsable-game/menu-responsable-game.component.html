@@ -1,0 +1,22 @@
+<h5 class="text-right pr-3 pt-3 mb-0"><i class="fas fa-times cursor-pointer" (click)="closeModal()"></i></h5>
+<div class="p-3">
+    <p class="text-blue font-weight-bold text-center">JUEGO RESPONSABLE</p>
+    <mat-divider class="white_divider"></mat-divider>
+    <br>
+    <p class="text-blue text-center">AQUÍ PUEDES GESTIONAR TU CUENTA RESPONSABLEMENTE</p>
+    <div class="row m-0">
+        <div class="col-12 col-md-4 mb-3">
+            <button id='button1' class="w-100 btn" [ngClass]="{ 'btn-orange':(type === 1), 'btn-secondary':(type != 1) }" (click)="onClickButtonResponsableGame($event)">AUTO LÍMITES</button>
+        </div>
+        <div class="col-12 col-md-4 mb-3">
+            <button id='button2' class="w-100 btn" [ngClass]="{ 'btn-orange':(type === 2), 'btn-secondary':(type != 2) }" (click)="onClickButtonResponsableGame($event)">AUTOEXCLUSIÓN</button>
+        </div>
+        <div class="col-12 col-md-4 mb-3">
+            <button id='button3' class="w-100 btn" [ngClass]="{ 'btn-orange':(type === 3), 'btn-secondary':(type != 3) }" (click)="onClickButtonResponsableGame($event)">LÍMITE DE SESIÓN</button>
+        </div>
+    </div>
+
+    <app-autolimits (changePage)="type = 0" *ngIf="type == 1"></app-autolimits>
+    <app-autoexclusion (changePage)="type = 0" *ngIf="type == 2"></app-autoexclusion>
+    <app-sessionlimit (changePage)="type = 0" *ngIf="type == 3"></app-sessionlimit>
+</div>

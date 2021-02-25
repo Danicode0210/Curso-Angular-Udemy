@@ -1,0 +1,112 @@
+<div class="mat-drawer-container">
+	<div
+		class="card bg-light mb-3 "
+		style="
+			max-width: 33rem;
+			border: 1px solid white;
+			margin-left: 17em;
+			margin-top: 4em;
+			border-radius: 5px;
+			height: 14em;
+			background: white  !important ;
+		"
+	>
+		<div class="card-header" style="background: white; height: 3em;">
+			<h2 class="tusDatos">Tus datos</h2>
+		</div>
+		<div
+			class="card-body"
+			style="background: white; background: white; height: 11em;"
+		>
+			<img class="imgProfile" src="assets/img/payU/icon-profile.png" alt="" />
+			<span id="spanUser" class="mr-1 spanUser"
+				><b
+					>{{userdata.firstName | titlecase }} {{ userdata.firstName2 |
+					titlecase}} {{userdata.lastName | titlecase}} {{userdata.lastName2 |
+					titlecase}}</b
+				></span
+			>
+			<br />
+			<span class="spanEmail">{{userdata.email}}</span>
+		</div>
+		<div
+		>
+    <div class="resumen">
+			<div
+				class="card-header"
+				style="background: white; border-bottom: 2px solid #dadada;"
+			>
+				<h2 class="resumenCompra">Resumen de la compra</h2>
+				<span class="referencia">Referencia:</span>
+				<span class="spanReferencia">{{dataSend}}</span>
+				<span class="descripcion">Descripción:</span>
+				<span class="deposito">Déposito Betplay</span>
+				<span class="totalPagar">
+					Total a pagar:...................................................{{valor | currency}}</span
+				>
+			</div>
+    </div>
+    </div>
+		<main style="margin-top: 2em;">
+			<div class="containerPayMethods">
+				<h2
+					class="medioDePago card-header"
+					style="background: white; width: 39.6em;"
+				>
+					Selecciona el medio de pago
+				</h2>
+				<ul>
+					<li>
+						Tarjeta de crédito o débito
+						<a [routerLink]="['/payU/tarjeta']">
+							<img
+								class="logo-visa"
+								src="assets/img/payU/logo-visa.png"
+								alt="logo-visa"
+                id="logo-visa"
+							/>
+							<img
+								class="logo-mastercard"
+								src="assets/img/payU/logo-mastercard.png"
+								alt="logo-mastercard"
+							/>
+							<div class="borderGray"></div>
+						</a>
+					</li>
+					<li style="margin-top: 2em;">
+						Depósito bancario PSE
+						<a [routerLink]="['/payU/pse']">
+							<img
+								class="logo-pse"
+								src="assets/img/payU/logo-pse.png"
+								alt="logo-pse"
+							/>
+						</a>
+						<img
+							src="assets/img/payU/signo-admiracion.JPG"
+							alt="signo-admiracion"
+							class="signoAdmiracion"
+						/>
+						<h6 class="recuerdaPagos">
+							Recuerda verificar el monto máximo que tienes habilitado para
+							pagos por internet
+						</h6>
+					</li>
+					<div class="borderGrayTwo"></div>
+
+					<li style="margin-top: 2em;">
+						Pago en efectivo
+						<a [routerLink]="['/payU/baloto']">
+							<img
+								class="logo-baloto"
+								src="assets/img/payU/logo-baloto.png"
+								alt="logo-baloto"
+							/>
+						</a>
+					</li>
+				</ul>
+			</div>
+		</main>
+	</div>
+</div>
+

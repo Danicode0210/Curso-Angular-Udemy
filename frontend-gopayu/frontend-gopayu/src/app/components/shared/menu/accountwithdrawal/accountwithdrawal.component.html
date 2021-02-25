@@ -1,0 +1,132 @@
+<app-loadingspinner *ngIf="isLoading"></app-loadingspinner>
+<div class="alert alert-danger" *ngIf="error != ''">
+  {{ error }}
+</div>
+<div class="alert alert-success" *ngIf="success != ''">
+  <b>¡Tu retiro ha sido exitoso! </b>
+  <br>
+  {{
+    success
+  }}
+</div>
+<div *ngIf="isConfirm" class="p-3"> 
+  <div *ngIf="flagDoc">
+    <p>El monto que deseas retirar es demasiado alto, para continuar debes diligenciar el siguiente formato y adjuntar una imagen para poder continuar.</p>
+    <div class="text-center mb-3">
+      <a target="_blank" href="{{ formato }}">
+        <button class="btn btn-blue">Descargar formato</button>
+      </a>
+
+      <div class="p-3">
+        <label for="inputImage">Subir imagen</label>
+        <br>
+        <input type="file" (change)="changeImage($event)" id="inputImage" accept="image/jpeg">
+      </div>
+
+    </div>
+  </div>
+  <p class="text-center">La retención por esta transacción es de:</p>
+  <h3 class="text-center">${{ formData.value.valorRetencion | number }}</h3>
+  <div class="d-flex justify-content-between">
+    <button class="btn btn-secondary" (click)="isConfirm = false">Volver</button>
+    <button mat-raised-button color="primary" (click)="makeWithdrawal()">Aceptar</button>
+  </div>
+</div>
+
+<div class="p-3">
+  <p class="text-left mb-0">Retiro por transferencia interbancaria</p>
+  <p class="text-left mb-0">Para realizar un retiro por transferencia interbancaria debes tener en cuenta los siguientes puntos:</p>
+  <p class="text-left mb-0">-Monto mínimo de retiro $100.000</p>
+  <p class="text-left mb-0">-Monto máximo de retiro al día $1.700.000</p>
+  <p class="text-left mb-0">-Puedes realizar máximo 3 retiros al día, que no sumen más del monto máximo diario.</p>
+  <p class="text-left mb-0">-Es importante recordar que, para realizar un retiro, debes haber apostado al menos el 50% de tu saldo real.</p>
+  <p class="text-left mb-0">-Una vez tu retiro ha sido exitoso, puede tardar entre 24 o 72 horas hábiles para aparecer en la cuenta de tu banco. Esto dependerá de los tiempos que toman las transferencias interbancarias.</p>
+  <p class="text-left mb-0">-Los retiros por este método, solo se pueden hacer a cuentas que correspondan al titular de la cuenta registrada en BetPlay</p>
+</div>
+
+<form
+  *ngIf="!isConfirm"
+  [formGroup]="formData"
+  novalidate
+  autocomplete="off"
+  (ngSubmit)="validateRetention()"
+>
+  <div class="row m-0">
+    <div class="col-12 col-md-6 p-0 pr-md-3 pl-md-3">
+      <mat-form-field class="w-100">
+        <mat-select formControlName="accountType" placeholder="Tipo de cuenta">
+          <mat-option
+            *ngFor="let accountType of accountTypes"
+            [value]="accountType.CODIGO"
+            >{{ accountType.VALOR }}</mat-option
+          >
+        </mat-select>
+        <mat-error *ngIf="formData.controls.accountType.hasError('required')">
+          Selecciona un tipo de cuenta
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <div class="col-12 col-md-6 p-0 pr-md-3 pl-md-3">
+      <mat-form-field class="w-100">
+        <input
+          maxlength="17"
+          matInput
+          placeholder="Número de cuenta"
+          formControlName="accountNumber"
+        />
+        <mat-error *ngIf="formData.controls.accountNumber.hasError('required')">
+          Ingresa el número de cuenta
+        </mat-error>
+        <mat-error *ngIf="formData.controls.accountNumber.hasError('minlength')">
+          El número debe contener al menos 5 dígitos
+        </mat-error>
+        <mat-error *ngIf="formData.controls.accountNumber.hasError('maxlenght')">
+          El número no puede contener más de 17 dígitos
+        </mat-error>
+
+        <mat-error *ngIf="formData.controls.accountNumber.hasError('pattern')">
+          Sólo se permiten números
+        </mat-error>
+      </mat-form-field>
+    </div>
+  </div>
+
+  <div class="row m-0">
+    <div class="col-12 col-md-6 p-0 pr-md-3 pl-md-3">
+      <mat-form-field class="w-100">
+        <mat-select formControlName="bankCode" placeholder="Banco">
+          <mat-option *ngFor="let bank of banks" [value]="bank.ID_BANCO">{{
+            bank.NOMBRE_BANCO
+          }}</mat-option>
+        </mat-select>
+        <mat-error *ngIf="formData.controls.bankCode.hasError('required')">
+          Selecciona un banco
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="col-12 col-md-6 p-0 pr-md-3 pl-md-3">
+      <mat-form-field class="w-100">
+        <input
+          matInput
+          placeholder="Valor a retirar"
+          formControlName="amount"
+          (keyup)="numberFormat('amount')"
+        />
+        <mat-error *ngIf="formData.controls.amount.hasError('required')">
+          Ingresa el valor a retirar
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <div class="pl-3">
+      <button
+        [disabled]="formSuccess != ''"
+        color="primary"
+        mat-raised-button
+        class="mb-0"
+      >
+        Enviar
+      </button>
+    </div>
+  </div>
+</form>

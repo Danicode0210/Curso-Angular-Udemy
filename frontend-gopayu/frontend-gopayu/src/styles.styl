@@ -1,0 +1,1412 @@
+/* You can add global styles to this file, and also import other style files */
+
+// Import material theme
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+
+@font-face {
+  font-family: Gotham;
+  src: url('./assets/font/Gotham Book.ttf');
+}
+@font-face {
+    font-family: Gotham;
+    src: url('./assets/font/Gotham Bold Regular.ttf');
+    font-weight: bold;
+}
+
+/*  ======================
+    Variables
+    ======================
+*/ 
+$color-white = #FFFFFF;
+$color-blue-dark-gd = #002b54;
+$color-blue-middle-gd = #03487a;
+$color-blue-light-gd = #02497d;
+$color-blue-general = #002361;
+$color-blue-registration = #BDE9F9;
+$color-light-blue-dark-gd = #0485b1;
+$color-light-blue-middle-gd = #0091b6;
+$color-light-blue-light-gd = #049dbb;
+
+$color-footer-blue-dark-gd = #1a2e3d;
+$color-footer-blue-middle-gd = #183146;
+$color-footer-blue-light-gd = #183b57;
+
+$color-orange-dark-gd = #e93b0c;
+$color-orange-middle-gd = #fe5701;
+$color-orange-light-gd = #f5570e;
+
+$color-light-blue = #0b84b0;
+
+$color-blue-kambi = #002e45;
+$color-blue-kambi-dark = #00202f;
+
+$color-bk-faqs = #0f2738;
+
+$color-blue-modals = rgba(0, 72, 121, .95);
+
+$shadow = box-shadow 0 1px 6px rgba(57,73,76,.35);
+
+/*  ======================
+    Functions
+    ======================
+*/
+app-trigger-button .chattigo-widget-trigger
+    position fixed
+    left: 9999px
+gradient($color1, $color2)
+    background: -webkit-linear-gradient(to right, $color1, $color2);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, $color1, $color2); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+gradientBackground($color1, $color2, $color3)
+    background-image: linear-gradient(to right, $color1 0%, $color2 51%, $color3 100%);
+
+footer_gradient()
+    background: $color-footer-blue-dark-gd;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to left, $color-footer-blue-light-gd, $color-footer-blue-dark-gd);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to top, $color-footer-blue-light-gd, $color-footer-blue-dark-gd); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+.hiddden
+    position: fixed
+    left:-9999px
+.virtuales-footer
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+
+img
+{
+    border-radius: 0 !important;
+}
+
+/*  =================
+    Slots Styles
+    =================
+*/
+.banner_cl
+    width: 100%;
+.text-blue-primary
+    color: $color-blue-general
+option
+    color: #181818;
+.launcher
+    color: $color-white;
+    background: rgba(255,255,255,.8);
+    background-image: url(./assets//img/Bg-Home.jpg)
+    position: fixed;
+    z-index 9998
+    top:0em
+    left:0em
+    width: 100%
+    height: 100%
+    text-align: center
+    .button-settings
+        background: #002361;
+        color: #FFF;
+        border-color: #002361;
+        margin-right: .5em;
+    .iframeGame
+        width: 100%;
+        height: 80%;
+        width: 80%;
+        border: 0;
+    .iframeGame.lg
+        height: 89%;
+        width: 100%;
+#modal-download
+    .modal-content
+        background-color: #002361;
+        color: #FFF;
+        padding: 2em;
+
+// Chatt
+.chattigo-widget-header--fixed, .chattigo-widget-header__background, .c-button
+    background: #002460 !important;
+
+/*  ======================
+    General Styles
+    ======================
+*/
+@media (min-width: 1200px)
+  #register-form
+      max-width: 1500px !important;
+      padding: 0;
+
+body 
+    font-size: 12px;
+    font-family: 'Gotham', 'Avenir', Helvetica, Arial, sans-serif !important;
+    .content-pat
+        max-width: 865px;
+        margin: 0 auto;
+        margin-bottom: 7em !important;
+    .container
+        max-width: 1130px;
+        padding: 0;
+    .icon-bigger
+        font-size:1.8em !important;
+    .font-dot-9
+        font-size: .9em;
+    .mat-select-value
+        color:#FFF;
+    .mat-select-arrow
+        color: #FFF;
+    .blue-dialog .mat-dialog-container
+        background: #002460 !important;
+        color: #FFF !important;
+        border-radius: 5px !important;
+    .btn-orange-new
+        background-image: #00AE42;
+        color: #fff !important;
+        border: #e93b0c !important;
+        border-radius: 50px !important;
+        transition: 0.5s !important;
+        background-size: 200% auto;
+    .mat-raised-button.mat-success
+        background-color: #00b930;
+        color: #FFF;
+        border-radius: 100px;
+    .dropdown
+        background-color:#002361;
+        color: $color-white;
+    .profile-icon-content
+        // background: #01ae42;
+        color: $color-white;
+        border-radius: 100%;
+        // width: 40px;
+        // height: 40px;
+        vertical-align: middle;
+        align-items: center;
+        justify-content: center;
+        margin-left: auto;
+        cursor: pointer;
+        font-size: 1em;
+        vertical-align: middle;
+    .white_divider
+        border-top-color: #FFF;
+    .mat-dialog-container
+        background: #002460 !important;
+        color: #FFF !important;
+        border-radius: 5px !important;
+    img
+        max-width: 100%;
+    .btn
+        $shadow;
+        border-radius: 50px !important
+        transition: .5s !important
+        background-size: 200% auto
+    .btn:hover
+        background-position: right center;
+    .btn-orange
+        background-color: #00AE42
+        color: $color-white !important;
+        border: $color-orange-dark-gd !important
+    .btn-blue
+        background-color: #3CB4E5;
+        color: $color-white !important;
+        border: $color-orange-dark-gd !important
+    .text-light-blue
+        color: $color-light-blue
+.content-input-search
+    position relative;
+    input
+        padding-left: 2em;
+        margin-top: 1em;
+        height: 30px;
+    i 
+        position absolute
+        left: 1em;
+        top: .8em;
+.main_container
+    min-height: 100vh;
+    .mat-drawer
+        background-color: #002460;
+        color: $color-white;
+        nav
+            ul
+                a   
+                    li:hover
+                        background: $color-orange-light-gd;
+                    li
+                        display: block;
+                        padding: 1em;
+                        width: 100%;
+nav
+    ul 
+        padding: 0;
+        margin-bottom: 0;
+        a.active
+            li
+                color: #37b2e7;
+                border-bottom: .5em solid #37b2e7;
+                background: transparent;
+        a, a:focus, a:hover   
+            color: $color-white;
+            li
+                font-weight: 200;
+                transition: .3s;
+            li:hover
+                display: inline-block;
+.form-control
+    max-width 100%;
+.form-control,
+.form-control:focus
+    border-radius: 20px;
+    background: transparent;
+    border: 1px solid #FFF;
+    color:$color-white;
+.form-control::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: $color-white;
+  opacity: 1; /* Firefox */
+}
+
+.form-control:-ms-input-placeholder { /* Internet Explorer 10-11 */
+  color: $color-white;
+}
+
+.form-control::-ms-input-placeholder { /* Microsoft Edge */
+  color: $color-white;
+}
+
+.dropdown-toggle.no-row::after
+    display:none;
+.cursor-pointer
+    cursor: pointer;
+.underline
+    text-decoration: underline;
+.hidden-input
+    position fixed
+    left -9999px;
+
+/*Escribenos*/
+
+#writeus_content
+    position: fixed;
+    right: 2em;
+    bottom: 0;
+    background: #FFF;
+    font-size: 14px;
+    z-index: 9999;
+    max-width: 650px;
+    textarea
+        resize: none
+        height: 115px;
+    .writeus_header
+        background-color: #002360;
+        padding: 1em;
+    button
+        color: #fff;
+        background: #01ae42;
+        height: 40px;
+        border: 1px solid #01ae42;
+        width: 100%;
+        font-weight: bold;
+    button.disabled
+        background-color: #a7c8b4
+    .form-control-cb.is-invalid
+        border-color: #dc3545;
+
+.slots-search-content
+    position: absolute;
+    z-index: 999;
+    left: 0;
+    width: 100%;
+    div.row
+        background: #024375;
+        color: $color-white;
+        transition: .2s;
+        img 
+            max-width:55px 
+    div.row:hover
+        background: #00589c;
+        cursor pointer;
+.content_form_singin_ 
+    margin: 0 auto;
+    padding: 3em !important;
+/*  =======================
+    BLOG styles
+    =======================
+*/
+
+.nameContentPost
+    max-width: 100px;
+    color: #9a9a9a;
+    margin: 0;
+    margin-left: auto;
+.mat-dialog-container
+  .login
+    .mat-form-field.mat-focused
+      .mat-form-field-label
+        color: $blue-bet !important
+.postContent
+  background: #FFF;
+  .contentDetailBlogImage
+    position relative
+  .postContentHTML
+    padding: 1.5em;
+    text-align: justify
+  .post-date-content
+    color: #004a97;
+    font-weight: bold;
+    text-transform: uppercase;
+  .text-image-description-post
+    position: absolute
+    bottom: 0;
+    left: 1em;
+    text-align: left;
+    color:#FFF;
+  h1
+    color: #032c6c
+    font-size: 1.5em;
+    margin-top: 1em;
+    text-align:left;
+    padding-left: 1em;
+    font-weight: bold;
+  h1.titleType2
+    padding: 0;
+    margin: 0;
+  .post-header
+      text-align: left;
+      padding: 1em;
+    div
+    h2
+      font-size: 1em;
+      margin-bottom: 2em;
+.postContent.category
+  .post-header
+    border-bottom: 3px solid #CCC;
+    padding: 0;
+    .contentColumn:first-child
+      border-right: 3px solid #CCC;
+    .contentColumn
+      padding: 1em;
+.blog
+  padding: 1em
+  background-size:cover
+  .contentPosts
+    background: #FFF
+    .col:hover
+      .blueMask
+        opacity .5;
+    .col
+      min-height: 400px
+      position relative
+      background-size: cover;
+      background-position-x: center;
+      background-position-y: top;
+      .contentTextsTitles
+        color: #FFF;
+        position absolute
+        left 1em
+        bottom: 1em
+        text-align: left
+        .subtitle
+          font-size: .8em
+      .blueMask
+        position absolute
+        background: #032c6c
+        left 0
+        top: 0
+        width: 100%;
+        height: 100%;
+        opacity .3
+.transparentPost
+  background: rgba(0,0,0,.4);
+  font-size: .8em;
+  .tpPost
+    padding: 1em 0;
+    border-bottom 1px solid #FFF
+  .titleTPPost
+    font-weight: bold;
+  .titleTPPost, .dateRelatedPost
+    color #FFF;
+    text-align: left;
+    margin: 0;
+.newsSocialNetwork
+  font-size: 1.5em;
+  padding: .7em 0;
+.btn-continue
+  border-radius: 50px !important;
+.contentNewsTitle
+    background: #e2211c;
+    color: #FFF;
+    padding-left: 2em;
+    margin-top: 1em;
+    padding: .5em;
+    padding-left: 2em;
+    max-width: 330px;
+    font-size: 1em;
+    border-radius: 0 15px 15px 0;
+    position relative
+    -webkit-box-shadow: -1px 0px 5px 2px rgba(201,201,201,1);
+    -moz-box-shadow: -1px 0px 5px 2px rgba(201,201,201,1);
+    box-shadow: -1px 0px 5px 2px rgba(201,201,201,1);
+    p
+      font-size: 1.2em;
+    .fa-arrow-right
+      font-size: 3.9em;
+      color: #e2211c;
+      position: absolute;
+      right: -16px;
+      top: -9px;
+.blog
+  .contentSocialNetworks
+        text-align: left;
+        display: flex;
+        flex-direction: column;
+        // justify-content: space-between;
+        height: 100%;
+        a:last-child
+            .row
+                margin-bottom: 0em !important;
+        .row:hover
+          opacity:.9;
+        .row
+            border-radius: 10px;
+            color: #999;
+            background: #FFF; 
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 1em;
+            margin-bottom: 1em !important;
+            .col-9, .col-3
+                padding: 1em;
+            .col-3
+                text-align: center;
+                background: rgba(226,226,226,1);
+                background: -moz-linear-gradient(left, rgba(226,226,226,1) 0%, rgba(219,219,219,1) 81%, rgba(209,209,209,1) 100%);
+                background: -webkit-gradient(left top, right top, color-stop(0%, rgba(226,226,226,1)), color-stop(81%, rgba(219,219,219,1)), color-stop(100%, rgba(209,209,209,1)));
+                background: -webkit-linear-gradient(left, rgba(226,226,226,1) 0%, rgba(219,219,219,1) 81%, rgba(209,209,209,1) 100%);
+                background: -o-linear-gradient(left, rgba(226,226,226,1) 0%, rgba(219,219,219,1) 81%, rgba(209,209,209,1) 100%);
+                background: -ms-linear-gradient(left, rgba(226,226,226,1) 0%, rgba(219,219,219,1) 81%, rgba(209,209,209,1) 100%);
+                background: linear-gradient(to right, rgba(226,226,226,1) 0%, rgba(219,219,219,1) 81%, rgba(209,209,209,1) 100%);
+                border-radius: 10px 0 0 10px;
+            .col-9
+                background: rgba(255,255,255,1);
+                background: -moz-linear-gradient(left, rgba(255,255,255,1) 0%, rgba(246,246,246,1) 47%, rgba(237,237,237,1) 100%);
+                background: -webkit-gradient(left top, right top, color-stop(0%, rgba(255,255,255,1)), color-stop(47%, rgba(246,246,246,1)), color-stop(100%, rgba(237,237,237,1)));
+                background: -webkit-linear-gradient(left, rgba(255,255,255,1) 0%, rgba(246,246,246,1) 47%, rgba(237,237,237,1) 100%);
+                background: -o-linear-gradient(left, rgba(255,255,255,1) 0%, rgba(246,246,246,1) 47%, rgba(237,237,237,1) 100%);
+                background: -ms-linear-gradient(left, rgba(255,255,255,1) 0%, rgba(246,246,246,1) 47%, rgba(237,237,237,1) 100%);
+                background: linear-gradient(to right, rgba(255,255,255,1) 0%, rgba(246,246,246,1) 47%, rgba(237,237,237,1) 100%);
+                border-radius: 0 10px 10px 0;
+  .relatedPost
+    background: #FFF;
+    text-align: left;
+    padding-bottom: .5em;
+    margin-bottom: 1em;
+    h2
+      color: #032c6c
+      padding-left: 1em;
+      font-size: 1em;
+      text-transform: uppercase;
+      margin-bottom:0
+      margin-top: 1em;
+      font-weight: bold;
+    .dateRelatedPost
+      color: #737373;
+      padding-left: 1.3em;
+      font-size: .8em;
+  .mat-card
+    padding: 0
+  .mat-card-image:first-child
+    margin-top: 0;
+  .navBlog
+    color: #959fa9
+    background: #ffffff
+    div.col-12
+      padding: 1em;
+      font-weight: bold
+      text-transform: uppercase
+      border-right:1px solid #CCC;
+      text-align: center;
+      font-weight: normal;
+    div.col-12:hover,
+    div.col-12.active
+      background: #f3f3f3
+      color:#181818
+      cursor: pointer
+
+/*  ======================
+    Menu Styles
+    ======================
+*/ 
+.promotions-dialog
+    .mat-dialog-container
+        padding: 0 !important;
+.menu-button
+    font-size: 2.5em;
+    background: transparent;
+    border: 0;
+    i
+        transition: .2s;
+    .fa-times
+        transform: rotate(90deg);
+.mat-form-field-appearance-legacy .mat-form-field-underline
+    background-color: #FFF;
+.mat-form-field.mat-focused .mat-form-field-ripple
+    background-color: #00aec7;
+.mat-form-field-appearance-legacy .mat-form-field-label
+    color:#FFF;
+.mat-form-field.mat-focused .mat-form-field-label
+    color:#00aec7;
+.mat-fab.mat-primary, .mat-flat-button.mat-primary, .mat-mini-fab.mat-primary, .mat-raised-button.mat-primary
+    background-color: #00ae42;
+    border-radius: 100px;
+    min-width: 150px;
+    padding: 0em;
+    font-size: 1em;
+    height: 35px;
+.mat-dialog-container
+    max-height: 95vh !important;
+.menu-select
+    width: fit-content;
+    border-radius: 30px;
+    margin: 0 auto;
+.formDepoPin
+    .mat-form-field
+        max-width 200px
+        margin-top: 1em
+        display block
+.menu-dialog
+    .mat-dialog-container
+        width 650px;
+        padding: 0;
+ul.menu
+    margin: 0;
+    list-style none;
+    padding: 0;
+    min-width 250px;
+    li:last-child
+        border-bottom: 0;
+    li
+        padding: .5em 1em;
+        border-bottom: 1px solid #015fa4;
+    li:hover
+        color: #015fa4;
+
+
+/*  ======================
+    Registration Styles
+    ======================
+*/ 
+.registration
+    background-color: $color-blue-registration;
+.content_form_singin_ 
+    .contentForm
+        form
+            .mat-select-value
+                color: #000;
+            .mat-form-field-appearance-legacy .mat-form-field-label
+                color: #00afcb;
+            .mat-form-field-appearance-legacy .mat-form-field-underline
+                background-color: rgba(0,0,0,.42);
+            
+.blue_title
+    color: #00afcb;
+
+.content-first-carousel
+    .bet-carousel
+        max-height: 400px;
+
+/*  ======================
+    CHAT Styles
+    ======================
+*/
+#webchat-widget-container
+    input, select
+        background-color: transparent;
+        color: #FFF;
+        border-color: #FFF;
+        border-radius: 25px;
+        height: 35px;
+    input::placeholder
+        color: transparent;
+        opacity: 1; 
+    input:-ms-input-placeholder 
+        color: transparent;
+    input::-ms-input-placeholder
+        color: transparent;
+.sc-ktHwxA
+    display none;
+.cxmwWG
+    border-bottom: 1px solid #FFF !important; 
+.cxmwWG, .hXUNwH, .jTsTFK
+    background-color: #024375 !important;
+.eNZQNz
+    padding: 1em;
+    margin: 0;
+.eNZQNz, .joSRFN
+    color: #FFF !important;
+.egDWoe
+    background-color: #fa5607 !important;
+.dRMiBh:before
+    color: #fa5607 !important;
+.ejEaSK
+    border: 1px solid transparent !important;
+.iNcsYZ
+    background-color: #024374 !important;
+    color:#FFF;
+.sc-gzVnrw
+    background-image: #00AE42;
+    color: #fff !important;
+    border: #e93b0c !important;
+    border-radius: 50px !important;
+    transition: 0.5s !important;
+    background-size: 200% auto;
+    height: 40px !important;
+    padding: 0 !important;
+
+.entra-ya
+    min-width: 140px !important;
+    padding: 0;
+
+/*  ======================
+    Header Styles
+    ======================
+*/ 
+.header
+    background-color: #002361;
+    color: $color-white;
+    .content-header-logo 
+        flex: 0 1 auto;
+        margin-bottom: auto;
+        margin-top: auto;
+    .dropdown-login
+        background-color: #002460;
+        color: $color-white;
+        padding: 2em;
+        border-radius: 10px;
+        min-width: 300px;
+        font-size: .9em;
+    // .image_deposit
+    //     -webkit-box-shadow: 0px 0px 22px 15px rgba(0,97,161,1)
+    //     -moz-box-shadow: 0px 0px 22px 15px rgba(0,97,161,1)
+    //     box-shadow: 0px 0px 22px 15px rgba(0,97,161,1)
+    //     border-radius: 100%;
+    .logo
+        max-height: 85px;
+        margin-bottom: 0em;
+    .contentLastLogin
+        font-size: .8em;
+    .contentSignButtons
+        display: flex;
+        justify-content: flex-end;
+        flex-wrap: wrap;
+        button
+            max-width: 145px;
+            padding: 0em !important;
+            width: 100%;
+            height 30px;
+    .content-widgets
+        font-size: 12px !important;    
+        font-weight: 200;
+        // max-width: 750px;
+        border-radius: 40px;
+        padding: .5em;
+        padding-top: .5em !important;
+        // max-width: 530px;
+        img
+            max-width: 30px;
+        img.plus_img
+            width: 100%;
+            max-width: 70px;
+    nav
+        ul
+            display: flex;
+            justify-content: space-between;
+            a   
+                text-decoration: none;
+                li:hover
+                    color: #37b2e7;
+                    border-bottom: .5em solid #37b2e7;
+                    background: transparent;
+                li
+                    display: inline-block;
+                    padding: 1em;
+.contentTwitter
+  max-height: 600px
+  overflow: auto
+  margin-bottom 1em
+.mostPopularImageContent
+  width: 100%;
+  min-height:274px
+  background-size:cover
+  background-position-x: center
+
+                
+/*  ======================
+    Recovery Styles
+    ======================
+*/ 
+.title_modal
+    border-bottom: 1px solid #FFF;
+    padding: 1em;
+.updateRecoveryPassword
+    margin: 0 auto;
+    padding: 1em;
+    background: #004475;
+    color:#fff;
+    .formRecoveryContent
+        max-width 600px;
+        margin:0 auto;
+        border:1px solid #FFF;
+        padding-bottom:1em;
+        border-radius: 5px;
+
+.bg-home-image
+    background-image: url(./assets/img/Bg-Home.jpg);
+    background-size: cover;
+.slot-content-lf
+    background-image: url(./assets/img/Bg-Home.jpg);
+    background-size: cover;
+.fake-input
+    position: fixed
+    left: -9999px
+
+.mat-drawer-content
+    display: initial !important;
+    position: initial !important;
+/*  ======================
+    Home Styles
+    ======================
+*/
+.contentLastLogin, .contentSession, .contentBalance
+    font-size: .8em;
+.btn-logout
+    margin-top: .5em;
+    height: 22px !important;
+    font-size: 1em;
+.home
+    background: #19354b;
+    .text-select-colombia
+        max-width: 350px;
+        margin: 0 auto;
+    .content-dimayor-logos
+        max-width: 500px;
+        margin: 0 auto !important;
+    .content-patro
+        // max-width: 900px;
+        margin: 0 auto !important;
+        img
+            max-width 130px;
+    .dividder-home-new
+        border-top: 1px solid #FFF;
+    .content-carousel-desc
+        border-radius: 0 0 10px 10px;
+        padding: 2em 0;
+        -webkit-box-shadow: -2px 11px 18px 0px rgba(0,0,0,0.75);
+        -moz-box-shadow: -2px 11px 18px 0px rgba(0,0,0,0.75);
+        box-shadow: -2px 11px 18px 0px rgba(0,0,0,0.75);
+        background: rgb(0,29,67);
+        background: linear-gradient(0deg, rgba(0,29,67,1) 19%, rgba(0,35,87,1) 78%);
+        text-align:center;
+        button
+            min-width: 200px;
+    .content-carouseles.has-virtuales
+        app-carousel
+            .bet-carousel
+                border-radius: 0 !important 
+        .content-carousel-desc
+            border-radius: 0;
+            background: #002460; 
+            h4
+                display: none !important
+            .btn.btn-orange
+                border: 1px solid #FFF !important;
+                background: transparent;
+                font-weight: bold;
+                padding-top:.2em; 
+    .content-carouseles
+        // background-color: #0d273a;
+        padding: 3em;
+.content-sports-nav
+    max-width: fit-content;
+.content-sports
+    background-color: $color-blue-general;
+    max-width: 40px;
+    p
+        font-size: .8em;
+    div.col:hover
+        background:#005d9c; 
+        cursor: pointer;
+    div.col
+        padding: 1em;
+        height: 10%;
+        align-items: center;
+        display: flex;
+        transition: .3s;
+        img
+            width: 20px;
+.content-sports.casino
+    div.col
+        img
+            width: 30px;
+            margin-bottom:1em;
+.content-sports.casino
+    div.col
+        height: auto;
+        min-height: 140px;
+        max-width: 60px;
+        font-size: .8em;
+
+/* =======================
+    Loading spinner
+    ======================
+*/ 
+.loadingSpinner
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #002361;
+    z-index: 9999;
+
+/*Spinner*/
+.lds-ring {
+  display: inline-block;
+  position: relative;
+  width: 64px;
+  height: 64px;
+}
+.lds-ring div {
+  box-sizing: border-box;
+  display: block;
+  position: absolute;
+  width: 51px;
+  height: 51px;
+  margin: 6px;
+  border: 6px solid #00afcb;
+  border-radius: 50%;
+  animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+  border-color: #00afcb transparent transparent transparent;
+}
+.lds-ring div:nth-child(1) {
+  animation-delay: -0.45s;
+}
+.lds-ring div:nth-child(2) {
+  animation-delay: -0.3s;
+}
+.lds-ring div:nth-child(3) {
+  animation-delay: -0.15s;
+}
+@keyframes lds-ring {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/*  ======================
+    PROMOTIONS Styles
+    ======================
+*/ 
+.promotions 
+    background: #01255c
+    .back_todo
+        background-image: url(./assets/img/Bg-Home.jpg);
+/*  ======================
+    FAQS Styles
+    ======================
+*/ 
+.faqs
+    background: $color-bk-faqs;
+    color:$color-white;
+    .faq-searcher
+        background-image: url(./assets/img/faq/Banner-Ayuda.jpg);
+        background-repeat: no-repeat;
+        background-size: cover;
+        text-align: center;
+        padding: 4em;
+        p
+            margin-bottom: 0;
+            font-size: 1.5em;
+        input:focus
+            outline: none;
+        input
+            background-color: rgba(255,255,255,0.8);
+            max-width: 50%;
+            width: 100%;
+            height: 40px;
+            border: 0;
+            border-radius: 20px;
+            padding: 1em 2em;
+    .faq-nav
+        background-color: #fff;
+        .col-4
+            cursor pointer;
+            transition:.2s;
+            color:#2d2d2d;
+        .col-4:hover, .col-4.active
+            color: #00afcb;
+            span
+                border-bottom: 1px solid #00afcb;
+    .faq_item:nth-child(even)
+        background: #FFF;
+        border:1px solid #FFF;
+        color: #2d2d2d;
+    .faq_item:nth-child(odd)
+        color: #2d2d2d;
+        background: #FFF;
+    .faq_item
+        border-radius: 5px;
+    .contentFaqsScrolled
+        overflow: auto;
+    .content-left
+        padding: 4em 2em 0 2em;
+        img.title_faq
+            max-width 200px;
+        h1
+            font-size: 10em;
+            margin-bottom: 0;
+        h3
+            font-size: 4em;
+            font-weight: normal;
+.faq_white_content
+    max-width: 80%;
+    margin: 0 auto !important;
+    padding: 2em;
+
+.faq_title
+    font-size: 1.3em;
+    margin-bottom: 0;
+/*  ======================
+    Footer Styles
+    ======================
+*/
+footer.bet-footer
+    background: #002361;
+    // border-top: 2px solid #186798;
+    .footer_legales
+        justify-content: space-between;
+        font-size: .8em;
+        div
+            a
+                color: $color-white;
+                text-transform: uppercase;
+    .legal_text
+        text-align: justify;
+        font-size: .8em;
+    .legal_game_logo
+        max-height: 55px;
+    .content_18
+        background-color: #FFF;
+        border-radius: 100%;
+        width: 50px; 
+        height: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #181818;
+        font-weight: bold; 
+        font-size: 1.2em;
+        margin: 0 auto;
+    .logo_corredor
+        width: 143px;
+        max-height: 75px;
+    .contactContainer
+        .icon
+            font-size: 1.2em;
+        .footer-social-networks
+            display:flex;
+            align-items: center;
+            // justify-content: space-between;
+            div 
+                display:flex;
+                border: 1px solid $color-white;
+                width: 40px;
+                align-items: center;
+                justify-content: center;
+                height: 40px;
+                border-radius: 100%;
+                opacity: .8;
+                transition: .2s;
+                .sn-icon
+                    border-color: $color-white;
+            div:hover
+                opacity: 1;
+                cursor:pointer;
+    .footer-navbar
+        font-size: .8em;
+        h5
+            font-size: 1.2em;
+        .col-12.col-md-3
+            // border-right: 1px solid $color-white;
+        .col-12.col-md-4:nth-child(3)
+            border-right: 0;
+    nav
+        ul
+            list-style: none;
+            a:hover
+                li
+                    text-decoration: underline;
+            a
+                text-decoration: none;
+                li:hover
+                    padding: 0;
+    // footer_gradient()
+    color: $color-white
+    .bp-payment-methods
+        background: $color-white;
+        padding: .5em;
+        .col-md
+            text-align: center;
+            img
+                max-width: 100%;
+                max-height: 35px;
+
+/* ======================
+    Kambi Stryles
+   ====================== */
+
+.KambiBC-container#KambiBC-container .KambiBC-navigation-menu__link
+    line-height:15px !important
+#KambiBC-container 
+    #KambiBC-contentWrapper__bottom
+        overflow-y: auto;
+        max-height: 100vh;
+#KambiBC-container .KambiBC-navigation-menu__link
+    background-color: $color-blue-kambi !important;
+#KambiBC-container .KambiBC-navigation-menu-view
+    background-color: $color-blue-kambi !important;
+#KambiBC-container .KambiBC-navigation-menu__link:hover
+    background-color: $color-blue-kambi-dark !important;
+#KambiBC-container .KambiBC-navigation-menu__link.KambiBC-navigation-menu__link--active, #KambiBC-container .KambiBC-navigation-menu__link.KambiBC-navigation-menu__link--active:hover
+    background-color: $color-blue-kambi-dark !important;
+    border: 0 !important;
+.KambiBC-navigation-menu__section-wrapper
+        .KambiBC-navigation-menu__section-links
+            .KambiBC-navigation-menu__list-item
+                a.KambiBC-navigation-menu__link.KambiBC-js-nav-link
+                    padding: .5em 1em !important;
+                    border-bottom: 1px solid #030d16;
+                    color: #bed8ea;
+.KambiBC-navigation-menu__section.KambiBC-navigation-menu__section--general
+    .KambiBC-navigation-menu__section-wrapper
+        .KambiBC-navigation-menu__section-links
+            .KambiBC-navigation-menu__list-item
+                a.KambiBC-navigation-menu__link.KambiBC-js-nav-link:hover
+                    background-color: $color-blue-kambi-dark !important;
+                a.KambiBC-navigation-menu__link.KambiBC-js-nav-link
+                    padding: 2px 14px !important;
+                    border-bottom: 0 !important;
+#KambiBC-container .KambiBC-navigation-menu__label--title
+    color: #bed8ea;
+/*  ======================
+    Chattigo styles
+    ======================
+*/ 
+.huinYi
+    position: inherit !important;
+    max-width: 60% !important;
+.ageContent
+    font-size: 1.5em;
+    color: #FFF;
+    background: #000;
+    width: 75px;
+    height: 75px;
+    border-radius: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+.button_ChatBot
+    right: unset;
+    z-index: 100;
+    left: 1em;
+#frames_ChatBot
+    right: unset !important;
+    left: 11px;
+    bottom: 75px;
+.cen_icono_ChatBot
+    margin-top: 1em;
+    cursor: pointer;
+#rvt_contact_ChatBot.hidden
+    display: none;
+#webchat-widget-container
+    font-family: 'Open Sans';
+    position: fixed;
+    left: 10px;
+    bottom: 10px;
+    z-index: 100 !important;
+    cursor: pointer;
+    max-width: fit-content;
+    
+#webchat-widget-container .cLybGN
+    left: 10px;
+#webchat-widget-container .extks11
+    padding-top: 0 !important;
+    display: none !important;
+
+@media (min-width: 64.0625em)
+    .eCdzKH 
+        position: inherit !important;
+        left: 1em;
+
+/*  ======================
+    Loading styles
+    ======================
+*/ 
+.loading
+    position: fixed;
+    left: 0;
+    top:0;
+    width: 100%;
+    height:100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: $color-blue-general;
+    z-index: 9999;
+    flex-direction: column;
+    .logo_loading
+        max-width: 300px;
+        margin-bottom: 2em;
+.lds-ring {
+    display: inline-block;
+    position: relative;
+    width: 64px;
+    height: 100px;
+}
+.lds-ring img {
+    position: absolute;
+    max-width: 25px;
+    left: 60%;
+    top: 35%;
+    transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%);
+}
+.lds-ring div {
+    box-sizing: border-box;
+    display: block;
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    margin: 6px;
+    border: 7px solid #fff;
+    border-radius: 50%;
+    animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+    border-color: #fff transparent transparent transparent;
+}
+.lds-ring div:nth-child(1) {
+animation-delay: -0.45s;
+}
+.lds-ring div:nth-child(2) {
+animation-delay: -0.3s;
+}
+.lds-ring div:nth-child(3) {
+animation-delay: -0.15s;
+}
+@keyframes lds-ring {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+#header.sticky
+    position fixed
+    z-index: 9999
+    top: 0
+    width: 100%;
+#header_slot.sticky
+    position fixed
+    z-index: 9999
+    top: 130px
+    width: 100%;
+
+.mat-checkbox-frame,
+.mat-radio-outer-circle
+    background-color: #FFF !important;
+
+.mat-radio-button.mat-accent .mat-radio-inner-circle, .mat-radio-button.mat-accent .mat-radio-ripple .mat-ripple-element:not(.mat-radio-persistent-ripple), .mat-radio-button.mat-accent.mat-radio-checked .mat-radio-persistent-ripple, .mat-radio-button.mat-accent:active .mat-radio-persistent-ripple
+    background-color: #01ae42 !important;
+.mat-checkbox-checked.mat-accent .mat-checkbox-background, .mat-checkbox-indeterminate.mat-accent .mat-checkbox-background
+    background-color: #01ae42 !important;
+.mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle
+    border-color: #01ae42 !important;
+
+.btn-balance
+    background: transparent;
+    color: #FFF;
+    border: 1px solid #FFF;
+    border-radius: 15px;
+    min-width: 200px;
+    padding: .2em;
+    position: relative;
+.content-notification
+    width: fit-content;
+    margin-left: auto;
+    padding-left: 1.5em;
+.notification
+    background-color: #f00;
+    color: #fff;
+    border-radius: 100%;
+    position: absolute;
+    left: -2.5em;
+    top: -1.5em;
+    width: 25px;
+    height: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: .9em;
+.btn-balance.active
+    border-color: #00ae42;
+    background-color: #00ae42;
+
+@media (max-width: 1000px) 
+    #writeus_content
+        right 0 !important
+        width: 100% !important
+        max-width: 100% !important
+        max-height: 100vh;
+        overflow: auto;
+    .launcher .iframeGame
+        width: 100% !important;
+        height: 100%;
+    .launcher .iframeGame.lg
+        height: 90% !important;
+    #header_slot 
+        background-color: rgba(0,0,0,.4) !important;
+        color: #FFF !important;
+        .button-settings:nth-child(1)
+            display none
+    .notification.modal_notification
+        left:.5em !important
+        
+    div[aria-labelledby=dropdownMenu]
+        position fixed !important
+        left:0 !important
+        transform: translate(0, 100%) !important
+    .promotionalmodal
+        width: 100% !important;
+    .banner_cl
+        max-height: 90px ;
+    .btn-white-poker,
+    .btn-gold
+        min-width: 115px !important;
+        height: 22px;
+        padding: 0 !important;
+    .text-right-responsive
+        text-align: right !important;
+    .content-logo-poker
+        margin: 0 auto;
+    .text-center-responsive
+        text-align:center;
+    .button-poker-big
+        height: 90px !important;
+        max-width: 225px !important;
+        margin: 0 auto !important;
+        h3
+            font-size: 1.5em;
+    .contentSlot
+        min-width: 100px !important;
+        height: 100px !important;
+    .forced-center
+        max-width: fit-content !important;
+        margin: 0 auto !important;
+    .responsive-centered
+        text-align: center;
+    .content-logo-col
+        text-align: right !important;
+    // app-trigger-button .chattigo-widget-trigger
+    //     left auto
+    .ico-colombia-logo
+        max-width: 130px !important;
+    .title-responsive
+        font-size: 1em !important;
+    .content-left
+        h1
+            font-size: 6em !important;
+        h3
+            font-size: 4em !important;
+    #webchat-widget-container .extks11
+        display: flex !important;
+    .contentSlotCarousel
+            overflow-x: auto !important; 
+        .categoryTitle, .contentPoints
+            text-align: center !important;
+        .contentPoints
+            .point
+                width: 15px !important;
+                height: 15px !important;
+    .content-sports-nav
+        max-width: 100%;
+    .content-sports
+        flex-wrap: nowrap;
+        align-items: center;
+        overflow: auto;
+        max-width: 100%;
+        div.col:hover
+            height: 100%;
+    .main_container 
+        .mat-drawer 
+            z-index: 4;
+            nav 
+                ul
+                    a 
+                        li
+                            width: 100%;
+                            border-bottom: 1px solid;
+    footer 
+        hr
+            border-color: $color-white;
+        .footer-navbar
+            .col-12.col-md-3
+                border-right: 0;
+                border-bottom: 1px solid #FFF;
+                padding-bottom: 1em;
+                border-right: 0 !important;
+        .bp-mobile
+            .bp-payment-methods
+                text-align: center;
+                border-radius: 0;
+.content_form_actualization_ 
+    form
+        .mat-select-value
+            color: white;
+        .mat-form-field-appearance-legacy .mat-form-field-underline
+            background-color: white;
+
+.registration
+    form
+        .mat-form-field
+            margin-top: 35px
+        .mat-error
+            font-size: 10px
+        .mat-input-element
+            color: black  !important;
+            font-size: 15px
+        .mat-select-value
+            color: black  !important;
+            font-size: 15px
+        .mat-form-field-appearance-legacy .mat-form-field-label
+            color: #002361;
+        .mat-form-field-appearance-legacy .mat-form-field-underline
+            background-color: rgba(0,0,0,.42); 
+
+        .mat-radio-container
+            height: 15px;
+            width: 15px;
+
+        .mat-radio-outer-circle
+            height: 15px;
+            width: 15px;
+
+        .mat-radio-inner-circle
+            height: 15px;
+            width: 15px;
+
+        .mat-radio-button.mat-radio-ripple
+            height: 30px; /*double of your required circle radius*/
+            width: 30px;  /*double of your required circle radius*/
+            left: calc(50% - 15px); /*'10px'-same as your required circle radius*/
+            top: calc(50% - 15px); /*'10px'-same as your required circle radius*/
+        

@@ -1,0 +1,19 @@
+<app-loading *ngIf="isLoading"></app-loading>
+
+<div class="launcher">
+    
+    <div id="header_slot" class="d-flex bg-white text-blue-primary p-2 font-weight-bold">
+        <p class="text-center mb-0">Tiempo de juego transcurrido: {{sessionTimer}}</p> 
+        <div class="ml-auto">
+            <p class="mb-0 d-inline-block mr-3" *ngIf="integrationChannelCode == 'GREENTUBE' || integrationChannelCode == 'RFRANCO'">Saldo disponible en bono: ${{ bonus | number }}</p>
+            <div class="d-inline-block">
+                <button class="button-settings" (click)="zoomIn = !zoomIn"><i class="fas" [ngClass]="{'fa-compress': zoomIn, 'fa-expand': !zoomIn}" ></i></button>
+                <a [routerLink]="'/slots'"><button class="button-settings"><i class="fas fa-times"></i></button></a>
+            </div>
+        </div>
+    </div>
+    
+    <iframe class="iframeGame" [ngClass]="{'lg':zoomIn}" *ngIf="gameUrl" id="gameFrame" [src]="gameUrl">
+        <app-spinner></app-spinner>
+    </iframe>
+</div>

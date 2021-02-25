@@ -1,0 +1,17 @@
+<div style="background-color: #002361;" class="content-registration-sucecess">
+  <div class="container content_form_singin_ jumbotron text-center">
+    <h3 class="blue_title">
+        <b>
+            {{texts$.Register.Welcome}}
+        </b>
+      </h3>
+      <p>
+          {{texts$.Register.SuccessRegisterMessage}}
+      </p>
+      <a [routerLink]="['/']">
+        <button (click) = "gaEventRegisterSuccessBack()" class="btn btn-orange">
+          {{texts$.Register.Back}}
+        </button>
+      </a>
+</div>
+</div>

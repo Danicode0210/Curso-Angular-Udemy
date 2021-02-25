@@ -1,0 +1,54 @@
+<div class="p-3 text-center">
+    <app-loadingspinner *ngIf="isLoading"></app-loadingspinner>
+    <p class="text-blue font-weight-bold">VERIFICACIÓN NÚMERO TELEFÓNICO</p>
+    <mat-divider class="white_divider"></mat-divider>
+    <br>
+    <div *ngIf = "isCodeValid">
+        <div class="row m-0">
+            <p class="w-100 text-center" style="text-align: justify;" *ngIf = "textToDisplay != ''">
+                {{textToDisplay}}
+            </p>
+            <p *ngIf="data.isRegister == 1" class="w-100" style="text-align: justify;">
+                Para poder completar el registro se le ha enviado un código de verificación a su número de celular, por favor ingrese el código en el siguiente formulario.
+            </p>  
+            <p *ngIf="data.isRegister != 1" class="w-100" style="text-align: justify;">
+                Para poder actualizar sus datos se le ha enviado un código de verificación a su número de celular, por favor ingrese el código en el siguiente formulario.
+            </p>  
+            <p class="text-center w-100">
+                Validez del código {{timeToDisplay}}
+            </p>
+        </div>
+        <form [formGroup]="formData" class="formDepoPin" (ngSubmit)="verifyPhoneNumber()">
+            <mat-form-field style="margin-left: auto; margin-right: auto;" class="w-100">
+                <input matInput required style="text-align: center;" formControlName="verificationCode" matInput class="w-100" type = "text">
+            </mat-form-field>
+            <mat-error *ngIf="error">
+                {{ error }}
+            </mat-error>
+            <div class="contentButtons row m-0">  
+                <div class="col-12 col-md-6 mt-3 mt-md-0">
+                    <button [mat-dialog-close]="data.isVerified" (click) = "cancelPhoneVerification()" type="button" class="w-100 btn btn-secondary">
+                        Cancelar
+                    </button>
+                </div>
+                <div class="col-12 col-md-6 mt-3 mt-md-0">
+                    <input class="w-100 btn btn-orange" type = "submit">
+                </div>
+            </div>
+        </form>
+    </div>
+    <div *ngIf = "!isCodeValid">
+        <p>Su código ha caducado por favor genere uno nuevo.</p>
+        <div class="contentButtons row m-0">  
+            <div class="col-12 col-md-6 mt-3 mt-md-0">
+                <button [mat-dialog-close]="data.isVerified" (click) = "closeDialog(false)" type="button" class="w-100 btn btn-secondary">
+                    Cancelar
+                </button>
+            </div>
+            <div class="col-12 col-md-6 mt-3 mt-md-0">
+                <button (click) ="resendCode()" class="w-100 btn btn-orange">Reenviar</button>
+            </div>
+        </div>
+    </div>
+</div>
+  

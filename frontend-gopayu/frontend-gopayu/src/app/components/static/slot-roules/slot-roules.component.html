@@ -1,0 +1,16 @@
+<div class="All-Bets-history text-left p-3">
+    <h4 class="ng-binding">Reglas de slots</h4>
+    <ul>
+      <ng-container *ngFor="let slot of slots" >
+        <li *ngIf="slot.roules">
+          <a [attr.href]="slot.roules">{{slot.title}}</a>
+        </li>
+      </ng-container>
+    </ul>
+    <h4 class="ng-binding"></h4>
+    <h4 class="ng-binding">Reclamaciones de slots</h4>
+    <div class="general-text-list">
+      <p>Si tienes una reclamación da click <a href="/reclamaciones">aquí</a></p>
+    </div>
+  </div>
+  

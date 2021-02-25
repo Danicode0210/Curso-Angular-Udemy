@@ -1,0 +1,134 @@
+<div class="row align-items-center content-widgets pt-3">
+  <div class="col p-0">
+    <a href="/apuestas#bethistory" (click) = 'gaEventHeader(textLinkMisApuestas)' class="text-white">
+      <div
+        class="row m-0 align-items-center"
+        (mouseover)="
+          imgBets = '../../../../assets/img/header/mis-apuestas-active.png'
+        "
+        (mouseout)="imgBets = '../../../../assets/img/header/mis-apuestas.png'"
+      >
+        <div class="col-4 p-0">
+          <img [src]="imgBets" />
+        </div>
+        <div class="col-8 pl-1">
+          <span>Mis Apuestas</span>
+        </div>
+      </div>
+    </a>
+  </div>
+
+  <div class="col p-0">
+    <div
+      class="row m-0 align-items-center cursor-pointer"
+      (click)="OpenModal(); gaEventHeader(textLinkRecarga)"
+      (mouseover)="
+        imgDeposit = '../../../../assets/img/header/dinero-active.png'
+      "
+      (mouseout)="imgDeposit = '../../../../assets/img/header/dinero.png'"
+    >
+      <div class="col-4 p-0">
+        <img class="image_deposit" [src]="imgDeposit" />
+      </div>
+      <div class="col-8 pl-1">
+        <span>Recarga Aquí</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="col p-0">
+    <a
+      href="/apuestas#filter/all/all/all/all/in-play,streaming"
+      class="text-white"
+      (click) = "gaEventHeader(textLinkTransmision)"
+    >
+      <div
+        class="row m-0 align-items-center"
+        (mouseover)="imgPlay = '../../../../assets/img/header/play-active.png'"
+        (mouseout)="imgPlay = '../../../../assets/img/header/play.png'"
+      >
+        <div class="col-4 p-0">
+          <img [src]="imgPlay" />
+        </div>
+        <div class="col-8 pl-1">
+          <span class="font-dot-9">Transmisión en Vivo</span>
+        </div>
+      </div>
+    </a>
+  </div>
+
+
+  <div *ngIf="Promotions" class="col p-0">
+    <div
+      class="row m-0 align-items-center cursor-pointer"
+      (click)="openPromotionsModal(); gaEventHeader(textLinkRedimePromociones)"
+      (mouseover)="imgPromo = '../../../../assets/img/header/promociones-active.png'"
+      (mouseout)="imgPromo = '../../../../assets/img/header/promociones.png'"
+    >
+      <div class="col-4 p-0">
+        <img [src]="imgPromo" />
+      </div>
+      <div class="col-8 pl-1">
+        <span class="font-dot-9">Redime promociones</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="col pl-3 p-0">
+    <div
+      class="row m-0 align-items-center cursor-pointer"
+      (click)="toggleChat()"
+      (mouseover)="imgChat = '../../../../assets/img/header/chat-active.png'"
+      (mouseout)="imgChat = '../../../../assets/img/header/chat.png'"
+    >
+      <div class="col-4 p-0">
+        <img [src]="imgChat" />
+      </div>
+      <div class="col-8 pl-1">
+        <span class="font-dot-9">Chat en Línea</span>
+      </div>
+    </div>
+  </div>
+
+  <div  *ngIf="Callback" class="col p-0" style="    min-width: 128px;">
+    <div
+      class="row m-0 align-items-center cursor-pointer"
+      onclick="window['$']('#callbackCB').removeClass('d-none')"
+      (mouseover)="imgCallback = '../../../../assets/img/CallbackActive.svg'"
+      (mouseout)="imgCallback = '../../../../assets/img/Diadema.svg'"
+      (click) = "gaEventHeader(textTeLlamamos)"
+    >
+      <div class="col-3 p-0">
+        <img [src]="imgCallback" />
+      </div>
+      <div class="col-9 pl-1">
+        <span class="font-dot-9">¿Prefieres que te llamemos?</span>
+      </div>
+    </div>
+  </div>
+
+  <div (click)="openModalApp(); gaEventHeader(textDescargaApp)" class="col p-0" style="    min-width: 128px;">
+    <div
+      class="row m-0 align-items-center cursor-pointer"
+      (mouseover)="imgApp = '../../../../assets/img/app_active.svg'"
+      (mouseout)="imgApp = '../../../../assets/img/app_inactive.svg'"
+    >
+      <div class="col-3 p-0">
+        <img [src]="imgApp" />
+      </div>
+      <div class="col-9 pl-1">
+        <span class="font-dot-9">Descargar la App Betplay</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- <div class="col">
+        <a href="/blog">
+            <div class="row m-0 align-items-center cursor-pointer">
+                <div class="col-12 p-0">
+                    <img class="plus_img" src="../../../../assets/img/header/plus.png">
+                </div>
+            </div>
+        </a>
+    </div> -->
+</div>

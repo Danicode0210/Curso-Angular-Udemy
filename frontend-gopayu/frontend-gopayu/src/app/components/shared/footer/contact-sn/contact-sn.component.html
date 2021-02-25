@@ -1,0 +1,197 @@
+<div class="row m-0 align-items-center contactContainer">
+  
+  <div class="col-12 col-md-4">
+    <div class="row m-0 align-items-center forced-center">
+      <div class="col-1 p-0">
+        <i class="align-middle far fa-envelope icon icon-bigger"></i>
+      </div>
+      <div class="col-11 pl-3">
+        <div id="writeus_content" [ngClass]="{'d-none': isHidden}">
+          <div class="writeus_header d-flex">
+            <div>
+              <i class="align-middle far fa-envelope icon icon-bigger mr-3"></i>
+              <span>Escribenos</span>
+            </div>
+            <div class="ml-auto">
+              <i (click)="isHidden = true" class="cursor-pointer fas fa-window-minimize mr-2"></i>
+              <i (click)="isHidden = true" class="cursor-pointer fas fa-times"></i>
+            </div>
+          </div>
+
+          <div 
+          *ngIf="!success"
+          class="p-3 text-center">
+            <img src="../../../../../assets/img/logo-bet-chatt.png" style="max-width: 150px;margin-bottom: 1em;" alt="">
+            <p class="m-0 text-blue-primary font-weight-bold">Déjanos tus datos</p>
+            <h4 class="m-0 text-blue-primary font-weight-bold">¡Validaremos y te daremos una respuesta!</h4>
+            
+          </div>
+
+          <div *ngIf="success" class="success p-3">
+            <h4 class="m-0 text-blue-primary font-weight-bold">¡Mensaje Enviado Correctamente!</h4>
+            <p class="m-0 text-blue-primary font-weight-bold">¡Tu mensaje ha sido enviado, validaremos la información y te daremos respuesta lo más pronto posible!.</p>
+            <div class="text-center p-3" style="max-width: 200px; margin:0 auto">
+              <button class="btn-send" (click)="success = false">¡Volver!</button>
+            </div>
+          </div>
+
+          <form 
+          [ngClass]="{'d-none':success}"
+          [formGroup]="form"
+          novalidate
+          autocomplete="off"
+          (ngSubmit)="sendWriteUs(file, file2, file3, termsInput)">
+          <div class="writeus_form p-3">
+            <div class="row m-0">
+              <div class="mb-3 col-12 col-md-6">
+                <label class="font-weight-bold mb-0 text-blue-primary">Nombre</label>
+                <br>
+                <input maxlength="60" (keyup)="formatFields()" formControlName="name" class="form-control-cb text-blue-primary w-100" [ngClass]="{'is-invalid':hasError('name','')}" type="text">
+                <small *ngIf="hasError('name','required')" class="invalid-feedback d-block">Ingresa tu nombre</small>
+                <small *ngIf="hasError('name','pattern')" class="invalid-feedback d-block">Tu nombre no puede contener números ni caracteres especiales</small>
+              </div>
+              <div class="mb-3 col-12 col-md-6">
+                <label class="font-weight-bold mb-0 text-blue-primary">Cédula</label>
+                <br>
+                <input maxlength="12" formControlName="document" class="form-control-cb text-blue-primary w-100" [ngClass]="{'is-invalid':hasError('document','')}" type="text">
+                <small *ngIf="hasError('document','required')" class="invalid-feedback d-block">Ingresa tu cédula</small>
+                <small *ngIf="hasError('document','minlength')" class="invalid-feedback d-block">El número de cédula no puede contaner menos de 5 caracteres</small>
+                <small *ngIf="hasError('document','maxlength')" class="invalid-feedback d-block">El número de cédula no puede contaner más de 12 caracteres</small>
+                <small *ngIf="hasError('document','pattern')" class="invalid-feedback d-block">El número de cédula solo debe contener números</small>
+              </div>
+            </div>
+            <div class="row m-0">
+              <div class="mb-3 col-12 col-md-6">
+                <label class="font-weight-bold mb-0 text-blue-primary">Correo Electrónico</label>
+                <br>
+                <input maxlength="60" (keyup)="formatFields()" formControlName="email" class="form-control-cb text-blue-primary w-100" [ngClass]="{'is-invalid':hasError('email','')}" type="text">
+                <small *ngIf="hasError('email','required')" class="invalid-feedback d-block">Ingresa tu correo electrónico</small>
+              </div>
+              <div class="mb-3 col-12 col-md-6">
+                <label class="font-weight-bold mb-0 text-blue-primary">Celular</label>
+                <br>
+                <input maxlength="10" formControlName="phoneNumber" class="form-control-cb text-blue-primary w-100" [ngClass]="{'is-invalid':hasError('phoneNumber','')}" type="text">
+                <small *ngIf="hasError('phoneNumber','required')" class="invalid-feedback d-block">Ingresa tu número de celular</small>
+                <small *ngIf="hasError('phoneNumber','pattern')" class="invalid-feedback d-block">El número debe empezar con 3 y solo contener números</small>
+                <small *ngIf="hasError('phoneNumber','maxlength') || hasError('phoneNumber','maxlength')" class="invalid-feedback d-block">El número de celular debe contener 10 caracteres</small>
+              </div>
+            </div>
+            <div class="row m-0">
+              <div class="col-12 col-md-6">
+                <label class="font-weight-bold mb-0 text-blue-primary">Mensaje</label>
+                <br>
+                <textarea formControlName="message" [ngClass]="{'is-invalid':hasError('message','')}" class="form-control-cb text-blue-primary w-100"></textarea>
+                <small *ngIf="hasError('message','required')" class="invalid-feedback d-block">Ingresa tu mensaje</small>
+              </div>
+              <div class="col-12 col-md-6">
+                <label class="font-weight-bold mb-0 text-blue-primary">Adjuntar Documentos</label>
+                <br>
+                <input #file type="file" class="form-control-cb mb-3 text-blue-primary w-100">
+                <input #file2 type="file" class="form-control-cb mb-3 text-blue-primary w-100">
+                <input #file3 type="file" class="form-control-cb mb-3 text-blue-primary w-100">
+                <small class="text-primary">Word, PDF, JPEG, JPG y PNG No puede persar más de 25MB</small>
+              </div>
+            </div>
+          </div>
+          <div class="pr-3 pl-3 pb-3">
+            <div class="row m-0 mt-3 mb-3 align-items-center pl-3">
+              <div class="col check_CB p-0" style="max-width: 20px;"><input #termsInput (change)="setTerms(terms)" #terms id="acceptCB" style="height: auto;" type="checkbox" value="true" class="ng-untouched ng-pristine ng-invalid"></div>
+              <div class="col text-blue-primary text-left"> 
+                He leído y acepto la <a href="https://cempresarial.co/SIGO-GE-PPD-DG-05PoliticaTratamientoDatosPersonalesCEV4202012SIGO.pdf" target="_blank"> Política de protección de datos personales </a>
+                <small *ngIf="hasError('terms','required')" class="invalid-feedback d-block">Debes aceptar los términos y condiciones</small>
+              </div>
+              
+              <div class="col-12 col-md-6">
+                <div *ngIf="error != ''" class="alert alert-danger">{{error}}</div>
+
+                <button class="btn-send" [ngClass]="{'disabled':isLoading}">
+                  <span *ngIf="!isLoading">¡Enviar!</span>
+                  <span *ngIf="isLoading">Enviando...</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </form>
+        </div>
+        <p class="mb-0 underline cursor-pointer" (click)="launchWriteUsBox(file, termsInput)">
+          Escribenos
+        </p>
+      </div>
+    </div>
+  </div>
+  <div class="col-12 col-md-4">
+    <hr class="d-block d-md-none" />
+    <div class="forced-center row m-0 align-items-center">
+      <div class="col p-0">
+        <div class="footer-social-networks">
+          <a
+            (click) = "gaEventFooterSocialMedia('Facebok')"
+            class="text-white"
+            href="https://www.facebook.com/BetPlayCO/"
+            target="_blank"
+          >
+            <div class="mr-3">
+              <i class="fab sn-icon icon fa-facebook-f"></i>
+            </div>
+          </a>
+          <a
+            (click) = "gaEventFooterSocialMedia('Twitter')"
+            class="text-white"
+            href="https://twitter.com/betplayco"
+            target="_blank"
+          >
+            <div class="mr-3">
+              <i class="fab sn-icon icon fa-twitter"></i>
+            </div>
+          </a>
+          <a
+            (click) = "gaEventFooterSocialMedia('Instagram')"
+            class="text-white"
+            href="https://www.instagram.com/betplayco/"
+            target="_blank"
+          >
+            <div class="mr-3">
+              <i class="fab sn-icon icon fa-instagram"></i>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-12 col-md-12 p-0 mt-3 mt-md-0 pl-0">
+    <hr class="d-block d-md-none" />
+    <div class="row m-0 align-items-center">
+      <div (click) = "gaEventFooterContact('Logo Corredor Empresarial')" class="responsive-centered col-12 col-md-4 p-0">
+        <a  target="_blank" href="https://www.cempresarial.co/"><img
+          class="logo_corredor"
+          style="max-width: 140px;"
+          src="../../../../../assets/img/footer/log_corredor.png"
+          alt="Logo Corredor Empresarial"
+        />
+      </a>
+      </div>
+      <div (click) = "gaEventFooterContact('SARLAFT')" class="responsive-centered col-12 col-md-4 p-2">
+        <a target="_blank" href="https://cempresarial.co/prevencion-laft.php">
+          <img
+          class="logo_corredor"
+          style="
+              max-width: 122px;
+              margin: 0 auto;
+          "
+          src="../../../../../assets/img/footer/footer_1.png"
+          alt="Logo Corredor Empresarial"
+        />
+      </a>
+    </div>
+      <div (click) = "gaEventFooterContact('Juega Bien')" class="responsive-centered col-12 col-md-4 p-2">
+        <a target="_blank" href="http://juegabien.co/">
+          <img
+          class="logo_corredor"
+          src="../../../../../assets/img/footer/logo-juega-bien.png"
+          alt="Logo Corredor Empresarial"
+        />
+      </a>
+    </div>
+    </div>
+  </div>
+</div>

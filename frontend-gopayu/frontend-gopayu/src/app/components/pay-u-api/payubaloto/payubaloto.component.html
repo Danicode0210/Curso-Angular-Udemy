@@ -1,0 +1,182 @@
+<div class="col mat-drawer-container">
+	<div class="col containerBaloto" *ngIf="declined == ''">
+		<h2 class="pagoEfectivo">Pago en efectivo</h2>
+		<img src="assets/img/payU/logo-baloto.png" alt="" class="logoBaloto" />
+		<img src="assets/img/payU/cambio.png" alt="" class="iconCambio" />
+		<h5 [routerLink]="['/payU']" class="cambiarMetodoDePago">
+			Cambiar método de pago
+		</h5>
+	</div>
+	<div class="borderGray col"></div>
+	<div class="col containerInformation">
+		<h6
+			style="
+				margin-top: 2em;
+				position: absolute;
+				margin-left: 1em;
+				border-bottom: 2px solid #afaeae;
+				height: 3em;
+				width: 69em;
+			"
+		>
+			1. Has click en el botón "Generar número de pago" para obtener el número
+			que te pedirá el cajero Vía Baloto
+		</h6>
+		<h6
+			style="
+				margin-top: 7em;
+				position: absolute;
+				margin-left: 1em;
+				border-bottom: 2px solid #afaeae;
+				height: 3em;
+				width: 69em;
+			"
+		>
+			2. Realiza el pago en efectivo presentando el número que generaste, en
+			cualquier punto Vía Baloto de Colombia
+		</h6>
+		<h6 style="margin-top: 12em; position: absolute; margin-left: 1em;">
+			3. Una vez recibido tu pago Vía Baloto,PayU enviará la información de pago
+			a nombre de Fantasía Colombia , que procederá a hacer la entrega del
+			producto /servicio que estas adquiriendo
+		</h6>
+		<label>
+			<a
+				target="_blank"
+				class="politicaDeSeguridad"
+				href="https://betplay.com.co/static/politica-de-privacidad"
+			>
+				Nueva politica de privacidad
+			</a>
+		</label>
+		<form [formGroup]="forma" (ngSubmit)="postPayuBaloto()" autocomplete="off"  id="payuForm">
+			<h1 class="politicaSeguridad">
+				Acepto los términos y condiciones y política de privacidad
+			</h1>
+			<input
+				type="checkbox"
+				name="checkbox"
+				class="checkbox"
+				formControlName="acceptsTerms"
+				required
+			/>
+			<div class="clas" style="margin-left: 16em; border-radius: 3px;">
+				<mat-error *ngIf=" forma.controls.acceptsTerms.hasError('required')">
+					{{msgError}}
+				</mat-error>
+			</div>
+			<button
+				class="generarNumeroDePago"
+				id="generarNumeroDePago"
+			>
+				Generar número de pago
+			</button>
+			<button
+      *ngIf="isLoading == true"
+        [ngClass]="{ 'disabled':isLoading }"
+        [disabled]="isLoading"
+				class="btn btn-orange pl-3 pr-3"
+				type="submit"
+				style="
+					color: #fff !important;
+					font-weight: bold;
+					border-radius: 3px !important;
+					margin-left: -14em;
+					margin-top: 0em;
+					width: 14em;
+				"
+			>
+				Cargando...
+				<i   *ngIf="isLoading" class="fas fa-circle-notch fa-spin"></i>
+			</button>
+			<iframe
+				[src]="dataBaloto"
+				*ngIf="dataBaloto"
+				frameborder="0"
+				style="
+					margin-top: 11em;
+					margin-left: -62em;
+					z-index: 3;
+					position: absolute;
+					width: 107em;
+					height: 65em;
+					border-radius: 17px;
+				"
+			></iframe>
+		</form>
+		<div class="resBaloto" *ngIf="declined == 'declinado'">
+			<div
+				class="containerResumenCompraRes"
+				style="
+					margin-left: -16em;
+					position: absolute;
+					background: white;
+					border-radius: 8px;
+					margin-top: 10em;
+				"
+			>
+				<div
+					style="
+						background: white;
+						border-radius: 11px;
+						height: 34em;
+						width: 71em;
+					"
+				>
+					<h3 class="transaccion">
+						Tu transacción se encuentra en estado {{declined}}
+					</h3>
+					<img
+						src="assets/img/payU/logo-rechazado.png"
+						alt="-logo-rechazado"
+						class="logoRechazado"
+					/>
+					<div class="lineTransaccion"></div>
+					<h3 class="fecha">Fecha:</h3>
+					<h3 class="diaFecha">
+						{{ fechaTransaccion | date:'dd/MM/yyyy hh:mm:ss a' }}
+					</h3>
+					<h3 class="referenciaDePago">
+						Referencia de Pago:{{referenciaDePago}}
+					</h3>
+					<img
+						src="assets/img/payU/recordar-datos.png"
+						alt="logo-exclamacion"
+						class="logo-exclamacion"
+					/>
+					<div class="containerMedioDePago">
+						<h3 class="textMedioDePago">Medio de pago</h3>
+						<div class="medioDePagoRes">
+							<h3 class="declined">{{declinedMedioDePago}}</h3>
+							<img
+								src="assets/img/payU/logo-baloto.png"
+								alt="logo-baloto"
+								style="width: 22em; margin-top: 6em; margin-left: 11em;"
+							/>
+						</div>
+						<div class="resumen">
+							<h2 class="resumenH2">
+								Resumen de la compra
+							</h2>
+							<div
+								class="lineResumen"
+								style="border-bottom: 2px solid #dadada; margin-top: 3.5em;"
+							></div>
+							<span class="referencia">Referencia:</span>
+							<span class="spanReferencia">{{dataSend}}</span>
+						</div>
+						<div
+							style="background: white; height: 10em; border-radius: 7px;"
+						></div>
+					</div>
+					<span class="descripcion">Descripción:</span>
+					<span class="deposito">Déposito Betplay</span>
+					<span class="totalPagar">
+						Total a pagar:............................................{{valor |
+						currency}}</span
+					>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,39 @@
+<div class="promo-carousel-content d-none d-md-block">
+    <!-- Controls -->
+    <div class="bet-carousel-control">
+        <i (click)="back()" class="fas fa-chevron-left"></i>
+    </div>
+    <div class="bet-carousel-control right">
+        <i (click)="next()" class="fas fa-chevron-right"></i>
+    </div>
+    <div [id]="'promo-carousel'+id" class="promo-carousel d-none d-md-flex">
+        <div *ngFor="let item of promotions" class="promo-carousel-item row m-0 justify-content-between">
+            <div *ngFor="let promo of item" class="col-12 col-md-3 promo-carousel-item-promotion" [ngStyle]="{'background-image':'url('+ promo.feature +')'}">
+                <div (click)="setData(promo._id, promo.title, promo)" class="bk-show-more">
+                    <button _ngcontent-qiw-c3="" class="btn btn-primary">VER MÁS</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="promo-carousel-content d-block d-md-none">
+    <!-- Controls -->
+    <div class="bet-carousel-control">
+        <i (click)="back(true)" class="fas fa-chevron-left"></i>
+    </div>
+    <div class="bet-carousel-control right">
+        <i (click)="next(true)" class="fas fa-chevron-right"></i>
+    </div>
+    <div [id]="'m-promo-carousel'+id" class="promo-carousel d-flex d-md-none">
+        <div class="d-flex" *ngFor="let item of promotions">
+            <div *ngFor="let promo of item" class="promo-carousel-item row m-0 justify-content-between">
+                <div class="col-12 col-md-12 promo-carousel-item-promotion" [ngStyle]="{'background-image':'url('+ promo.feature +')'}">
+                    <div (click)="setData(promo._id)" class="bk-show-more">
+                        <button _ngcontent-qiw-c3="" class="btn btn-primary">VER MÁS</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

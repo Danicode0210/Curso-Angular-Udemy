@@ -1,0 +1,86 @@
+<div class="faqs">
+  <div class="faq-searcher">
+    <p><b>Estamos aquí para ayudarte</b></p>
+    <input (keyup)="buscar($event)" type="text" placeholder="Buscar..." />
+  </div>
+  <div class="container">
+    <div class="row m-0 bg-white faq_white_content">
+      <div class="col-12 col-md-2 p-0">
+        <div class="faq-nav row m-0">
+          <div
+            [routerLink]="['/faq', 'apuestas']"
+            [routerLinkActive]="['active']"
+            class="p-3 col-4 col-md-12 text-left"
+          >
+            <span>APUESTAS</span>
+          </div>
+
+          <div
+            [routerLink]="['/faq', 'slots']"
+            [routerLinkActive]="['active']"
+            class="p-3 col-4 col-md-12 text-left"
+          >
+            <span>SLOTS</span>
+          </div>
+
+          <div
+            [routerLink]="['/faq', 'registro']"
+            [routerLinkActive]="['active']"
+            class="p-3 col-4 col-md-12 text-left"
+          >
+            <span>REGISTROS</span>
+          </div>
+
+          <div
+            [routerLink]="['/faq', 'deposito']"
+            [routerLinkActive]="['active']"
+            class="p-3 col-4 col-md-12 text-left"
+          >
+            <span>DEPÓSITOS</span>
+          </div>
+
+          <div
+            [routerLink]="['/faq', 'generales']"
+            [routerLinkActive]="['active']"
+            class="p-3 col-4 col-md-12 text-left"
+          >
+            <span>GENERALES</span>
+          </div>
+
+          <div
+            [routerLink]="['/faq', 'bonos']"
+            [routerLinkActive]="['active']"
+            class="p-3 col-4 col-md-12 text-left"
+          >
+            <span>BONOS</span>
+          </div>
+
+          <div
+            [routerLink]="['/faq', 'retiradas']"
+            [routerLinkActive]="['active']"
+            class="p-3 col-4 col-md-12 text-left"
+          >
+            <span>RETIRADAS</span>
+          </div>
+
+          <div
+            [routerLink]="['/faq', 'glosario']"
+            [routerLinkActive]="['active']"
+            class="p-3 col-4 col-md-12 text-left"
+          >
+            <span>GLOSARIO</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-md-10">
+        <div class="row m-0 align-items-center">
+          <div class="col-12 col-md-12 p-3">
+            <div class="contentFaqsScrolled">
+              <router-outlet></router-outlet>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

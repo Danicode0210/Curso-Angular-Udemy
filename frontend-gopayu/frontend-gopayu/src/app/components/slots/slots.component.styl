@@ -1,0 +1,125 @@
+.slots
+    background: #0f2b40
+    .contentCategory
+        padding: 2em 1em;
+        color: white
+        align-items: center
+        .content-all-slots-category
+            .contentSlot
+                display: inline-block;
+        .total-slots-content:hover
+            background:#ffffff7a;
+            cursor: pointer;
+        .row-slots
+            position: absolute;
+            z-index: 10;
+            top: 38%;
+            font-size: 2em;
+            border-radius: 100%;
+            padding: .5em .7em;
+            right: 0;
+            cursor: pointer;
+        .row-slots.left
+            left: 0;
+            right:unset;
+        .contentSlotCarousel
+            display: flex
+            overflow-x: hidden
+            overflow-y: hidden;
+            .fa-heart
+                z-index: 10;
+                font-size: 2em;
+                position: absolute;
+                right: .2em;
+                top: .2em;
+                color: #CCC;
+            .fa-heart:hover,
+            .fa-heart.active
+                cursor: pointer;
+                color: #dc3445;
+        .contentPoints
+            text-align: left 
+            .point:hover
+                background: #f87216
+            .point
+                width: 10px;
+                height: 10px;
+                border-radius: 100%;
+                border: 1px solid #FFF;
+                display inline-block
+                margin-right: .5em
+                cursor pointer
+        .categoryTitle
+            font-size: 2em;
+            line-height: .9;
+            text-align: left;
+            font-weight: 900;
+            background: #FFF;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            span 
+                border:1px solid #FFF;
+                border-radius: 30px;
+                padding: 0 1em;
+                font-size: 17px;
+                font-weight: normal;
+        .contentSlot:hover
+            .contentSlotDescription
+                height 100%
+                opacity 1
+        .contentSlot
+            min-width: 212px;
+            height: 212px;
+            background-size: cover
+            background-position-x: center
+            background-position-y: center
+            display: flex;
+            flex-shrink: 0
+            margin-right: 1em
+            position: relative;
+            transition: 1s;
+            background-color:#eee; 
+            border-radius: 10px;
+            .slotLabel
+                position: absolute
+                left 0
+                top 0
+                max-width: 100px
+            .contentSlotDescription
+                font-size: .8em;
+                position absolute
+                left: 0
+                bottom: 0
+                background: rgba(15, 43, 64, .5);
+                width: 100%;
+                color: #7F7F7F;
+                padding: 1em
+                transition: .4s
+                height 100%
+                opacity 0;
+                display: flex
+                justify-content: center;
+                align-items: center;
+                flex-direction: column;
+                p
+                    margin-bottom: 0;
+                    flex-grow: 0;
+                    color: #FFF;
+                    font-size: 1.5em;
+                    text-align: center;
+                button:focus 
+                    outline:0
+                button:hover
+                    background: #bf5912;
+                button
+                    font-size: 1.2em;
+                    background: #f87216;
+                    color: #fff;
+                    font-weight: bold;
+                    border-radius: 20px;
+                    padding: .25em 1em
+                    border: 0
+                    -webkit-box-shadow: -4px -2px 22px -10px rgba(0,0,0,0.55);
+                    -moz-box-shadow: -4px -2px 22px -10px rgba(0,0,0,0.55);
+                    box-shadow: -4px -2px 22px -10px rgba(0,0,0,0.55);
+                    cursor pointer

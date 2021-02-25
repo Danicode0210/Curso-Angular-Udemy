@@ -1,0 +1,276 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+    <script src="https://apipas.wanabet.es/NFRAPASWebMobile/Integration/ClientScript/" type="text/javascript"></script>
+    <script src="jquery/dist/jquery.js"></script>
+    <script src="jquery-json/dist/jquery.json.min.js"></script>
+    <script src="jquery-simple-websocket/jquery.simple.websocket.min.js"></script>
+    <link href="style.css" rel="stylesheet" />
+</head>
+<body>
+    <iframe id="iframeLoginPas"
+            name="iframeLoginPas"
+            src="https://apipas.wanabet.es/NFRAPASWebMobile/Account/FrameLogOn"
+            style="position: absolute; left: -1000px;"></iframe>
+    <script>
+        var userBC, tokenBC;
+        $(document).ready(function () {
+            $('#iframeLoginPas').on("load", function () {
+
+                window.MTIntegrationInit('iframePas', 'iframeLoginPas');
+                getLoginToken("BETCONSTRU");
+
+                window.NotifyLoginTokenCallBack = function (token, user) {
+                    userBC = user;
+                    tokenBC = token;
+                    webSocket = jQuery.simpleWebSocket({ url: 'wss://swarm-cloud.betconstruct.com/' });
+
+                    webSocket.listen(function (message) {
+                        if (message.code == 0 || message.code == 12) {
+                            if (message.code == 12) {
+                                contadorTimeout++;
+                            }
+
+                            if (LastCall) {
+                                parseaApuestas(message.data);
+                                $("#loader").remove();
+                            }
+
+
+                        } else {
+                            contadorTimeout--;
+                        }
+                        controlFlag = true;
+                    });
+
+                    
+
+                    bucleTimeoutado();
+
+                }
+
+            });
+        })
+
+
+        function parseaApuestas(data) {
+            if (data.bets.length) {
+
+                for (var i = 0; i < data.bets.length; i++) {
+                    var fechaApuesta = new Date(data.bets[i].date_time * 1000);
+                    var fechaStrApuesta = hazBonitaFecha(fechaApuesta, true);
+
+                    var status = "";
+                    if (data.bets[i].outcome == "0") {
+                        status = "<b style='color: #ccc;'>PENDIENTE</b>";
+                    } else {
+                        if (data.bets[i].outcome == "3") {
+                            status = "<b style='color: #e31c79;'>GANADA<br />" + data.bets[i].payout + " " + data.bets[i].currency + "</b>";
+                        } else if (data.bets[i].outcome == "1") {
+                            status = "<b style='color: #999;'>PERDIDA</b>";
+                        } else {
+                            status = "<b>NULA</b>";
+                        }
+                    }
+
+
+
+                    var str = getPopupText(data.bets[i]);
+
+                    if (data.bets[i].type == 1) {
+                        var dtStrEvento = hazBonitaFecha(new Date(data.bets[i].events[0].game_start_date * 1000), false);
+                        $("#apuestas").append("<tr><td>" + (data.bets[i].events[0].is_live == "1" ? "<span style='color: #e31c79;'>LIVE</span><br/>" : "") + fechaStrApuesta
+                            + "</td><td onmouseover='showPopup(\"" + str + "\");' onmouseout='hidePopup()'>" + data.bets[i].events[0].team1 + "-" + data.bets[i].events[0].team2 + "<br/><span style='font-size: .8em; color: #ccc;'>" + dtStrEvento + "</span></td>"
+                            + "<td><button onclick='hidePopup(); showPopup(\"" + str + "\")'>Ver Detalle</button></td></tr><tr><td>Evento: " + data.bets[i].events[0].event_name + "<br />id: " + data.bets[i].id + "</td><td>" + data.bets[i].events[0].coeficient + "<br /><b>" + data.bets[i].currency + " " + data.bets[i].amount + "</b></td>"
+                            + "<td>" + status + "</td></tr>");
+
+                    } else {
+                        $("#apuestas").append("<tr><td>" + fechaStrApuesta + "</td><td><button onclick='hidePopup(); showPopup(\"" + str + "\")'>Ver Detalle</button></td></tr><tr><td onmouseover='showPopup(\"" + str + "\");' onmouseout='hidePopup()'>COMBINADA</td>"
+                            + "<td>id: " + data.bets[i].id + "</td><td>" + data.bets[i].events[0].coeficient + "<br /><b>" + data.bets[i].currency + " " + data.bets[i].amount + "</b></td>"
+                            + "<td>" + status + "</td></tr>");
+                    }
+
+
+
+                }
+            } else {
+                $("#apuestas").html("No se realizaron apuestas en este período")
+            }
+
+        }
+
+        function showPopup(str) {
+            //alert(str);
+            $("#popup").remove();
+
+            $(document).on("mousemove", function (event) {
+                $("body").append("<DIV id='popup' style='padding: 5px; border: 1px solid #e31c79; width: 200px; background-color: #fff; color: #e31c79; position: absolute; top: " + event.pageY + "px; left: " + (event.pageX - 200) + "px'>" + str + "</div>")
+                $(document).off("mousemove");
+            });
+
+            $("#apuestas").on("click", function () {
+                $("#popup").remove();
+            })
+
+            
+
+        }
+
+        function hidePopup() {
+            $("#popup").remove();
+        }
+
+        function getPopupText(bet) {
+            var str = "";
+            var xtraClass = "";
+            for (i = 0; i < bet.events.length; i++) {
+                var dtEvento = new Date(bet.events[i].game_start_date * 1000);
+                var dtStrEvento = hazBonitaFecha(dtEvento, false);
+                if (bet.events[i].outcome == "0") {
+                    xtraClass = "watch";
+                } else {
+                    if (bet.events[i].outcome == "3") {
+                        xtraClass = "win";
+                    } else if (bet.events[i].outcome == "1") {
+                        xtraClass = "lost";
+                    }
+                }
+
+                
+
+                str += "<div class=\\\"result-bet-icon " + xtraClass + "\\\"></div>(" + bet.events[i].coeficient + ") " + bet.events[i].sport_name + " " + dtStrEvento + "<br/>" + bet.events[i].game_name + "<br/>";
+            }
+
+            return str;
+            
+        }
+
+
+
+        function hazBonitaFecha(dt, saltoLinea) {
+            return ("0" + dt.getDate()).slice(-2) + "/" + ("0" + (dt.getMonth() + 1)).slice(-2) + "/" + dt.getFullYear() + (saltoLinea ? "<br/>" : " ") + ("0" + dt.getHours()).slice(-2) + ":" + ("0" + dt.getMinutes()).slice(-2);
+        }
+
+
+        function hazLlamada(cmd) {
+            LastCall = false;
+            if (cmd.command == "bet_history") {
+                LastCall = true;
+
+            }
+            webSocket.send(cmd).done(function () {
+                
+            }).fail(function (e) {
+                console.log(e);
+            });
+        }
+
+        var contadorTimeout = 0;
+        var controlFlag = true;
+
+        var heAcabado = false;
+
+        function bucleTimeoutado() {
+            var sessionRequestCmd = { 'command': "request_session", 'params': { 'language': 'spa', 'site_id': '170', 'source': '1' } };
+
+            var loginRequestCmd = { 'command': "restore_login", 'params': { 'user_id': userBC, 'auth_token': tokenBC } };
+            
+
+
+            console.log("intento [" + contadorTimeout + "]");
+            if (controlFlag) {
+
+                console.log("controlFlag ha terminado, siguiente paso");
+
+                controlFlag = false;
+                //siguiente paso
+
+                if (contadorTimeout == 0) {
+                    console.log("PASO 1 Obteniendo sesión");
+                    hazLlamada(sessionRequestCmd);
+                } else if (contadorTimeout == 1) {
+                    console.log("PASO 2 Obteniendo login");
+                    hazLlamada(loginRequestCmd);
+                }/* else if (contadorTimeout == 2) {
+                    console.log("PASO 3 Obteniendo bethistory");
+                    hazLlamada(betHistoryCmd);
+                } */else if (contadorTimeout == 2) {
+                    heAcabado = true;
+                    rellenaSelectFecha();
+                }
+
+                contadorTimeout++;
+            } else {
+                console.log("no ha acabado la anterior");
+            }
+
+            if (!heAcabado) {
+                setTimeout(function () { bucleTimeoutado() }, 1000);
+            }
+        }
+
+        function rellenaSelectFecha() {
+            var dt = new Date();
+
+            dt.setMonth(dt.getMonth() - 1);
+
+            var dtNow = new Date();
+            console.log(dtNow);
+            var time = dt.getTime();
+            var date = dt.getDate() + "/" + (dt.getMonth() + 1) + "/" + dt.getFullYear();
+            
+            date = date + " - " + dtNow.getDate() + "/" + (dtNow.getMonth() + 1) + "/" + dtNow.getFullYear();
+
+
+            $("#fechas").prepend("<OPTION value='" + time + "'>" + date + "</OPTION>");
+            
+            teMiroYTeFecheo();
+
+        }
+
+        function teMiroYTeFecheo() {
+            $("#apuestas").html("");
+
+            var dt = new Date();
+            dt.setTime($("#fechas").val());
+
+            dt.setMonth(dt.getMonth() + 1);
+
+            var betHistoryCmd = { 'command': "bet_history", 'params': { 'where': { "from_date": $("#fechas").val() / 1000, "to_date": dt.getTime() / 1000 } } };
+
+            hazLlamada(betHistoryCmd);
+        }
+
+
+    </script>
+    <div id="container">
+        <table>
+            <tr>
+                <td style="width: 300px; vertical-align: top;">
+                    <h2>HISTORIA DE APUESTAS</h2>
+                    Fecha: <select id="fechas" onchange="teMiroYTeFecheo()"></select>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <h2>TODAS LAS APUESTAS</h2>
+                </td>
+            </tr>
+            <tr>
+                <td id="container_apuestas" style="vertical-align: top;">
+                    <table id="apuestas" style="text-align: center;"></table>
+                </td>
+            </tr>
+
+        </table>
+        <div>
+            <div id="loader" class="md-progress-circular md-theme"><div class="md-spinner-wrapper"><div class="md-inner"><div class="md-gap"></div><div class="md-left"><div class="md-half-circle"></div></div><div class="md-right"><div class="md-half-circle"></div></div></div></div></div>
+        </div>
+    </div>
+</body>
+
+
+
+</html>

@@ -1,0 +1,375 @@
+<div class="mat-drawer-container">
+	<div class="containerTarjetas" *ngIf="responseDataCard == dataCard">
+		<h2
+			class="medioDePago card-header"
+			style="
+				background: white;
+				width: 76em;
+				width: 33.9em;
+				font-size: 23px;
+				color: #002361;
+				margin-top: 10px;
+				position: absolute;
+			"
+		>
+			Tarjeta de crédito o débito
+		</h2>
+		<img src="assets/img/payU/cambio.png" alt="cambio" class="iconCambio" />
+		<h5 [routerLink]="['/payU']" class="cambiarMetodoDePago">
+			Cambiar método de pago
+		</h5>
+	</div>
+	<div>
+		<div class="containerResumenCompra">
+			<div
+				class="card-header"
+				style="background: white; border-radius: 5px; height: 4.9em;"
+			>
+				<h2 class="resumenCompra">Resumen de la compra</h2>
+				<span class="referencia">Referencia:</span>
+				<span class="spanReferencia" style="color: #002361;">{{dataSend}}</span>
+			</div>
+			<div
+				class="card-body"
+				style="background: white; height: 10em; border-radius: 7px;"
+			></div>
+		</div>
+		<span class="descripcion">Descripción:</span>
+		<span class="deposito">Déposito Betplay</span>
+		<span class="totalPagar">
+			Total a pagar:............................................{{valor |
+			currency}}</span
+		>
+	</div>
+	<form
+		class="formTarjetaSSSSSSSSS form-group"
+		autocomplete="off"
+		[formGroup]="forma"
+		(ngSubmit)=" onSubmit()"
+		method="POST"
+		id="payuForm"
+	>
+		<div class="imagesTarjetas">
+			<img
+				src="assets/img/payU/logo-visa.png"
+				alt="logo-visa"
+				class="logo-visa"
+				(click)="clicklogoVisa()"
+			/>
+
+			<img
+				src="assets/img/payU/logo-mastercard.png"
+				alt="logo-mastercard"
+				class="logo-mastercard"
+				(click)="clicklogoMastercard()"
+			/>
+		</div>
+		<label>Nombre en la tarjeta*</label>
+		<input
+			type="text"
+			disabled="disabled"
+			value="{{ fullNameCard }}"
+			style="background: #e8e8e8;"
+		/>
+		<label for="identificacion" class="documentoIdentificacion"
+			>Documento de identificación*</label
+		>
+		<select
+			disabled="disabled"
+			class="selectIdentificacion"
+			style="color: black;"
+		>
+			<option disabled="disabled" value=""
+				>{{userdata.identityDocument.type}}</option
+			>
+		</select>
+		<input
+			type="tel"
+			name="dniNumber"
+			required
+			class="numberIdenti"
+			value="{{userdata.identityDocument.number}}"
+			disabled="disabled"
+		/>
+		<label class="numeroDeTarjeta">Número de tarjeta*</label>
+		<input
+			type="email"
+			id="numeroDeTarjeta"
+			[maxlength]="19"
+			[minlength]="14"
+			required
+			class="inputNumeroTarjeta form-control"
+			[(ngModel)]="numberTarjeta"
+			formControlName="numeroDeTarjeta"
+			(keyup)="numberFormatCard('numeroDeTarjeta')"
+			[placeholder]="placeholder"
+		/>
+		<mat-error
+			style="margin-top: 11.5em; position: absolute; margin-left: -19.5em;"
+			>{{msgErrorLuhn}}</mat-error
+		>
+		<label class="codigoDeSeguridad">Código de seguridad*</label>
+		<input
+			type="tel"
+			required
+			class="inputCvv form-control"
+			[(ngModel)]="numberCodigoSeguridad"
+			[maxlength]="3"
+			[minlength]="3"
+			formControlName="codigoDeSeguridad"
+			(keyup)="numberFormatCardCvv('codigoDeSeguridad')"
+		/>
+		<a class="cvv">CVV/CVC</a>
+		<div class="codigoDeSeguridad">
+			<i
+				class="fas fa-times cursor-pointer light"
+				style="
+					position: absolute;
+					z-index: 4;
+					margin-left: 26em;
+					margin-top: 13px;
+					color: #52ad44;
+				"
+			></i>
+			<span class="cerrar">Cerrar</span>
+			<img
+				src="assets/img/payU/codigo-de-seguridad.png "
+				alt="modal"
+				class="imgModal"
+			/>
+		</div>
+		<img
+			class="imgCvv"
+			src="assets/img/payU/recordar-datos.png"
+			alt="recordar"
+		/>
+		<label class="fechaVencimiento">Fecha de vencimiento*</label>
+		<select
+			class="mesVencimiento"
+			required
+			formControlName="fechaDeVencimientoMes"
+			[(ngModel)]="fechaDeVencimientoMes"
+		>
+			<option value="">-Mes-</option>
+			<option id="optionMes" *ngFor="let mes of meses">{{mes}}</option>
+			<div class="invalid-feedback"></div>
+		</select>
+		<select
+			formControlName="fechaDeVencimientoAno"
+			[(ngModel)]="fechaDeVencimientoAno"
+			class="anoVencimiento"
+		>
+			<option value="">-Año-</option>
+			<option *ngFor="let ano of anos">{{ano}}</option>
+		</select>
+		<label class="validThru">VALID THRU</label>
+		<label class="fechaDeVencimientoLabel">{{fechaDeVencimientoMes}} / </label>
+		<label class="fechaDeVencimientoAno">{{fechaDeVencimientoAno}}</label>
+		<label class="labelCuotas">Cuotas*</label>
+		<select class="selectCuotas" formControlName="cuotas">
+			<option value=""></option>
+			<option *ngFor="let cuota of cuotas"> {{cuota}}</option>
+		</select>
+		<label class="telefonoCelular">Teléfono celular*</label>
+		<img
+			src="assets/img/payU/flagCo.png"
+			alt=""
+			style="
+				width: 19px;
+				position: absolute;
+				margin-top: 25.7em;
+				margin-left: -19em;
+				z-index: 3;
+			"
+		/>
+		<label
+			style="
+				margin-left: -15.7em;
+				margin-top: 23.5em;
+				position: absolute;
+				color: #868585;
+				font-weight: 600;
+				font-size: 13px;
+				z-index: 3;
+			"
+			>+57</label
+		>
+		<input
+			type="tel"
+			required
+			class="telefonoCelularInput"
+			value="                  {{userdata.mobile}}"
+			disabled="disabled"
+			style="background: #e8e8e8;"
+		/>
+		<label class="politicaPrivacidad">
+			<a
+				href="https://betplay.com.co/static/politica-de-privacidad"
+				class="nuevaPolitica"
+				>Nueva politica de privacidad</a
+			>
+		</label>
+		<input
+			type="checkbox"
+			class="checkboxTerminos"
+			formControlName="acceptsTerms"
+		/>
+		<h5 class="aceptoPolitica">
+			Acepto los términos y condiciones y política de privacidad
+		</h5>
+		<mat-error
+			style="margin-top: 34.6em; position: absolute; margin-left: -37.5em;"
+			>{{msgError}}</mat-error
+		>
+		<button class="buttonPagar" type="submit" (click)="postPayuCard()">
+			Pagar
+		</button>
+		<!-- variable deviceSessionId -->
+		<script
+			type="text/javascript"
+			src="https://maf.pagosonline.net/ws/fp/tags.js?id=${{deviceSessionId}}80200"
+		></script>
+		<noscript>
+			<iframe
+				style="
+					width: 100px;
+					height: 100px;
+					border: 0;
+					position: absolute;
+					top: -5000px;
+				"
+				src="https://maf.pagosonline.net/ws/fp/tags.js?id=${{deviceSessionId}}80200"
+			></iframe>
+		</noscript>
+	</form>
+	<div class="logoVisaTarjeta" id="logoVisa"></div>
+	<div class="logoMastercardTarjeta" id="logoMastercard"></div>
+	<!--   Se dejan aqui por que el innerHtml da null -->
+	<div id="logoAprobado" class="logoAprobado"></div>
+	<div id="logoRechazado" class="logoRechazado"></div>
+	<div class="containerTarjeta">
+		<div class="tarjeta">
+			<!--   <label for=""  class="numberCodigoSeguridad">{{numberCodigoSeguridad}}</label> -->
+			<!-- 	<label class="mesVencimientoLabel" id="mesVencimiento">00</label>
+			<label class="anoVencimientoLabel" id="anoVencimiento">00</label> -->
+			<label class="labelTarjeta" id="labelTarjeta">1234 5678 9100 0000</label>
+			<label class="fullNameTarjeta">{{fullNameCard }}</label>
+			<img src="assets/img/payU/chip-tarjeta.JPG" alt="" class="chipTarjeta" />
+		</div>
+		<div class="respaldoTarjeta" *ngIf="false">
+			<div class="cinta"></div>
+			<img class="imgcinta" src="assets/img/payU/cintaTarjetaDeCredito.png" />
+			<div class="campoCvv"></div>
+		</div>
+	</div>
+	<div
+		class="containerRespuesta card"
+		id="containerRespuesta"
+		*ngIf="responseDataCard !== dataCard"
+	>
+		<div
+			class="containerResumenCompraRes"
+			style="
+				margin-left: 69em;
+				position: absolute;
+				background: white;
+				border-radius: 8px;
+			"
+		>
+			<div
+				style="
+					background: white;
+					border-radius: 11px;
+					height: 5em;
+					width: 32em;
+				"
+			>
+				<h2 class="resumenCompra" style="margin-left: 24px; margin-top: 17px;">
+					Resumen de la compra
+				</h2>
+				<span class="referencia" style="margin-left: 16px;">Referencia:</span>
+				<span class="spanReferencia" style="color: #002361; margin-left: 7em;"
+					>{{dataSend}}</span
+				>
+			</div>
+			<div style="background: white; height: 10em; border-radius: 7px;"></div>
+		</div>
+		<span class="descripcion" style="margin-top: 8.6em; margin-left: 65em;"
+			>Descripción:</span
+		>
+		<span
+			class="deposito"
+			style="margin-left: 77em; margin-top: 9.3em !important; width: 10em;"
+			>Déposito Betplay</span
+		>
+		<span
+			class="totalPagar"
+			style="margin-top: 10.8em; margin-left: 65em; width: 27em;"
+		>
+			Total a pagar:............................................{{valor |
+			currency}}</span
+		>
+		<h3 class="transaccionAprobada">
+			Tu transacción se encuentra en estado {{responseDataCard}}
+		</h3>
+		<div class="lineTransaccion"></div>
+		<h3 class="fecha">Fecha:</h3>
+		<h3 class="diaFecha">
+			{{ fechaTransaccion | date:'dd/MM/yyyy hh:mm:ss a' }}
+		</h3>
+		<h3 class="referenciaDePago">Referencia de Pago:{{dataCard}}</h3>
+		<img
+			src="assets/img/payU/recordar-datos.png"
+			alt="logo-exclamacion"
+			class="logoDataCard"
+		/>
+		<div class="containerMedioDePago">
+			<div class="medioDePagoRes">
+				<h3 class="textMedioDePago">Medio de pago</h3>
+				<h3 class="resDataCard">{{resDataCard}}</h3>
+				<h6 class="numberCardResponse">{{numberTarjeta}}</h6>
+				<div class="alert alert-warning">
+					<img
+						src="assets/img/payU/signoAdmiracionCard.png"
+						alt="Signo-Admiracion"
+						style="width: 84px;"
+					/>
+					<p
+						style="
+							margin-left: 8em;
+							width: 39em;
+							position: absolute;
+							margin-top: -6em;
+							font-size: 11px;
+						"
+					>
+						· Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam
+						nonummy · Lorem ipsum dolor sit amet, consectetuer adipiscing elit,
+						sed diam nonummy · Lorem ipsum dolor sit amet, consectetuer
+						adipiscing elit, sed diam nonummy
+					</p>
+					<div id="logoVisaRes"></div>
+					<div id="logoMastercardRes"></div>
+					<div
+						style="
+							margin-left: 57.1em;
+							border-bottom: 2px solid rgba(0, 0, 0, 0.125);
+							margin-top: -30em;
+							width: 32em;
+						"
+					></div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- <pre>
+  Estado del formulario {{forma.valid}}
+  <br>
+  status {{forma.status}}
+  <pre>
+    {{forma.value | json}}
+  </pre>
+</pre>
+ -->

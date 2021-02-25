@@ -1,0 +1,17 @@
+<div class="row m-0 navBlog mb-3">
+    <div (click) = "gaEventCommunity('Inicio')" [routerLink]="['/blog']" routerLinkActive="active" class="col-12 col-md-2">
+        Inicio
+    </div>
+    <div (click) = "gaEventCommunity('Noticias')" [routerLink]="['/blog','noticias']" routerLinkActive="active" class="col-12 col-md-2">
+        Noticias
+    </div>
+    <div (click) = "gaEventCommunity('Apuestas Deportivas')" [routerLink]="['/blog','apuestas-deportivas']" routerLinkActive="active" class="col-12 col-md-4">
+        Apuestas deportivas
+    </div>
+    <div (click) = "gaEventCommunity('Casino')" [routerLink]="['/blog','casino']" [routerLinkActive]="['activeRoute']" class="col-12 col-md-2">
+        Casino
+    </div>
+    <div (click) = "gaEventCommunity('Tu Seccion')" [routerLink]="['/blog','tu-seccion']" [routerLinkActive]="activeRoute" class="col-12 col-md-2">
+        Tu sección
+    </div>
+</div>

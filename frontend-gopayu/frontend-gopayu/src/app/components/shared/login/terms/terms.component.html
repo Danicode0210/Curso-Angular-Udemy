@@ -1,0 +1,12 @@
+<h4>Hemos actualizado nuestros términos y condiciones</h4>
+<hr>
+<div mat-dialog-content>
+    <!-- <embed [src]='url' width="100%" height="600px" type="application/pdf"> -->
+      <object style="min-height: 1000px; max-height: 300px;" [data]="url" type="application/pdf" width="100%" height="100%">
+        <p>Puedes ver los nuevos términos y condiciones <a [href]="url" target="_blank">¡Aquí!</a></p>
+      </object>
+</div>
+<div mat-dialog-actions>
+  <button mat-button color="warn" [mat-dialog-close]="false">Cancelar</button>
+  <button mat-raised-button color="primary" [mat-dialog-close]="true" cdkFocusInitial>Aceptar</button>
+</div>

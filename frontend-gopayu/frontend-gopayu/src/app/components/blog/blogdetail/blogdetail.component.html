@@ -1,0 +1,76 @@
+<app-loading *ngIf="isLoading"></app-loading>
+<div class="promotions">
+  <div class="blog container" [style.background-image]="bkRoute">
+  <app-navblog></app-navblog>
+  <div class="row m-0">
+    <div class="col-12 col-md-4">
+        <div *ngIf="post">
+            <div (click)="getDetailById(related._id)" [routerLink]="'/blog/'+generateSlug(related.title)+'/'+related._id" class="relatedPost pointer" *ngFor="let related of post.relatedPost">
+              <img [src]="related.image" [alt]="related.title">
+              <h2>{{related.title}}</h2>
+              <p class="dateRelatedPost">{{months[(related.date | date:'MMMM')]}} {{related.date | date:'dd, yyyy'}}</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-12 col-md-8 pr-0">
+      <div class="postContent" *ngIf="post">
+        <div class="contentDetailBlogImage">
+          <img class="imgBlog" [src]="post.image">
+          <p class="text-image-description-post">
+            {{post.imageDescription}}
+          </p>
+        </div>
+        <h1>{{post.title}}</h1>
+        <div class="postContentHTML" [innerHTML]="html">
+
+        </div>
+        <div class="row m-0 post-header align-items-center" >
+          <div class="col-12 col-md-6">
+              <div class="col-12 col-md-6 text-right text-gray">
+                  <i *ngIf="!isLiked" class="far fa-heart mr-1 pointer" (click)="setLike()" matTooltip="Me gusta"></i>
+                  <i *ngIf="isLiked" class="fas fa-heart mr-1 pointer text-danger" (click)="setDislike(isLiked)" matTooltip="Ya no me gusta"></i> <span>{{post.likes.length}}</span>
+                  <span class="ml-3 mr-3">|</span>
+                  <i class="far fa-comment mr-1"></i> <span>{{post.comments.length}}</span>
+                  <span class="ml-3 mr-3">|</span>
+                  <i class="fas fa-share pointer" (click)="openShareDialog(post)" matTooltip="Compartir"></i>
+              </div>
+          </div>
+          <div class="col-12 col-md-6">
+              <p class="post-date-content text-right">{{months[(post.date | date:'MMMM')]}} {{post.date | date:'dd, yyyy'}}</p>
+              <div class="row m-0 align-items-center">
+                  <div class="col-8 text-right pr-0 m-0 contentLike" *ngFor="let user of post.user">
+                    <p class="nameContentPost">
+                      {{user.username}}
+                    </p>
+                  </div>
+                  <div class="col-4">
+                    <div class="imageContent">
+
+                    </div>
+                  </div>
+              </div>
+          </div>
+        </div>
+        <div *ngIf="profile" class="p-3 text-left">
+          <p><b>Comentarios</b></p>
+          <p class="mb-0">{{profile.firstName}} {{profile.lastName}}:</p>
+          <mat-form-field class="w-100">
+            <textarea [(ngModel)]="comment" matInput placeholder="Dejar comentario..."></textarea>
+          </mat-form-field>
+          <button (click)="setComment()" color="primary" [disabled]="(comment == '')" mat-raised-button>Enviar</button>
+        </div>
+        <hr>
+        <div *ngIf="post.comments.length > 0">
+            <div class="text-left p-3" *ngFor="let comment of post.comments">
+                <p class="float-right text-gray">{{comment.date | date:'dd-MM-yyyy'}}</p>
+                <p class="mb-0"><b>{{comment.name}}:</b></p>
+                <p class="mb-0">{{comment.comment}}</p>
+                <hr>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</div>

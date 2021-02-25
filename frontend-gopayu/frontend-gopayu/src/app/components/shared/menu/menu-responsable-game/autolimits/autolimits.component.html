@@ -1,0 +1,71 @@
+<form [formGroup]="formData" novalidate autocomplete="off" (ngSubmit)="setAutoLimits()">
+    <div class="row m-0 p-3 mt-3">
+        <div class="col-12 col-md-4">
+            <mat-form-field class="w-100">
+              <input matInput formControlName="monthLimit" (keyup)="numberFormat('monthLimit')" type="text" placeholder="Límite mensual">
+              <mat-error *ngIf="formData.controls.monthLimit.hasError('required')">
+                  {{texts$.playerValidationError.EmptyMonthLimit}}
+              </mat-error>
+              <mat-error *ngIf="formData.controls.monthLimit.hasError('minlength')">
+                  {{texts$.playerValidationError.LimitTooLow}}
+              </mat-error>
+            </mat-form-field>
+        </div>
+        <div class="col-12 col-md-4">
+            <mat-form-field class="w-100">
+              <input matInput formControlName="weekLimit" (keyup)="numberFormat('weekLimit')" type="text" placeholder="Límite semanal">
+              <mat-error *ngIf="formData.controls.weekLimit.hasError('required')">
+                  {{texts$.playerValidationError.EmptyWeekLimit}}
+              </mat-error>
+              <mat-error *ngIf="formData.controls.weekLimit.hasError('minlength')">
+                  {{texts$.playerValidationError.LimitTooLow}}
+              </mat-error>
+            </mat-form-field>
+        </div>
+        <div class="col-12 col-md-4">
+            <mat-form-field class="w-100">
+              <input matInput formControlName="daylyLimit" (keyup)="numberFormat('daylyLimit')" type="text" placeholder="Límite diario">
+              <mat-error *ngIf="formData.controls.daylyLimit.hasError('required')">
+                  {{texts$.playerValidationError.EmptyDaylyLimit}}
+              </mat-error>
+              <mat-error *ngIf="formData.controls.daylyLimit.hasError('minlength')">
+                  {{texts$.playerValidationError.LimitTooLow}}
+              </mat-error>
+            </mat-form-field>
+        </div>
+    </div>
+    <div class="pr-3 pl-3">
+        <div class="alert alert-danger" *ngIf="formError != ''">
+          {{ (localTexts$.playerValidationError[formError]) ? localTexts$.playerValidationError[formError] : formError }}
+        </div>
+        <div class="alert alert-success" *ngIf="formSuccess != ''">
+            {{ (texts$.GeneralMessages[formSuccess]) ? texts$.GeneralMessages[formSuccess] : formSuccess }}
+        </div>
+        <div class="alert alert-success alert-dismissible fade show" *ngIf = "acceptedLimitsMessage != ''" role="alert">
+            {{acceptedLimitsMessage}}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+        <div class="alert alert-warning" *ngIf="formWarning != ''">
+            {{ formWarning }}
+        </div>
+    </div>
+    <div class="text-right">
+        <div class="row m-0">
+            <div class="col-12 col-md-6">
+            </div>
+            <div class="col-12 col-md-6 p-0">
+                <div class="row m-0 p-0 justify-content-space-between">
+                    <div class="col-12 col-md-6 mt-3 pr-md-3 p-0">
+                        <button class="w-100 btn btn-secondary" (click)="goBack()" type="button" >Cancelar</button>
+                    </div>
+                    <div class="col-12 col-md-6 mt-3 pl-md-3 p-0">
+                        <button *ngIf="!isLoading" class="w-100 btn btn-orange" >Guardar</button>
+                        <button *ngIf="isLoading" class="btn btn-orange pl-3 pr-3" [ngClass]="{ 'disabled':isLoading }" [disabled]="isLoading" type="submit"> Cargando... <i *ngIf="isLoading" class="fas fa-circle-notch fa-spin"></i> </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  </form>

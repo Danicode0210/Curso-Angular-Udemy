@@ -1,0 +1,223 @@
+<app-loadingspinner *ngIf="isLoading"></app-loadingspinner>
+<div class="slots">
+  <div class="slot-content-lf">
+    <div class="row m-0">
+      <div class="col-12 col-md p-0">
+        <!-- Banner content  -->
+        <app-carousel *ngIf="banner" [images]="banner"></app-carousel>
+
+        <div
+          *ngIf="showFavorites && favoriteSlots.length > 0"
+          class="container"
+        >
+          <!-- Favorites content -->
+          <div>
+            <div class="row contentCategory">
+              <div class="col-md-12 col-12">
+                <div class="categoryTitle mb-3">
+                  <p class="d-md-inline d-block">
+                    FAVORITOS
+                  </p>
+                  <span class="total-slots-content">
+                    {{ favoriteSlots.length }} Juegos
+                  </span>
+                </div>
+              </div>
+
+              <div
+                class="col-md-12 col-12 text-center text-md-left content-all-slots-category"
+              >
+                <!-- Slot content -->
+                <div
+                  class="contentSlot bc-carousel-item"
+                  [attr.id]="'slot' + slot._id"
+                  [ngStyle]="{
+                    'background-image':
+                      'url(' +
+                      slot.feature.replace(
+                        '190.145.216.50:8080',
+                        '192.168.0.82:9000'
+                      ) +
+                      ')'
+                  }"
+                  *ngFor="let slot of favoriteSlots"
+                >
+                  <div class="contentSlotDescription">
+                    <p>
+                      <b>{{ slot.buttonText }}</b>
+                    </p>
+                    <a
+                      (click)="no_js_login($event, category.title, slot.buttonText)"
+                      [attr.href]="
+                        session
+                          ? '/slots/launchGame?gameCode=' +
+                            slot.gameCode +
+                            '&flashClient=' +
+                            slot.flashClient +
+                            '&additionalParam=' +
+                            slot.additionalParam +
+                            '&integrationChannelCode=' +
+                            slot.integrationChannelCode
+                          : ''
+                      "
+                    >
+                      <button class="btnSlot">¡Juega Ahora!</button>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div
+          style="margin-top: 4em;"
+          class="container"
+          *ngIf="categories && !categories.data && !showFavorites"
+        >
+          <!-- Slots content -->
+          <div
+            *ngFor="let category of categories"
+            [attr.id]="'cat' + category._id"
+          >
+            <div
+              *ngIf="navCategoryId == '' || navCategoryId == category._id"
+              class="row contentCategory"
+            >
+              <div class="col-md-12 col-12">
+                <div class="categoryTitle mb-3">
+                  <p class="d-md-inline d-block mb-0">
+                    {{ category.title }}
+                  </p>
+                  <span
+                    (click)="getSlotsByCategoryId(category._id)"
+                    class="total-slots-content"
+                  >
+                    {{ category.total }} Juegos
+                  </span>
+                </div>
+              </div>
+
+              <div
+                *ngIf="currentCategory != category._id && navCategoryId == ''"
+                class="col-md-12 col-12 text-center text-md-left"
+              >
+                <div
+                  class="contentSlotCarousel"
+                  (scroll)="carouselScrolled('cat-scroll-' + category._id)"
+                  [id]="'cat-scroll-' + category._id"
+                >
+                  <i
+                    (click)="next('cat' + category._id, category.title)"
+                    class="fas fa-chevron-right row-slots d-none d-md-block"
+                  ></i>
+                  <i
+                    (click)="back('cat' + category._id, category.title)"
+                    class="fas fa-chevron-left row-slots d-none d-md-block left"
+                  ></i>
+                  <!-- Slot content -->
+                  <div
+                    class="contentSlot bc-carousel-item"
+                    [attr.id]="'slot' + slot._id"
+                    [ngStyle]="{
+                      'background-image':
+                        'url(' +
+                        slot.feature.replace(
+                          '190.145.216.50:8080',
+                          '192.168.0.82:9000'
+                        ) +
+                        ')'
+                    }"
+                    *ngFor="let slot of category.slots"
+                  >
+                    <!-- <i *ngIf="session" (click)="addFavoriteSlot(slot)" [ngClass]="{ 'active': (favoriteSlotsFake[slot._id]) }" [matTooltip]="(favoriteSlots[slot._id]) ? 'Eliminar de favoritos' : 'Agregar en favoritos'" class="fas fa-heart"></!-->
+                    
+                    <img
+                      class="slotLabel"
+                      [src]="imgPath + category.label"
+                      *ngIf="category.label != '-'"
+                    />
+                    <div class="contentSlotDescription">
+                      <p>
+                        <b>{{ slot.buttonText }}</b>
+                      </p>
+                      <a
+                        (click)="no_js_login($event, category.title, slot.buttonText)"
+                        [attr.href]="
+                          session
+                            ? '/slots/launchGame?gameCode=' +
+                              slot.gameCode +
+                              '&flashClient=' +
+                              slot.flashClient +
+                              '&additionalParam=' +
+                              slot.additionalParam +
+                              '&integrationChannelCode=' +
+                              slot.integrationChannelCode
+                            : ''
+                        "
+                      >
+                        <button (click)="internalPromotion(slot)" class="btnSlot">¡Juega Ahora!</button>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div
+                *ngIf="
+                  currentCategory == category._id ||
+                  (navCategoryId != category._id && navCategoryId != '')
+                "
+                class="col-md-12 col-12 text-center text-md-left content-all-slots-category"
+              >
+                <!-- Slot content -->
+                <div
+                  class="contentSlot bc-carousel-item"
+                  [attr.id]="'slot' + slot._id"
+                  [ngStyle]="{
+                    'background-image':
+                      'url(' +
+                      slot.feature.replace(
+                        '190.145.216.50:8080',
+                        '192.168.0.82:9000'
+                      ) +
+                      ')'
+                  }"
+                  *ngFor="let slot of slots"
+                >
+                  <img
+                    class="slotLabel"
+                    [src]="imgPath + category.label"
+                    *ngIf="category.label != '-'"
+                  />
+                  <div class="contentSlotDescription">
+                    <p>
+                      <b>{{ slot.buttonText }}</b>
+                    </p>
+                    <a
+                      (click)="no_js_login($event, category.title, slot.buttonText)"
+                      [attr.href]="
+                        session
+                          ? '/slots/launchGame?gameCode=' +
+                            slot.gameCode +
+                            '&flashClient=' +
+                            slot.flashClient +
+                            '&additionalParam=' +
+                            slot.additionalParam +
+                            '&integrationChannelCode=' +
+                            slot.integrationChannelCode
+                          : ''
+                      "
+                    >
+                      <button class="btnSlot">¡Juega Ahora!</button>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

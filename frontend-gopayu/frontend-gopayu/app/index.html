@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Betplay - Kambi</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=IE8" />
+        <meta name="msapplication-tap-highlight" content="no" />
+        <link rel="stylesheet" type="text/css" href="./styles.css">
+        <script type="text/javascript" src="./kambi-mobile.js"></script>
+    </head>
+    <body>
+        <div id="KambiBC"></div>
+
+        <script>
+            let oldXHROpen = window.XMLHttpRequest.prototype.open;
+            window.XMLHttpRequest.prototype.open = function(method, url, async, user, password) {
+            // do something with the method, url and etc.
+            this.addEventListener('load', function() {
+              // do something with the response text
+              // console.log('load: ' + url);
+            });
+      
+              if(url.includes("history.json") && !window.location.href.toString().includes("#bethistory"))
+              {
+                console.log('load: ' + url);
+                return false;
+              }
+              else 
+              {
+                return oldXHROpen.apply(this, arguments);
+              }         
+            }
+          </script>
+    </body>
+</html>

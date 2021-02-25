@@ -1,0 +1,75 @@
+def remote = [:]
+remote.name = "REMOTE_HOST"
+remote.host = REMOTE_HOST
+remote.allowAnyHosts = true
+remote.user = USER_HOST
+remote.password = PASSWORD_HOST
+def remoteFolder = REMOTE_FOLDER
+def projectName = PROJECT_NAME // 
+def remoteRootFolder = REMOTE_ROOT_FOLDER
+
+pipeline {              // Define pipeline
+    agent any           // instructs Jenkins to allocate an executor (on any available agent/node in the Jenkins environment) and workspace for the entire Pipeline.
+    environment {
+        CHROME_BIN = '/usr/bin/chromium-browser'
+    }
+    stages {            // Steps that jekins have to follow
+        
+        stage('preparing') {
+            steps {
+                script {
+                    try{
+                        sh "npm --version"
+                    }
+                    catch(Exception e){
+                        echo 'Installing npm'
+                        sh "apk add npm"
+                    }
+                    try{
+                        sh "ng --version"
+                    }
+                    catch(Exception e){
+                        echo 'Installing angular'
+                        sh 'npm install -g @angular/cli'
+                    }
+                    try{
+                        echo 'chromium --version'
+                    }
+                    catch(Exception e){
+                        echo 'Installing chromium'
+                        sh "apk add chromium"
+                    }
+                }
+            }
+        }
+
+        stage('build') {
+            steps {
+                echo "Building..."
+                sh "npm install"
+                sh "ng build --prod"
+            }
+        }
+
+        // stage('test') {
+        //     steps {
+        //         sh "ng test --watch=false"
+        //     }
+        // }
+        
+        stage('deploy') {
+            steps {
+                sshCommand remote: remote, command: "rm -R -f ${REMOTE_FOLDER}"
+                sshPut remote: remote, from: "dist/${PROJECT_NAME}", into: "/${REMOTE_ROOT_FOLDER}"
+                sshCommand remote: remote, command: "mv /${REMOTE_ROOT_FOLDER}/${PROJECT_NAME} ${REMOTE_FOLDER}"
+                // Copy SEO and services files
+                sshPut remote: remote, from: "i18n", into: "${REMOTE_FOLDER}"
+                sshPut remote: remote, from: "app", into: "${REMOTE_FOLDER}"
+                sshPut remote: remote, from: "services", into: "${REMOTE_FOLDER}"
+                sshPut remote: remote, from: "SEO", into: "${REMOTE_FOLDER}"
+                sshCommand remote: remote, command: "mv ${REMOTE_FOLDER}/SEO/* ${REMOTE_FOLDER}"
+                sshCommand remote: remote, command: "rm -R -f ${REMOTE_FOLDER}/SEO"
+            }
+        }
+    }
+}

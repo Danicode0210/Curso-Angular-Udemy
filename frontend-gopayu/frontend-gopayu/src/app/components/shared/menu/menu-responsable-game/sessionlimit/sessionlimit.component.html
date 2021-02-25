@@ -1,0 +1,37 @@
+<div class="p-3 text-center">
+  <p class="text-blue">Tu tiempo límite de sesión actual:</p>
+  <mat-form-field>
+      <mat-label>Selecciona una opción</mat-label>
+      <mat-select [(ngModel)]="duration">
+        <mat-option *ngFor="let item of sessionLimits" [value]="item.value">
+            {{item.text}}
+        </mat-option>
+      </mat-select>
+  </mat-form-field>
+  <p class="text-blue font-weight-bold">Si deseas modificar tus límites, por favor selecione un nuevo valor y pulse Guardar.</p>
+  <div class="pr-3 pl-3">
+      <div class="alert alert-danger" *ngIf="formError != ''">
+        {{texts$.playerValidationError[formError]}}
+      </div>
+      <div class="alert alert-success" *ngIf="formSuccess != ''">
+          {{texts$.GeneralMessages[formSuccess]}}
+      </div>
+  </div>
+  <div class="text-right">
+      <div class="row m-0">
+          <div class="col-12 col-md-4">
+          </div>
+          <div class="col-12 col-md-8 p-0">
+              <div class="row m-0 p-0 justify-content-space-between">
+                    <div class="col-12 col-md-6 mt-3 pr-md-3 p-0">
+                        <button class="w-100 btn btn-secondary" (click)="goBack()" type="button">Cancelar</button>
+                    </div>
+                    <div class="col-12 col-md-6 mt-3 pl-md-3 p-0">
+                        <button *ngIf="!isLoading" class="w-100 btn btn-orange" (click)="setSessionLimit()">Guardar</button>
+                        <button *ngIf="isLoading" class="btn btn-orange pl-3 pr-3" [ngClass]="{ 'disabled':isLoading }" [disabled]="isLoading" type="submit"> Cargando... <i *ngIf="isLoading" class="fas fa-circle-notch fa-spin"></i> </button>
+                    </div>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>

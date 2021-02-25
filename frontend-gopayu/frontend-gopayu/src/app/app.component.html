@@ -1,0 +1,30 @@
+<app-smartbanner (close)="smartBannerOpen = false;" *ngIf="isAndroid && smartBannerOpen"></app-smartbanner>
+
+<app-header [bonusNotifications]="bonusNotifications"></app-header>
+
+<mat-drawer-container class="main_container">
+
+    <mat-drawer mode="push" (closedStart)="onCloseMenu()" [opened]="isOpen">
+        <div *ngIf="isAuth" class="text-left p-3">
+            <app-profile [bonusNotifications]="bonusNotifications"></app-profile>
+        </div>
+        <mat-divider class="white_divider"></mat-divider>
+        <app-navbar></app-navbar>
+
+    </mat-drawer>
+    <mat-drawer-content>
+
+        <router-outlet></router-outlet>
+        <div id="KambiBC" [ngClass]="{'d-none':!currentRoute}"></div>
+
+        <app-footer></app-footer>
+
+    </mat-drawer-content>
+
+</mat-drawer-container>
+
+<app-callback></app-callback>
+<app-loading *ngIf="isLoading"></app-loading>
+
+
+<app-app-download></app-app-download>

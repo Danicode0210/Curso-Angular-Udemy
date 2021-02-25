@@ -1,0 +1,33 @@
+<div class="contentTable">
+    <div class="row m-0">
+        <div class="col-4">
+            <span class="text-blue">Fecha</span>
+        </div>
+
+        <div class="col-4">
+            <span class="text-blue">Documento</span>
+        </div>
+
+        <div class="col-4">
+
+        </div>
+    </div>
+    <div class="row m-0" *ngFor="let item of terms">
+        <div class="col-4">
+            <span>{{item.fileName}}</span>
+        </div>
+
+        <div class="col-4">
+            <span>{{item.acceptanceDate | date:'dd-MM-yyyy hh:mm:ss a'}}</span>
+        </div>
+
+        <div class="col-4">
+            <a [attr.href]="currentTerms+item.fileName" target="_blank"><i (click)='gaEventGetTerms(item.fileName)'>Descargar</i></a>
+        </div>
+    </div>
+    <div class="row m-0" *ngIf="terms.length == 0">
+        <div class="col-12 text-center">
+            <span class="text-blue">No se encontraron resultados</span>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,18 @@
+<div class="static p-3">
+    <app-bet-roules *ngIf="currentRoute == 'reglas-apuestas'"></app-bet-roules>
+    <app-slot-roules *ngIf="currentRoute == 'slots-roules'"></app-slot-roules>
+    <app-helps *ngIf="currentRoute == 'ayuda'"></app-helps>
+    <app-res-game *ngIf="currentRoute == 'juego-responsable'"></app-res-game>
+    <app-cookies *ngIf="currentRoute == 'politica-de-cookies'"></app-cookies>
+    <app-privacy *ngIf="currentRoute == 'politica-de-privacidad'"></app-privacy>
+    <app-cookies *ngIf="currentRoute == 'politica-cookies'"></app-cookies>
+    <app-privacy *ngIf="currentRoute == 'politica-privacidad'"></app-privacy>
+    <app-legal-advise *ngIf="currentRoute == 'aviso-legal'"></app-legal-advise>
+    <app-about *ngIf="currentRoute == 'about'"></app-about>
+
+    <div *ngIf="pdfs[currentRoute] && loadedPDF" class="All-Bets-history container">
+        <object style="min-height: 1000px;" [data]="saveUrl(pdfs[currentRoute])" type="application/pdf" width="100%" height="100%">
+            <p>Consulta el archivo dando clic <a target="_blank" [attr.href]="pdfs[currentRoute]">en este link</a></p>
+        </object>
+    </div>
+</div>

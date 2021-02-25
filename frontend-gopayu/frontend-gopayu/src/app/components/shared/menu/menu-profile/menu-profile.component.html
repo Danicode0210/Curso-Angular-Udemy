@@ -1,0 +1,67 @@
+<h5 class="text-right pr-3 pt-3 mb-0"><i class="fas fa-times cursor-pointer" (click)="closeModal()"></i></h5>
+<app-loadingspinner *ngIf="isLoading"></app-loadingspinner>
+<div class="p-3 contentProfile">
+    <app-menu-update-information (onUpdateInformation) = "updateCurrentInformation($event)" style="width: 100%;" (changePage)="setType(0)" *ngIf="type == 4"></app-menu-update-information>
+    <div *ngIf="type == 0" class="row m-0">
+        <div class="col-12 col-md-6">
+            <mat-form-field class="w-100">
+                <input readonly matInput placeholder="Nombre y Apellidos" [value]="profile.name">
+            </mat-form-field>
+            <mat-form-field class="w-100">
+                <input readonly matInput placeholder="Documento de identificación" [value]="profile.identityDocument.number">
+            </mat-form-field>
+            <mat-form-field class="w-100">
+                <input readonly matInput placeholder="Fecha de nacimiento" [value]="profile.birthDate | date:'dd-MM-yyyy'">
+            </mat-form-field>
+            <mat-form-field class="w-100">
+                <input readonly matInput placeholder="Sexo" [value]="profile.gender">
+            </mat-form-field>
+            <mat-form-field class="w-100">
+                <input readonly matInput placeholder="Nacionalidad" [value]="profile.nationality">
+            </mat-form-field>
+        </div>
+        <div class="col-12 col-md-6">
+            <mat-form-field class="w-100">
+                <input readonly matInput placeholder="Email" [value]="profile.email">
+            </mat-form-field>
+            <mat-form-field class="w-100">
+                <input readonly matInput placeholder="Teléfono" [value]="profile.mobile">
+            </mat-form-field>
+            <mat-form-field class="w-100">
+                <input readonly matInput placeholder="Dirección" [value]="profile.residence.address+' '+profile.residence.cityText+', '+profile.nationality">
+            </mat-form-field>
+            <mat-form-field class="w-100">
+                <input readonly matInput placeholder="Idioma" [value]="profile.language">
+            </mat-form-field>
+        </div>
+    </div>
+    <div class="col-12 alert alert-danger text-center" *ngIf="formError != ''">
+        {{localTexts$.playerValidationError[formError]}}
+    </div>
+    <div class="contentButtons row m-0 mb-0 mb-md-3">
+        <div class="col-12 col-md-6 mt-3 mt-md-0">
+            <button id="button1" class="w-100 btn" (click)="onClickUpdateProfile($event)" [ngClass]="{'btn-orange':(type == 1), 'btn-secondary':(type != 1)}">Cambiar contraseña</button>
+        </div>
+        <div class="col-12 col-md-6 mt-3 mt-md-0">
+            <button id="button2" class="w-100 btn" (click)="onClickUpdateProfile($event)" [ngClass]="{'btn-orange':(type == 2), 'btn-secondary':(type != 2)}">Enviar documentos</button>
+        </div>
+    </div>
+    <div class="contentButtons row m-0">
+        <div class="col-12 col-md-6 mt-3 mt-md-0">
+            <button id="button3" class="w-100 btn" (click)="onClickUpdateProfile($event)" [ngClass]="{'btn-orange':(type == 3), 'btn-secondary':(type != 3)}">Términos y condiciones</button>
+        </div>
+        <div class="col-12 col-md-6 mt-3 mt-md-0">
+            <button id="button4" class="w-100 btn btn-orange" (click)="onClickUpdateProfile($event)">Actualizar datos</button>
+        </div>
+    </div>
+
+    <div class="p-3">
+        <app-password (updatedPassword)="showUpdatedPasswordSuccesfully()"  (changePage)="setType(0)" *ngIf="type == 1"></app-password>
+        <app-documents (changePage)="setType(0)" *ngIf="type == 2"></app-documents>
+        <app-termsmenu (changePage)="setType(0)" *ngIf="type == 3"></app-termsmenu>
+    </div>
+    <div class="alert alert-success" *ngIf="formSuccess != ''">
+        {{localTexts$.GeneralMessages[formSuccess]}}
+    </div>
+    <p *ngIf="type == 0" class="text-blue p-3">Si deseas cambiar tus datos, ponte en contacto con nuestro servicio de atención al cliente.</p>
+</div>

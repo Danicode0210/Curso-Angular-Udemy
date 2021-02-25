@@ -1,0 +1,36 @@
+<app-loading *ngIf="isLoading"></app-loading>
+
+<div class="cl_content">
+    <div class="launcher" *ngIf="gameUrl">
+        <div id="header_slot" class="d-flex bg-white text-blue-primary p-2 font-weight-bold">
+            <p class="text-center mb-0">Tiempo de juego transcurrido: {{sessionTimer}}</p> 
+            <div class="ml-auto">
+                <div class="d-inline-block">
+                    <button class="button-settings" (click)="zoomIn = !zoomIn"><i class="fas" [ngClass]="{'fa-compress': zoomIn, 'fa-expand': !zoomIn}" ></i></button>
+                    <button (click)="reloadPage()" class="button-settings"><i class="fas fa-times"></i></button>
+                </div>
+            </div>
+        </div>
+        <iframe class="iframeGame" [src]="gameUrl" [ngClass]="{'lg':zoomIn}">
+            <app-spinner></app-spinner>
+        </iframe>
+    </div>
+    <img *ngIf="!gameUrl" class="banner_cl" src="../../../assets/img/casinolive/cl_banner.png" alt="">
+
+    <div *ngIf="!gameUrl" class="row gameContentCasino">
+        <div class="container_games col-12 row m-0">
+            <div *ngFor="let game of games; let i = index" class="col-12 col-md-6 pt-3 pb-3 cursor-pointer virtualGame" (click)="launchGame(game.gameCode)">
+                <div class="casinolv-wrapper" [ngClass]="{'margingame': (i%2 != 0)}" id="{{base_url+game.image}}">
+                    
+                </div>
+                <!-- <div class="p-3">
+                    <p class="mb-0 text-center text-white font-weight-bold gameTitle">{{ game.title }}</p>
+                </div> -->
+            </div>
+            <div class="col-12">
+                <p class="text-center text-clear">&copy; TODOS LOS DERECHOS RESERVADOS CORREDOR EMPRESARIAL S.A.</p>
+            </div>
+        </div>
+        
+    </div>
+</div>

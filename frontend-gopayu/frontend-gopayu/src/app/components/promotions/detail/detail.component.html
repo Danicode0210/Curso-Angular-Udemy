@@ -1,0 +1,7 @@
+<h1 class="text-blue" mat-dialog-title>{{detail.title}}</h1>
+<p class="text-right text-gray">{{detail.date | date:'dd/MM/yyyy hh:mm:ss a'}}</p>
+<mat-dialog-content [innerHTML]="detail.html">
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-raised-button color="primary" mat-dialog-close>Cerrar</button>
+</mat-dialog-actions>

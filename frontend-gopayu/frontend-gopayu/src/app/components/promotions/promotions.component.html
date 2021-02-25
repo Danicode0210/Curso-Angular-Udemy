@@ -1,0 +1,17 @@
+<app-loadingspinner *ngIf="isLoading"></app-loadingspinner>
+<div class="promotions">
+  <div class="back_todo">
+    <div class="row m-0">
+      <div class="col-12 col-md p-0">
+        <!-- Banner content  -->
+        <app-carousel *ngIf="banner" [images]="banner"></app-carousel>
+        <div class="container">
+          <!-- Categories and promotions -->
+          <app-promo-categories
+            [categories]="promotions"
+          ></app-promo-categories>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

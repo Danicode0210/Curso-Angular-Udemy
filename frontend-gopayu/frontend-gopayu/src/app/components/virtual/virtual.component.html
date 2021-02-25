@@ -1,0 +1,34 @@
+<app-loading *ngIf="isLoading"></app-loading>
+
+<div class="launcher" *ngIf="gameUrl">
+    <div id="header_slot" class="d-flex bg-white text-blue-primary p-2 font-weight-bold">
+        <p class="text-center mb-0">Tiempo de juego transcurrido: {{sessionTimer}}</p> 
+        <div class="ml-auto">
+            <div class="d-inline-block">
+                <button class="button-settings" (click)="zoomIn = !zoomIn"><i class="fas" [ngClass]="{'fa-compress': zoomIn, 'fa-expand': !zoomIn}" ></i></button>
+                <button (click)="reloadPage()" class="button-settings"><i class="fas fa-times"></i></button>
+            </div>
+        </div>
+    </div>
+    <iframe class="iframeGame" [src]="gameUrl" [ngClass]="{'lg':zoomIn}">
+        <app-spinner></app-spinner>
+    </iframe>
+</div>
+
+<div *ngIf="!gameUrl" class="row m-0 gameContentVituales">
+    <div *ngFor="let game of games" class="col-12 col-md-3 p-0 cursor-pointer virtualGame" (click)="launchGame(game.gameCode)">
+        <div class="virutal-wrapper" id="{{base_url+game.image}}">
+            <div class="d-flex d-md-none virtuales-footer row m-0 align-items-center">
+                <div class="col-7 content-title-virtuales">
+                    <p class="mb-0">{{ game.title }}</p>
+                </div>
+                <div class="col-2 content-icon-virtuales">
+                    <img [src]="base_url+game.icon" alt="">
+                </div>
+                <div class="col-3 content-play-virtuales">
+                    ¡JUGAR!
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

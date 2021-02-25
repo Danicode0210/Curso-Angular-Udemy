@@ -1,0 +1,120 @@
+<app-loading *ngIf="isLoading"></app-loading>
+<div class="poker-page">
+  <div class="modal-cash" *ngIf="showModal">
+    <div class="text-center header-modal-poker">
+      CAJERO
+      <i
+        class="fas fa-times float-right pointer"
+        (click)="showModal = false"
+      ></i>
+    </div>
+    <app-poker
+      [balanceBet]="balanceBet"
+      [balancePoker]="balancePoker"
+      (updateBalance)="updateBalances()"
+    ></app-poker>
+  </div>
+
+  <div class="header-poker d-md-flex align-items-center p-3" *ngIf="cajero">
+    <div class="content-logo-poker">
+      <img
+        src="../../../assets/images/Poker-300.png"
+        alt="BetPlay Logo Poker"
+      />
+    </div>
+    <div class="row m-0 ml-auto text-right mb-3 m-md-0" *ngIf="isAuth">
+      <div class="col-12 col-md-12 text-center-responsive">
+        Saldo Sport: ${{ balanceBet | number }}
+        <i (click)="getBalance()" class="fas fa-sync-alt pointer"></i>
+      </div>
+      <div class="col-12 col-md-12 text-center-responsive">
+        Saldo Poker: ${{ balancePoker | number }}
+        <i (click)="getPokerBalance()" class="fas fa-sync-alt pointer"></i>
+      </div>
+    </div>
+
+    <div *ngIf="isAuth" class="row m-0" [ngClass]="{ 'ml-auto': !isAuth }">
+      <div class="col-6 col-md-6 mb-3 mb-md-0 p-2 text-right-responsive">
+        <button (click)="gaEventPoker('Bonos', false)" class="btn-gold">BONOS</button>
+      </div>
+      <div class="col-6 col-md-6 p-2">
+        <button class="btn-white-poker" (click)="gaEventPoker('Cajero', true)">
+          CAJERO
+        </button>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="!iframe || (iframe && !gameUrl)">
+    <img (click)="gaEventSeePokerBanner()" *ngIf="image && (!image.link || image.link == '-')" [src]="image.path" alt="" />
+    <a  target="_blank" [href]="image.link" *ngIf="image && (image.link && image.link != '-')"> 
+      <img  [src]="image.path" />
+    </a>
+  </div>
+  <div *ngIf="gameUrl && iframe">
+    <p class="text-center mt-3">Tiempo transcurrido: {{ sessionTimer }}</p>
+    <iframe class="iframeGame" [src]="gameUrl"></iframe>
+  </div> 
+  <div class="footer-poker pb-3">
+    <a target="_blank" id="gameLink" [href]="gameUrl"><button style="position: fixed; left:-9999px"></button></a>
+    <div class="container">
+      <div *ngIf="!iframe || (iframe && !gameUrl)" class="row m-0 align-items-center">
+          <div class="col-12 col-md-6 font-weight-bold text-center">
+            <div *ngIf="!isAuth || iframe" (click)="launchPoker()" class="button-poker-big">
+              <h3><b>¡JUEGA AHORA!</b></h3>
+            </div>
+            <a *ngIf="isAuth && (!iframe && isAuth)" [href]="gameUrl" target="_blank" style="text-decoration: none; color: #737373;">
+              <div (click)="launchPoker()" class="button-poker-big">
+                <h3><b>¡JUEGA AHORA!</b></h3>
+              </div>
+            </a>
+          </div>
+        <div class="col-12 col-md-6 font-weight-bold text-center d-none d-md-block">
+          <a (click) = "gaEventPokerOptions('Descarga')" class="text-poker" [href]="urlPoker">
+            <div class="button-poker-big">
+              <h3 class="mb-0"><b>DESCARGA</b></h3>
+              <p style="
+              font-size: 2em;
+              font-weight: normal;
+              margin-bottom: 0;
+              margin-top: -0.4em;
+          ">EN TU ESCRITORIO</p>
+            </div>
+          </a>
+        </div>
+      </div>
+      <!-- <div class="p-3">
+        <hr class="poker-divider-footer" />
+      </div>
+      <div class="row m-0 align-items-center">
+        <div class="col-12 col-md-2">
+          <img
+            style="max-width: 80px; padding-bottom: 1em;"
+            src="../../../assets/images/poker-like-coljuegos.png"
+            alt=""
+          />
+        </div>
+        <div class="col-12 col-md">
+          <p>
+            JUGAR SIN CONTROL CAUSA ADICCIÓN. EL JUEGO ES ENTRETENIMIENTO, JUEGA
+            CON MODERACIÓN. PROHIBIDA LA VENTA A MENORES DE EDDAD
+          </p>
+        </div>
+        <div class="col-6 col-md-1">
+          <img
+            style="max-width: 80px; padding-bottom: 1em;"
+            src="../../../assets/images/poker-18.png"
+            alt=""
+          />
+        </div>
+        <div class="col-6 col-md-1">
+          <img
+            style="max-width: 80px; padding-bottom: 1em;"
+            src="../../../assets/images/poker-coljuegos.png"
+            alt=""
+          />
+        </div>
+      </div>  -->
+    </div>
+  </div>
+</div>
+

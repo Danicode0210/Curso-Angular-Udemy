@@ -1,0 +1,33 @@
+export const environment = {
+  production: true,
+  v: "3.0.17",
+  ENVIROMENT: "PRODUCTION",
+  // apiUrl: "/services/apicrm.php?url=",
+  apiUrl:"https://apicrm.betplay.com.co/api/v1",
+  // apiUrl:"http://192.168.0.82:9000/api/v1",
+  // kambiUrl:"https://c3-static.kambi.com/sb-mobileclient/bp/kambi-bootstrap.js?cb=",
+  kambiUrl: "https://c3-static.kambi.com/sb-mobileclient/betplay/kambi-bootstrap.js?cb=", // Producción
+  apiPayU:" https://api.payulatam.com/payments-api/4.0/service.cgi",
+  // kambiUrl:"https://cts-static.kambi.com/sb-mobileclient/betplay/kambi-bootstrap.js?cb=", // Certificación
+  apiOperator: "/reverse-proxy",
+  apiOperatorKey: "reverse-proxy",
+  writeUsAPIUrl: "/escribeme",
+  oldOperator: "/services/operatorEndPoint",
+  apiResources: "/services/resourceEndPoint.php?url=",
+  apiPin: "/services/pinwithdrawal.php",
+  apiCompliance: "/services/complianceEndPoint.php",
+  // reCatpchaKey:'6LcSOmkUAAAAABC-GCgPLB3hhw-VI388wFRqyvYt',
+  reCatpchaKey:'6LdYhwwTAAAAAPBOcZwzDFAiSj8l2UCeRacP9HFK',
+  // reCatpchaKey: "6LdYhwwTAAAAAPBOcZwzDFAiSj8l2UCeRacP9HFK",
+  apiCAUrl: "/services/copaamerica.php",
+  validaPin: "/services/validaPin.php?url=",
+  i18n: "/i18n/es.json",
+  dataUrl: "/services/isVIP.php?url=",
+  cuponURL: "/services/cupon.php?url=",
+  // pokerURL: "https://betplay-test.esagaming.it/",
+  pokerURL: "https://betplaymobile.egamingc.com/",
+  messagingApiURLHablame: '/services/messagingCredentials.php?url=',
+  messagingApiURLBlipBlip: '/services/messagingCredentialsBlip.php?url=',
+  apiPayUNew:'/services/payu.php?url=',
+  ip: 'https://api64.ipify.org?format=json'
+};

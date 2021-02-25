@@ -1,0 +1,88 @@
+<app-loading *ngIf="isLoading"></app-loading>
+<div class="promotions">
+  <div class="blog container" [style.background-image]="bkRoute">
+    <app-navblog></app-navblog>
+    <div class="row m-0" *ngIf="post">
+      <div class="col-12 col-md-4">
+          <div *ngFor="let related of post.relatedPost; let idx = index">
+              <div (click) ="gaEventCommunutyNews(related.title, false, true)" *ngIf="idx == 0" [routerLink]="'/blog/'+generateSlug(related.title)+'/'+related._id" class="relatedPost pointer">
+                <img [src]="related.image" [alt]="related.title">
+                <h2>{{related.title}}</h2>
+                <p class="dateRelatedPost">{{months[(related.date | date:'MMMM')]}} {{related.date | date:'dd, yyyy'}}</p>
+              </div>
+          </div>
+          <div class="transparentPost" *ngFor="let related of post.relatedPost; let idx = index">
+              <div (click) ="gaEventCommunutyNews(related.title, false, false)" class="row m-0 pointer align-items-center tpPost" *ngIf="idx > 0"  [routerLink]="'/blog/'+generateSlug(related.title)+'/'+related._id">
+                <div class="col-12 col-md-6">
+                  <img [src]="related.image" [alt]="related.title">
+                </div>
+                <div class="col-12 col-md-6">
+                  <p class="titleTPPost">{{related.title}}</p>
+                  <p class="dateRelatedPost">{{months[(related.date | date:'MMMM')]}} {{related.date | date:'dd, yyyy'}}</p>
+                </div>
+              </div>
+          </div>
+
+          <div class="transparentPost text-left p-3">
+            <p class="m-0 text-white"><b>ACERCA DE NOSOTROS</b></p>
+            <p class="m-0 text-white">
+              Somos una plataforma de apuestas en lína más grandes del país en la que puedes ganar con tus deportes favoritos.
+            </p>
+          </div>
+
+          <div class="newsSocialNetwork text-white text-left">
+              <a href="https://es-la.facebook.com/BetPlayCO/" class="text-white" target="_blank"><i class="mr-3 fab fa-facebook-f"></i></a>
+              <a href="https://www.instagram.com/betplayco/?hl=es-la" class="text-white" target="_blank"><i class="mr-3 fab fa-instagram"></i></a>
+              <a href="https://twitter.com/betplayco" class="text-white" target="_blank"><i class="mr-3 fab fa-twitter"></i></a>
+          </div>
+        </div>
+
+      <div class="col-12 col-md-8 pr-0">
+        <div class="postContent category" *ngIf="post">
+            <div class="row m-0 post-header" >
+              <div class="col-12 col-md-7 contentColumn">
+                <h1 class="titleType2">{{post.title}}</h1>
+                <p>{{post.subtitle}}</p>
+              </div>
+              <div class="col-12 col-md-5 contentColumn">
+                  <p class="post-date-content text-right">{{months[(post.date | date:'MMMM')]}} {{post.date | date:'dd, yyyy'}}</p>
+                  <div class="row m-0 align-items-center">
+                      <div class="col-8 text-right  pr-0" *ngFor="let user of post.user">
+                        <p class="nameContentPost">
+                          {{user.username}}
+                        </p>
+                      </div>
+                      <div class="col-4">
+                        <div class="imageContent">
+
+                        </div>
+                      </div>
+                  </div>
+              </div>
+            </div>
+          <div class="p-3">
+            <div class="contentDetailBlogImage">
+              <img class="imgBlog" [src]="post.image">
+              <p class="text-image-description-post">
+                {{post.imageDescription}}
+              </p>
+            </div>
+            <div class="postContentHTML p-3">
+              {{post.shortDescription}}
+            </div>
+            <div class="text-left row m-0 pb-3">
+              <div class="col-12 col-md-6">
+                <a (click) ="gaEventCommunutyNews(post.title, true , false)" [routerLink]="'/blog/'+generateSlug(post.title)+'/'+post._id"><button mat-raised-button color="primary" class="btn-continue">SEGUIR LEYENDO</button></a>
+              </div>
+              <div class="col-12 col-md-6 text-right text-gray">
+                <i class="far fa-heart mr-1"></i> <span>{{post.likes.length}}</span>
+                <span class="ml-3 mr-3">|</span>
+                <i class="far fa-comment mr-1"></i> <span>{{post.comments.length}}</span>
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

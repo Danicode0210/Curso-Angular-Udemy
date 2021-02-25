@@ -1,0 +1,27 @@
+<div>
+        <div class="row m-0 align-items-center">
+            <div class="col-12 pr-1 text-right">
+                <!-- <a [routerLink]="'/cuenta'" class="text-white"> -->
+                <div ngbDropdown ngbDropdownToggle placement="bottom-right" class="profile-icon-content no-row">
+                    <span #spanUser (click) = "gaEventProfile(spanUser)" id="spanUser" class="mr-1"><b>{{ userdata.firstName }} {{userdata.lastName}}</b></span>
+                    <i id="dropdownMenu" class="fas fa-chevron-down"></i>
+                    <div ngbDropdownMenu aria-labelledby="dropdownMenu" class="dropdown p-0">
+                        <app-menu></app-menu>
+                    </div>
+                </div>
+                <!-- </a> -->
+            </div>
+        </div>
+    <a [routerLink]="'/balance'" #aBalance (click) = "gaEventProfile(aBalance)" id = "aBalance" class="text-white"> 
+        <div class="position-relative content-notification p-0">
+            <div *ngIf="bonusNotifications != 0" class="notification"><i class="fas fa-gift"></i></div>
+            <p class="myBalance name sideLinkProfile contentBalance mb-0">SALDO TOTAL: ${{balance.totalBalance | number}}</p>
+        </div>
+    </a>
+    <!-- <p class="m-0 contentTimer">{{ timer |  date:'dd/MM/yyyy hh:mm:ss a' }}</p> -->
+    <p class="m-0 ap-hidden contentSession text-right">Sesión: {{sessionTimer}}</p>
+    <p class="m-0 contentLastLogin">Último inicio: {{ lastLogin |  date:'dd/MM/yyyy hh:mm:ss a' }}</p>
+    <div class="text-right">
+        <button class="btn btn-orange p-1 pl-3 pr-3 btn-logout" (click)="logout()">Cerrar Sesión</button>
+    </div>
+</div>

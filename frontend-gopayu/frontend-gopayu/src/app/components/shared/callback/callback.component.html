@@ -1,0 +1,107 @@
+<div class="content_callback d-none" id="callbackCB">
+    <div class="callback_header d-flex">
+        <i class="fas fa-headset"></i> 
+        <p class="m-0 ml-2">¿Te llamamos?</p>
+        <div class="ml-auto">
+            <i (click)="close()" class="cursor-pointer fas fa-window-minimize mr-2"></i>
+            <i (click)="close()" class="cursor-pointer fas fa-times"></i>
+        </div>
+    </div>  
+
+    <div class="body_callback">
+
+        <div class="text-center p-3">
+            <img class="mb-3" style="max-width: 170px;border-radius: 0;" src="../../../../assets/img/logo-bet-chatt.png" alt="">
+
+            <p class="m-0 text-blue-primary font-weight-bold">Déjanos tus datos</p>
+            <h4 class="m-0 text-blue-primary font-weight-bold">¡Te llamamos!</h4>
+            <div class="alert alert-success m-0" style="    max-width: 300px;
+            margin: 1em auto !important;
+            display: block;" *ngIf="success != ''">{{ success }}</div>
+            <form 
+            [formGroup]="form"
+            novalidate
+            autocomplete="off"
+            (ngSubmit)="sendCallBack()"
+            class="p-3">
+                <div class="row m-0 mb-3">
+                    <div class="col-12 col-md-6">
+                        <div class="form-gruop text-blue-primary">
+                            <label for="nameCB" class="text-left w-100">Nombre</label>
+                            <input formControlName="name" type="text" class="form-control-cb text-blue-primary w-100" id="nameCB">
+                            <span *ngIf="isSubmited && form.controls.name.hasError('required')" class="invalid-feedback d-block m-0">Debes ingresar tu nombre</span>
+                            <span *ngIf="isSubmited && form.controls.name.hasError('pattern')" class="invalid-feedback d-block m-0">Tu nombre solo puede contener letras</span>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <div class="form-gruop text-blue-primary">
+                            <label for="emailCB" class="text-left w-100">Correo electrónico</label>
+                            <input formControlName="email" type="email" class="form-control-cb text-blue-primary w-100" id="emailCB">
+                            <span  *ngIf="isSubmited && form.controls.email.hasError('required')" class="invalid-feedback d-block m-0">Debes ingresar tu correo</span>
+                            <span  *ngIf="isSubmited && form.controls.email.hasError('email')" class="invalid-feedback d-block m-0">Ingresa un correo válido</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row m-0">
+                    <div class="col-12 col-md-6">
+                        <div class="form-gruop text-blue-primary">
+                            <label for="ccCB" class="text-left w-100">Cédula</label>
+                            <input formControlName="id" type="text" maxlength="12" class="form-control-cb text-blue-primary w-100" id="ccCB">
+                            <span  *ngIf="isSubmited && form.controls.id.hasError('required')" class="invalid-feedback d-block m-0">Debes ingresar tu cédula</span>
+                            <span  *ngIf="isSubmited && form.controls.id.hasError('minlength')" class="invalid-feedback d-block m-0">Número de cédula demasiado corto</span>
+                            <span  *ngIf="isSubmited && form.controls.id.hasError('maxlength')" class="invalid-feedback d-block m-0">Número de cédula demasiado largo</span>
+                            <span  *ngIf="isSubmited && form.controls.id.hasError('pattern')" class="invalid-feedback d-block m-0">Valor no puede contener letras</span>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <div class="form-gruop text-blue-primary">
+                            <label for="mobilePhoneCB" class="text-left w-100">Celular</label>
+                            <input maxlength="10" formControlName="mobilePhone" type="text" class="form-control-cb text-blue-primary w-100" id="mobilePhoneCB">
+                            <span  *ngIf="isSubmited && form.controls.mobilePhone.hasError('required')" class="invalid-feedback d-block m-0">Debes ingresar tu teléfono</span>
+                            <span  *ngIf="isSubmited && (form.controls.mobilePhone.hasError('maxlength') || form.controls.mobilePhone.hasError('minlength'))" class="invalid-feedback d-block m-0">El número debe contener 10 dígitos</span>
+                            <span  *ngIf="isSubmited && form.controls.mobilePhone.hasError('pattern')" class="invalid-feedback d-block m-0">El número debe empezar con 3 y solo contener números</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row m-0 content-message pt-3 pb-3">
+                    <div class="col">
+                        <textarea formControlName="message" maxlength="100" placeholder="Ingresa tu mensaje aquí" id="message_CB"></textarea>
+                    </div>
+                </div>
+
+                <div class="content-message">
+                    <div class="row m-0">
+                        <div class="col-12">
+                            <p class="text-left"><i><b>Nuestro horario de atención es de 06:00 am a 10:00 pm</b></i></p>
+                        </div>
+                        <div class="col-12">
+                            <div class="alert alert-danger m-0" style="
+                            margin: 1em auto !important;
+                            display: block;" *ngIf="error != ''">{{ error }}</div>
+                        </div>
+                        <div class="col-12 col-md-7">
+                            <div class="row m-0 mt-3 mb-3 align-items-center pl-3">
+                                <div class="col check_CB p-0">
+                                    <input style="height: auto;" formControlName="terms" type="checkbox" id="acceptCB">
+                                </div>
+                                <div class="col text-blue-primary text-left">
+                                    He leído y acepto la <a target="_blank" href="https://cempresarial.co/SIGO-GE-PPD-DG-05PoliticaTratamientoDatosPersonalesCEV4202012SIGO.pdf">  Política de protección de datos personales </a>
+                                </div>
+                                <span *ngIf="isSubmited && form.controls.terms.hasError('required')" class="invalid-feedback d-block m-0">Debes aceptar los términos</span>
+                            </div>
+                        </div>
+                        
+                        <div class="col-12 col-md-5">
+                            <button>¡Solicitar llamada! <i class="fas fa-phone-volume ml-1"></i></button>
+                        </div>
+                    </div>
+                </div>
+                <span  *ngIf="isSubmited && form.controls.message.hasError('required')" class="invalid-feedback d-block m-0">Debes ingresar un mensaje</span>
+            </form>
+        </div>
+
+
+    </div>
+
+</div>

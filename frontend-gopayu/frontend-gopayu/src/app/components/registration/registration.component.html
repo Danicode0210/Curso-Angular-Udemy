@@ -1,0 +1,678 @@
+<script src="../../../assets/bpcaptcha/bpcaptcha.min.js"></script>
+
+<div class="p-3 registration">
+    <app-loading [ngClass]="{'d-block':isLoading, 'd-none':!isLoading}"></app-loading>
+    
+    <div *ngIf="loaded" class="content_form_singin_ container " id = "register-form">
+        <h4 id="title_form">
+            <b>
+                {{formConfig$.form.RegisterTitle}}
+            </b>
+        </h4>
+        <div style="border-bottom: solid #C4C4C4 3px;z-index: 10; margin-top: 60px;">
+        
+        </div>
+        <div class="contentForm" style = "display: flex; align-items: center;">
+            <img style="height: 50px; margin-right: 10px; margin-bottom: 10px;" src="../../../assets/img/register/register_exclamation.png">
+            <p class="mt-3" class="text">
+                {{formConfig$.form.CCAlertMessage}}
+            </p>
+        </div>
+        
+        <div>
+            <form [formGroup]="formData" (submit)="register()">
+                <app-loadingspinner *ngIf="isLoading"></app-loadingspinner>
+                <div class="row m-0" *ngIf="texts$">
+                    <div class="col-12 col-md-3"> 
+                        <div class="form-group">
+                            <label class="text">* {{formConfig$.Texts.DocumentType}}</label>
+                                <select class="form-control" (change)="setValidationIdField()" [(ngModel)]="documentType" formControlName="documentType" [(value)]="documentType">
+                                    <option *ngFor="let dt of documentTypes" [value]="dt.code">
+                                        {{ formConfig$.DocumentTypes[dt.description] }}
+                                    </option>
+                                </select>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-3 form-group" *ngIf = "documentType != 3">
+                        <label class="text">* {{formConfig$.Texts.ExpirationDate}}</label>
+                        <div class="row m-0 justify-content-between">
+                            <div class="col-3 p-0 col-md-3">
+                                <select [ngClass] = "{'select-placeholder': expirationDay === '', 'selected-value': expirationDay !== ''}" [(ngModel)]="expirationDay" class = "form-control" formControlName="expirationDay" required>
+                                    <option hidden value="" disabled selected>DD</option>
+                                    <option [value]="day" *ngFor="let day of days">
+                                        {{ day }}
+                                    </option>
+                                </select>
+                                <div class="error">
+                                    <div class="form-error" *ngIf="formData.controls.expirationDay.hasError('required') && formData.controls.expirationDay.touched">
+                                        {{formConfig$.Errors.EmptyExpirationDay}}
+                                    </div>
+                                </div> 
+                            </div>
+                            <div class="p-0 col-md-5 col-5">
+                                <select [ngClass] = "{'select-placeholder': expirationMonth === '', 'selected-value': expirationMonth !== ''}" [(ngModel)]="expirationMonth" class = "form-control" formControlName="expirationMonth" required>
+                                    <option hidden value="" disabled selected>MM</option>
+                                    <option [value]="month" *ngFor="let month of months">
+                                        {{ formConfig$.Texts.Months[month] }}
+                                    </option>
+                                </select> 
+                                <div class="error">
+                                    <div class="form-error" *ngIf="formData.controls.expirationMonth.hasError('required') && formData.controls.expirationMonth.touched">
+                                        {{formConfig$.Errors.EmptyExpirationMonth}}
+                                    </div> 
+                                </div>
+                            </div>
+                            <div class="col-4 p-0 col-md-3">
+                                <select [ngClass] = "{'select-placeholder': expirationYear === '', 'selected-value': expirationYear !== ''}" [(ngModel)]="expirationYear" class = "form-control" formControlName="expirationYear" required>
+                                    <option hidden value="" disabled selected>YYYY</option>
+                                    <option *ngFor="let year of expirationYears" [value]="year">
+                                        {{ year }}
+                                    </option>
+                                </select>
+                                <div class="error">
+                                    <div class="form-error" *ngIf="formData.controls.expirationYear.hasError('required') && formData.controls.expirationYear.touched">
+                                        {{formConfig$.Errors.EmptyExpirationYear}}
+                                    </div> 
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-3">
+                        <div class="form-group">
+                            <label class="text">* {{formConfig$.Texts.DocumentID}}</label>
+                            <input  
+                                autocomplete="disabled" 
+                                type ="text" 
+                                placeholder="Ej. 00 000 000 000"
+                                formControlName = "documentNumber" 
+                                [maxlength]="maxLengthId"
+                                required
+                                class = "form-control"
+                            >
+                            <div class="error">
+                                <div class="form-error" *ngIf="formData.controls.documentNumber.hasError('required') && formData.controls.documentNumber.touched">
+                                    {{ formConfig$.Errors.EmptyDocumentNumber }}
+                                </div>
+                                <div class="form-error" *ngIf="formData.controls.documentNumber.hasError('minlength')">
+                                    {{ formConfig$.Errors.DocumentNumberLessThan5 }}
+                                </div >
+                                <div class="form-error" *ngIf="formData.controls.documentNumber.hasError('pattern')" >
+                                    {{ formConfig$.Errors.DocumentNumberOnlyNumbers }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-3">
+                        <div class="form-group">
+                            <label class = "text">* {{formConfig$.Texts.ExpeditionPlace}}</label>
+                            <input 
+                            class="form-control"
+                            autocomplete="disabled" 
+                            placeholder="Ej. BOGOTÁ"
+                            formControlName="expeditionPlace" 
+                            type ="text" 
+                            (input) = "suggestCitiesDepartments()" 
+                            (keyup)="setUpperCase()"
+                            >
+                            <div appSuggestedSearch (clickOutside) = "disableSuggestion('city')" class = "suggestion-box" *ngIf="this.suggestedCitiesDepartments.length && enableCitiesDepartments" >
+                                <div class = "suggestion" *ngFor="let s of suggestedCitiesDepartments" (click) = "setValueCityDepartment(s.city_department, s.city_code)">
+                                    {{s.city_department}}
+                                </div>
+                            </div>
+                            <div class="error">
+                                <div class="form-error" *ngIf="formData.controls.expeditionPlace.hasError('required') && formData.controls.expeditionPlace.touched">
+                                    {{formConfig$.Errors.EmptyExpeditionPlace}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-3">
+                        <div class="form-group">
+                            <label  class="text">* {{formConfig$.Texts.ExpeditionDate}}</label>
+                            <div class="row m-0 justify-content-between">
+                                <div class="col-3 p-0 col-md-3">
+                                    <select [ngClass] = "{'select-placeholder': expeditionDay === '', 'selected-value': expeditionDay !== ''}" [(ngModel)]="expeditionDay" class = "form-control" formControlName="expeditionDay" required>
+                                        <option hidden value="" disabled selected>DD</option>
+                                        <option [value]="day" *ngFor="let day of days">
+                                            {{ day }}
+                                        </option>
+                                    </select>
+                                    <div class="error">   
+                                        <div class="form-error" *ngIf="formData.controls.expeditionDay.hasError('required') && formData.controls.expeditionDay.touched">
+                                            {{formConfig$.Errors.EmptyExpeditionDay}}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="p-0 col-md-5 col-5">
+                                    <select [ngClass] = "{'select-placeholder': expeditionMonth === '', 'selected-value': expeditionMonth !== ''}" [(ngModel)]="expeditionMonth" class = "form-control" formControlName="expeditionMonth" required>
+                                        <option hidden value="" disabled selected>MM</option>                                        <option [value]="month" *ngFor="let month of months">
+                                            {{ formConfig$.Texts.Months[month] }}
+                                        </option>
+                                    </select>
+                                    <div class="error">
+                                        <div class="form-error" *ngIf="formData.controls.expeditionMonth.hasError('required') && formData.controls.expeditionMonth.touched">
+                                            {{formConfig$.Errors.EmptyExpeditionMonth}}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-4 p-0 col-md-3">
+                                    <select [ngClass] = "{'select-placeholder': expeditionYear === '', 'selected-value': expeditionYear !== ''}" [(ngModel)]="expeditionYear" class = "form-control" formControlName="expeditionYear" required>
+                                        <option hidden value="" disabled selected>YYYY</option>
+                                        <option *ngFor="let year of expeditionYears" [value]="year">
+                                            {{ year }}
+                                        </option>
+                                    </select>
+                                    <div class="error">
+                                        <div class="form-error" *ngIf="formData.controls.expeditionYear.hasError('required') && formData.controls.expeditionYear.touched">
+                                            {{formConfig$.Errors.EmptyExpeditionYear}}
+                                        </div>
+                                    </div> 
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-3">
+                        <div class="form-group">
+                            <label class="text">* {{formConfig$.Texts.FirstName}}</label>
+                            <input  
+                            class="form-control"
+                            (keyup)="setUpperCase()" 
+                            autocomplete="off" 
+                            placeholder="Ej. JOHN"
+                            type ="text" 
+                            formControlName = "firstName"
+                            ng-pattern="/^[a-zA-Z\s]*$/"
+                            required
+                            >
+                            <div class="error">
+                                <div class="form-error" *ngIf= "formData.controls.firstName.hasError('required') && formData.controls.firstName.touched">
+                                    {{ formConfig$.Errors.EmptyFirstName }}
+                                </div>    
+                                <div class="form-error" *ngIf= "formData.controls.firstName.hasError('minlength')">
+                                    {{ formConfig$.Errors.FirstNameLessThan2 }}
+                                </div>   
+                                <div class="form-error" *ngIf="formData.controls.firstName.hasError('pattern')">
+                                    {{ formConfig$.Errors.InvalidName }}
+                                </div> 
+                            </div>   
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-3"> 
+                        <div class="form-group">
+                            <label class="text">* {{formConfig$.Texts.SecondName}}</label>
+                            <input 
+                            class="form-control"
+                            placeholder="Ej. JOHN"
+                            (keyup)="setUpperCase()" 
+                            autocomplete="off" 
+                            type ="text" 
+                            formControlName = "firstName2"
+                            >
+                            <div class="error">
+                                <div class="form-error" *ngIf="formData.controls.firstName2.hasError('minlength')">
+                                    {{ formConfig$.Errors.FirstNameLessThan2 }}
+                                </div>
+                                <div class="form-error" *ngIf="formData.controls.firstName2.hasError('pattern')">
+                                {{ formConfig$.Errors.InvalidName }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-3">
+                        <div class="form-group">
+                            <label class="text">* {{formConfig$.Texts.LastName}}</label>
+                            <input 
+                                class="form-control"
+                                (keyup)="setUpperCase()" 
+                                placeholder="Ej. DOE"
+                                autocomplete="nopeabled" 
+                                type ="text" 
+                                formControlName = "lastName"
+                                ng-pattern="/^[a-zA-Z\s]*$/"
+                                required
+                            >
+                            <div class="error">
+                                <div class="form-error" *ngIf= "formData.controls.lastName.hasError('required') && formData.controls.lastName.touched">
+                                    {{ formConfig$.Errors.EmptyLastName }}
+                                </div>
+                                <div class="form-error"  *ngIf= "formData.controls.lastName.hasError('minlength')">
+                                    {{ formConfig$.Errors.LastNamelessThan2 }}
+                                </div>
+                                <div class="form-error" *ngIf="formData.controls.lastName.hasError('pattern')">
+                                    {{ formConfig$.Errors.InvalidLastName }}                         
+                                </div> 
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-3">
+                        <div class="form-group">
+                            <label class="text">* {{formConfig$.Texts.SecondLastName}}</label>
+                            <input 
+                                class="form-control"
+                                (keyup)="setUpperCase()" 
+                                placeholder="Ej. DOE"
+                                autocomplete="disabled"
+                                type ="text" 
+                                formControlName = "lastName2"
+                            >
+                            <div class="error">
+                                <div class="form-error" *ngIf= "formData.controls.lastName2.hasError('minlength')">
+                                    {{ formConfig$.Errors.LastNamelessThan2 }}
+                                </div>
+                                <div class="form-error" *ngIf="formData.controls.lastName2.hasError('pattern')">
+                                    {{ formConfig$.Errors.InvalidLastName }} 
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-3">
+                        <div class="form-group">
+                            <label class="text">* {{formConfig$.Texts.MobilePhoneNumber}}</label>
+                            <input 
+                                class="form-control"
+                                [maxlength]="formConfig$.form.phoneNumberMaxLenght" 
+                                (keyup)="setUpperCase()" 
+                                placeholder="Ej. 300 000 0000"
+                                autocomplete="nopeabled" 
+                                type ="text" 
+                                formControlName="mobilePhoneNumber"
+                                ng-pattern="/^[a-zA-Z\s]*$/"
+                                required
+                            >
+                            <div class="error">
+                                <div class="form-error" *ngIf= "formData.controls.mobilePhoneNumber.hasError('required') && formData.controls.mobilePhoneNumber.touched">
+                                    {{formConfig$.Errors.EmptyPhoneNumber}}
+                                </div>
+                                <div class="form-error" *ngIf="formData.controls.mobilePhoneNumber.hasError('pattern')">
+                                    {{formConfig$.Errors.PhoneNumberNumeric}}
+                                </div> 
+                                <div class="form-error" *ngIf="formData.controls.mobilePhoneNumber.hasError('minlength')">
+                                    {{formConfig$.Errors.PhoneNumberLessThan10}}
+                                </div>
+                                <div class="form-error" *ngIf="formData.controls.mobilePhoneNumber.hasError('startsWith3')">
+                                    {{formConfig$.Errors.PhoneNumberMustStartWith3}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div *ngIf = "documentType != 4" class="col-12 col-md-3">
+                        <div class="form-group">
+                            <label class="text">* {{formConfig$.Texts.Email}}</label>
+                            <input 
+                                class="form-control"
+                                (keyup)="setLowerCase()" 
+                                autocomplete="nopeabled" 
+                                placeholder="Ej. johndoe@betplay.com"
+                                type ="text" 
+                                formControlName="email"
+                                ng-pattern="/^[a-zA-Z\s]*$/"
+                                required
+                            >
+                            <div class="error">
+                                <div class="form-error" *ngIf="formData.controls.email.hasError('required') && formData.controls.email.touched">
+                                    {{formConfig$.Errors.EmptyEmail}}
+                                </div>
+                                <div class="form-error" *ngIf="formData.controls.email.hasError('minlength')">
+                                    {{formConfig$.Errors.EmailLessThan6}}
+                                </div>
+                                <div class="form-error" *ngIf="formData.controls.email.hasError('email')">
+                                    {{formConfig$.Errors.InvalidEmail}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-3"> 
+                        <div class="form-group">
+                            <label class="text">* {{formConfig$.Texts.Password}}</label>
+                            <input 
+                                class="form-control"
+                                type ="password" 
+                                (input) = "checkPasswordsEqualityFormPassword()"
+                                placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;"
+                                formControlName = "password"
+                                ng-pattern="/^[a-zA-Z\s]*$/"
+                                required
+                            >
+                            <div class="error">
+                                <div class="form-error" *ngIf="formData.controls.password.hasError('required') && formData.controls.password.touched">
+                                    {{formConfig$.Errors.EmptyPassword}}
+                                </div>
+                                <div class="form-error" *ngIf="formData.controls.password.hasError('minlength')">
+                                    {{formConfig$.Errors.PasswordLessThan8}}
+                                </div>
+                                <div class="form-error" *ngIf="formData.controls.password.hasError('maxlength')">
+                                    {{formConfig$.Errors.PasswordMoreThan12}}
+                                </div>
+                                <div class="form-error" *ngIf="formData.controls.password.hasError('pattern')">
+                                    {{formConfig$.Errors.InvalidPassword}}
+                                </div> 
+                            </div> 
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-3">
+                        <div class="form-group">
+                            <label class="text">* {{formConfig$.Texts.CnfPassword}}</label>
+                            <input 
+                                class="form-control"
+                                placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;"
+                                type ="password"
+                                formControlName = "cnfPassword" 
+                                (input)="setUpperCase(); checkPasswordsEqualityFormPassword()"
+                                ng-pattern="/^[a-zA-Z\s]*$/"
+                                required
+                            >
+                            <div class="error">
+                                <div class="form-error" *ngIf="formData.controls.cnfPassword.hasError('notEqualPasswords')">
+                                    {{formConfig$.Errors.PasswordNotMatch}}
+                                </div>
+                                <div class="form-error" *ngIf="formData.controls.cnfPassword.hasError('required') && formData.controls.cnfPassword.touched">
+                                    {{formConfig$.Errors.EmptyConfirmPassword}}
+                                </div>
+                            </div>    
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-3">
+                        <div class="form-group">
+                            <label class="text">* {{formConfig$.Texts.Nationality}}</label>
+                            <input 
+                                class="form-control"
+                                autocomplete="disabled" 
+                                [ngStyle]="{'cursor': selectedCountry === 'CO' ? 'default' : 'auto'}"
+                                [readonly] = "readOnlyCountry" 
+                                formControlName="nationality" 
+                                placeholder="Ej. COLOMBIA"
+                                type ="text"
+                                (input) = "suggestCountries()" 
+                                (keyup)="setUpperCase()"
+                                ng-pattern="/^[a-zA-Z\s]*$/"
+                                required
+                            >
+                            <div appSuggestedSearch (clickOutside) = "disableSuggestion('country')" class = "suggestion-box" *ngIf="this.suggestedCountries.length && enableCountry" >
+                                <div class = "suggestion" *ngFor="let s of suggestedCountries" (click) = "setValueCountry(s.description, s.code)">
+                                    {{s.description}}
+                                </div>
+                            </div>
+                            <div class="error">
+                                <div class="form-error" *ngIf="formData.controls.nationality.hasError('required') && formData.controls.nationality.touched">
+                                    {{formConfig$.Errors.EmptyNationality}}
+                                </div> 
+                            </div>               
+                        </div>
+                        
+                    </div>
+                    <div class="col-12 col-md-3">
+                        <div class="form-group">
+                            <label class="text">* {{formConfig$.Texts.BornDate}}</label>
+                            <div class="row m-0 justify-content-between">
+                                <div class="col-3 p-0 col-md-3">
+                                    <select [ngClass] = "{'select-placeholder': bornDay === '', 'selected-value': bornDay !== ''}" [(ngModel)]="bornDay" class = "form-control" formControlName="bornDay" required>
+                                        <option hidden value="" disabled selected>DD</option>
+                                        <option [value]="day" *ngFor="let day of days">
+                                            {{ day }}
+                                        </option>
+                                    </select>
+                                    <div class="error">
+                                        <div class="form-error" *ngIf="formData.controls.bornDay.hasError('required') && formData.controls.bornDay.touched">
+                                            {{formConfig$.Errors.EmptyBornDay}}
+                                        </div>  
+                                    </div>
+                                </div>
+                                <div class="p-0 col-md-5 col-5">
+                                    <select [ngClass] = "{'select-placeholder': bornMonth === '', 'selected-value': bornMonth !== ''}" [(ngModel)]="bornMonth" class = "form-control" formControlName="bornMonth" required>
+                                        <option hidden value="" disabled selected>MM</option>
+                                        <option [value]="month" *ngFor="let month of months">
+                                            {{ formConfig$.Texts.Months[month] }}
+                                        </option>
+                                    </select>
+                                    <div class="error">
+                                        <div class="form-error" *ngIf="formData.controls.bornMonth.hasError('required') && formData.controls.bornMonth.touched">
+                                            {{formConfig$.Errors.EmptyBornMonth}}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-4 p-0 col-md-3">
+                                    <select [ngClass] = "{'select-placeholder': bornYear === '', 'selected-value': bornYear !== ''}" [(ngModel)]="bornYear" class = "form-control" formControlName="bornYear" required>
+                                        <option hidden value="" disabled selected>YYYY</option>
+                                        <option *ngFor="let year of years" [value]="year">
+                                            {{ year }}
+                                        </option>
+                                    </select>
+                                    <div class="error">
+                                        <div class="form-error" *ngIf="formData.controls.bornYear.hasError('required') && formData.controls.bornYear.touched">
+                                            {{formConfig$.Errors.EmptyBornYear}}
+                                        </div>
+                                    </div> 
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div *ngIf = "documentType != 3" class="col-12 col-md-3">
+                        <div class="form-group">
+                            <label class="text">* {{formConfig$.Texts.Email}}</label>
+                            <input 
+                                class="form-control"
+                                (keyup)="setLowerCase()" 
+                                autocomplete="nopeabled" 
+                                type ="text" 
+                                placeholder="Ej. johndoe@betplay.com"
+                                formControlName="email"
+                                ng-pattern="/^[a-zA-Z\s]*$/"
+                                required
+                            >
+                            <div class="error">
+                                <div class="form-error" *ngIf="formData.controls.email.hasError('required') && formData.controls.email.touched">
+                                    {{formConfig$.Errors.EmptyEmail}}
+                                </div>
+                                <div class="form-error" *ngIf="formData.controls.email.hasError('minlength')">
+                                    {{formConfig$.Errors.EmailLessThan6}}
+                                </div>
+                                <div class="form-error" *ngIf="formData.controls.email.hasError('email')">
+                                    {{formConfig$.Errors.InvalidEmail}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-3">
+                        <div class="form-group">
+                            <label class="text">* {{formConfig$.Texts.Address}}</label>
+                            <div class="row m-0 justify-content-between">
+                                <div class="col-12 p-0 col-md-3">
+                                    <select
+                                        class="form-control"
+                                        formControlName="addressType"
+                                        required
+                                        [(ngModel)] = "addressType"
+                                        [ngClass] = "{'select-placeholder': addressType === '', 'selected-value': addressType !== ''}"
+                                    >
+                                        <option hidden value="" disabled selected>Ej. Av.</option>
+                                        <option *ngFor="let type of addressTypes" [value]="type">
+                                            {{formConfig$.Texts.AddressTypes[type]}}
+                                        </option>
+                                    </select>
+                                    <div class="error">
+                                        <div class="form-error" *ngIf="formData.controls.addressType.hasError('required') && formData.controls.addressType.touched">
+                                            {{formConfig$.Errors.EmptyAdressField}}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 p-0 col-md-3">
+                                    <input 
+                                        class="form-control"
+                                        formControlName="address1"
+                                        placeholder="Ej.26D"
+                                        (keyup)="setUpperCase()" 
+                                        required
+                                    >
+                                    <div class="error">  
+                                        <div class="form-error" *ngIf="formData.controls.address1.hasError('required') && formData.controls.address1.touched">
+                                            {{formConfig$.Errors.EmptyAdressField}}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 p-0 col-md-3">
+                                    <input  
+                                        class="form-control"
+                                        formControlName="address2"
+                                        placeholder="Ej.#57D"
+                                        (keyup)="setUpperCase()" 
+                                        required
+                                    >
+                                    <div class="error">
+                                        <div class="form-error" *ngIf="formData.controls.address2.hasError('required') && formData.controls.address2.touched">
+                                            {{formConfig$.Errors.EmptyAdressField}}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 p-0 col-md-2">
+                                    <input  
+                                        class="form-control"
+                                        formControlName="address3"
+                                        placeholder="Ej. 87"
+                                        (keyup)="setUpperCase()" 
+                                        required
+                                    >
+                                    <div class="error">
+                                        <div class="form-error" *ngIf="formData.controls.address3.hasError('required') && formData.controls.address3.touched">
+                                            {{formConfig$.Errors.EmptyAdressField}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>                          
+                    </div>
+                    <div class="col-12 col-md-3">
+                        <div class="form-group">
+                            <label class="text">* {{formConfig$.Texts.Municipality}}</label>
+                            <input 
+                                class="form-control"
+                                autocomplete="disabled" 
+                                formControlName="cityAddress" 
+                                placeholder="Ej. BOGOTÁ"
+                                type ="text" 
+                                (input) = "suggestCitiesDepartmentsAddr()" 
+                                (keyup)="setUpperCase()"
+                                ng-pattern="/^[a-zA-Z\s]*$/"
+                                required
+                            >
+                            <div appSuggestedSearch (clickOutside) = "disableSuggestion('addr')" class = "suggestion-box" *ngIf="this.suggestedCitiesDepartmentsAddr.length && enableCitiesDepartmentsAddr" >
+                                <div class = "suggestion" *ngFor="let s of suggestedCitiesDepartmentsAddr" (click) = "setValueCityDepartmentAddr(s.city_department, s.city_code)">
+                                    {{s.city_department}}
+                                </div>
+                            </div>
+                            <div class="error">
+                                <div class="form-error" *ngIf="formData.controls.cityAddress.hasError('required') && formData.controls.cityAddress.touched">
+                                    {{formConfig$.Errors.EmptyCityText}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-3 form-group">
+                        <label class="text">* {{formConfig$.Texts.Gender}}</label>
+                        <div class="row m-0 justify-content-between">
+                            <mat-radio-group formControlName = "gender">
+                                <mat-radio-button style = "margin-right: 30px;" [value]="male" >Masculino</mat-radio-button>
+                                <mat-radio-button [value]="female" >Femenino</mat-radio-button>
+                            </mat-radio-group>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-3 form-group">
+                        <label class="text">* {{formConfig$.Texts.LudopathMessage}}</label>
+                        <div class="row m-0 justify-content-between">
+                            <mat-radio-group formControlName = "ludopath">
+                                <mat-radio-button style = "margin-right: 120px;" [value]="ludopath" >Sí</mat-radio-button>
+                                <mat-radio-button [value]="notLudopath" >No</mat-radio-button>
+                            </mat-radio-group>
+                        </div>
+                    </div>
+                </div>
+                <div class="row m-0" *ngIf="texts$">
+                    <div style = "text-align: justify" class="col-md-6 col-sm-12 text form-group"> 
+                        <mat-checkbox
+                        formControlName="acceptsTerms"
+                        class="mr-2"
+                        ></mat-checkbox>
+                        {{formConfig$.form.AcceptTermsAndConditions}} 
+                        <br>
+                        <div style="padding-top: 20px;">
+                            <label class="text">{{formConfig$.Texts.IsPep}}</label>
+                            <div class="row m-0 justify-content-between">
+                                <mat-radio-group formControlName = "pep">
+                                    <mat-radio-button style = "margin-right: 120px;" [value]="isPep" >Sí</mat-radio-button>
+                                    <mat-radio-button [value]="notPep" >No</mat-radio-button>
+                                </mat-radio-group>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-sm-12 text form-group"> 
+                        <div style = "text-align: justify;">
+                            <mat-checkbox
+                            formControlName = "acceptsReceivingPromotionalInformation"
+                            class="mr-2"
+                            ></mat-checkbox>
+                            {{formConfig$.form.SendInformation}}
+                        </div>
+                        <div style = "text-align: justify;">
+                            <mat-checkbox
+                            class="mr-2"
+                            formControlName = "acceptsLimits"
+                            ></mat-checkbox>
+                            {{formConfig$.form.AcceptLimits}}
+                        </div>
+                        <div style="padding-top: 10px;">
+                            <p style="color: white; background-color:#00afcb; width: 30%; cursor: default;">
+                                Consulta límites <a class = "click-limits" (click)= "openLimitsModal()">Aquí</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row m-0" *ngIf="texts$" style="padding-top: 20px;">
+                    <div class="col-12 col-md-3">
+                        <div class="form-group">
+                            <label class="text">{{formConfig$.Texts.StoreCode}}</label>
+                            <input 
+                                placeholder="Ej. 000000000"
+                                class="form-control"
+                                formControlName="storeCode" 
+                                type ="text"
+                            >
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-3">
+                        <div class="form-group">
+                            <label class="text">{{formConfig$.Texts.Referrer}}</label>
+                            <input 
+                                placeholder="Ej. 000000000"
+                                class="form-control"
+                                formControlName="referrer" 
+                                type ="text" 
+                            >
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6 recaptcha">
+                        <re-captcha
+                            [siteKey]="siteKey"
+                            (resolved)="resolvedCaptcha($event)"
+                            required
+                        ></re-captcha>
+                    </div>
+                </div>
+                <div class="row m-0" style="padding-top: 30px;">
+                    <div class="col-12 pr-0n text-center">
+                        <button type="submit" 
+                        class="btn btn-orange" 
+                        data-callback="successSubmit"
+                        [ngClass]="{ disabled: isLoading }"
+                        [disabled]="isLoading"
+                        >
+                            {{formConfig$.Texts.Next}}
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <br>
+       <!-- <div class="alert alert-danger text-center" *ngIf="formError != ''">
+            {{ (formConfig$.Errors && formConfig$.Errors[formError]) ? formConfig$.Errors[formError] : formError }}
+        </div> -->
+    </div>
+</div>

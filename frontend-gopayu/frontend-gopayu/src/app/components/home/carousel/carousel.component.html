@@ -1,0 +1,41 @@
+<div *ngIf="type === 'normal'" class="bet-carousel" [id]="carouselId">
+    <!-- Controls -->
+    <div class="bet-carousel-control">
+        <i (click)="back()" class="fas fa-chevron-left"></i>
+    </div>
+    <div class="bet-carousel-control right">
+        <i (click)="next()" class="fas fa-chevron-right"></i>
+    </div>
+    <div class="points_content d-none d-md-block">
+        <div (click)="goToIndex(i)" class="point" [ngClass]="{ 'active':(currentIndex == i) }" *ngFor="let item of images; let i = index"></div>
+    </div>
+    <!-- Images -->
+    <div *ngFor="let img of images;" class="bet-carousel-item">
+        <img [src]="img">
+    </div>
+</div>
+
+
+<div *ngIf="type === 'home'" class="bet-carousel" [id]="carouselId">
+    <!-- Controls -->
+    <div class="bet-carousel-control">
+        <i (click)="back()" class="fas fa-chevron-left"></i>
+    </div>
+    <div class="bet-carousel-control right">
+        <i (click)="next()" class="fas fa-chevron-right"></i>
+    </div>
+    <div class="points_content d-none d-md-block">
+        <div (click)="goToIndex(i)" class="point" [ngClass]="{ 'active':(currentIndex == i) }" *ngFor="let item of images; let i = index"></div>
+    </div>
+    <!-- Images -->
+    <div *ngFor="let img of images;"  class="bet-carousel-item">
+        <a [href]="img.link" (click)="internalPromotion()">
+            <div class="hover-image">
+                <button class="btn btn-primary">VER MÁS</button>
+            </div>
+        </a>
+        <div>
+            <img *ngIf="img" [src]="img.url" srcset="{{img.srcset}}"/>
+        </div>
+    </div>
+</div>

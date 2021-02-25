@@ -1,0 +1,396 @@
+﻿button {
+    background-color: #000;
+    color: #fff;
+}
+
+DIV#container {
+    background-color: #000;
+    color: #fff;
+    display: inline-block;
+    padding: 20px;
+    width: calc(100% - 60px);
+    font: 14px/18px 'Open Sans', "Helvetica Neue", Helvetica, Arial,sans-serif;
+}
+DIV#container > TABLE {
+    width: 100%;
+}
+TD#container_apuestas {
+    height: 500px;
+    max-height: 500px;
+    min-height: 500px;
+    overflow: auto;
+    display: block;
+    width: 100%;
+} 
+TABLE#apuestas {
+    width: 100%;
+}
+
+TABLE#apuestas TR TD{
+    font-size: 12px;
+    padding: 3px;
+    margin: 3px;
+    cursor: default;
+}
+
+TABLE#apuestas TR:nth-child(2n+1) TD {
+    border-top: 1px solid #e31c79;
+
+}
+
+#loader {
+    margin: 0 auto;
+    position: relative;
+    top: -300px;
+}
+
+.md-progress-circular.md-theme {
+    background-color: transparent;
+}
+
+.md-progress-circular {
+    width: 100px;
+    height: 100px;
+    display: block;
+    position: relative;
+    padding-top: 0 !important;
+    margin-bottom: 0 !important;
+    overflow: hidden;
+}
+
+.md-progress-circular .md-spinner-wrapper {
+    -webkit-animation: outer-rotate 2.91667s linear infinite;
+    animation: outer-rotate 2.91667s linear infinite;
+}
+
+.md-progress-circular .md-spinner-wrapper .md-inner {
+    -webkit-animation: sporadic-rotate 5.25s cubic-bezier(0.35, 0, 0.25, 1) infinite;
+    animation: sporadic-rotate 5.25s cubic-bezier(0.35, 0, 0.25, 1) infinite;
+}
+
+.md-progress-circular .md-inner {
+    width: 100px;
+    height: 100px;
+    position: relative;
+}
+
+.md-progress-circular.md-theme .md-inner .md-gap {
+    border-top-color: #a61f67;
+    border-bottom-color: #a61f67;
+}
+
+.md-progress-circular .md-inner .md-gap {
+    position: absolute;
+    left: 49px;
+    right: 49px;
+    top: 0;
+    bottom: 0;
+    border-top: 5px solid black;
+    box-sizing: border-box;
+}
+
+.md-progress-circular .md-inner .md-left {
+    left: 0;
+}
+
+.md-progress-circular .md-inner .md-left, .md-progress-circular .md-inner .md-right {
+    position: absolute;
+    top: 0;
+    height: 100px;
+    width: 50px;
+    overflow: hidden;
+}
+
+
+
+.md-progress-circular .md-spinner-wrapper .md-inner .md-left .md-half-circle {
+    -webkit-animation-name: left-wobble;
+    animation-name: left-wobble;
+}
+
+.md-progress-circular .md-spinner-wrapper .md-inner .md-left .md-half-circle, .md-progress-circular .md-spinner-wrapper .md-inner .md-right .md-half-circle {
+    -webkit-animation-iteration-count: infinite;
+    animation-iteration-count: infinite;
+    -webkit-animation-duration: 1.3125s;
+    animation-duration: 1.3125s;
+    -webkit-animation-timing-function: cubic-bezier(0.35, 0, 0.25, 1);
+    animation-timing-function: cubic-bezier(0.35, 0, 0.25, 1);
+}
+
+.md-progress-circular.md-theme .md-inner .md-left .md-half-circle {
+    border-left-color: #a61f67;
+}
+
+.md-progress-circular.md-theme .md-inner .md-left .md-half-circle, .md-progress-circular.md-theme .md-inner .md-right .md-half-circle {
+    border-top-color: #a61f67;
+}
+
+.md-progress-circular .md-inner .md-left .md-half-circle {
+    left: 0;
+    border-right-color: transparent;
+}
+
+.md-progress-circular .md-inner .md-left .md-half-circle, .md-progress-circular .md-inner .md-right .md-half-circle {
+    position: absolute;
+    top: 0;
+    width: 100px;
+    height: 100px;
+    box-sizing: border-box;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent;/*black black transparent;*/
+    border-radius: 50%;
+}
+
+.md-progress-circular .md-inner .md-right {
+    right: 0;
+}
+
+.md-progress-circular .md-spinner-wrapper .md-inner .md-right .md-half-circle {
+    -webkit-animation-name: right-wobble;
+    animation-name: right-wobble;
+}
+
+.md-progress-circular.md-theme .md-inner .md-right .md-half-circle {
+    border-right-color: #a61f67;
+}
+
+.md-progress-circular .md-inner .md-right .md-half-circle {
+    right: 0;
+    border-left-color: transparent;
+}
+
+/* small loader style */
+.md-progress-circular.small-progress{
+    width: 20px;
+    height: 20px;
+    top: 0;
+    right: 0;
+    left: auto;
+    margin: 0;
+}
+.md-progress-circular.small-progress .md-inner{
+    width: 20px;
+    height: 20px;
+}
+.md-progress-circular.small-progress .md-inner .md-gap{
+    left: 9px;
+    right: 9px;
+    border-top-width: 2px;
+}
+.md-progress-circular.small-progress .md-inner .md-left, .md-progress-circular.small-progress .md-inner .md-right {
+    height: 20px;
+    width: 10px;
+}
+.md-progress-circular.small-progress .md-inner .md-left .md-half-circle, .md-progress-circular.small-progress .md-inner .md-right .md-half-circle{
+    width: 20px;
+    height: 20px;
+    box-sizing: border-box;
+    border-width: 2px;
+}
+/* loader style position on different pages */
+.flash-game-contain .md-progress-circular{
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    margin-left:-50px;
+    z-index: 1;
+}
+.casino-main .md-progress-circular{
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    margin-left: -50px;
+}
+.md-progress-circular.page-center{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin-top:-50px;
+    margin-left: -50px;
+}
+.md-progress-circular.lottery-loader{
+    position: relative;
+    left: 50%;
+    margin-left:-50px;
+}
+.md-progress-circular.jackpot, .md-progress-circular.skillgames{
+    top: 25%;
+    left: 50%;
+    margin-left:-50px;
+    position: absolute;
+}
+.md-progress-circular.page-center.right-block-history{
+    margin-left: 68px;
+}
+
+.loader-btn .md-progress-circular.small-progress {
+    position: absolute;
+    right: 10px;
+    top: 13px;
+}
+.menu-casino.md-progress-circular{
+    left: 40%;
+    top: 80px;
+    position: relative;
+}
+
+@-webkit-keyframes outer-rotate {
+    100% {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes outer-rotate {
+    100% {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}
+
+@-webkit-keyframes sporadic-rotate {
+    12.5% {
+        -webkit-transform: rotate(135deg);
+        transform: rotate(135deg);
+    }
+
+    25% {
+        -webkit-transform: rotate(270deg);
+        transform: rotate(270deg);
+    }
+
+    37.5% {
+        -webkit-transform: rotate(405deg);
+        transform: rotate(405deg);
+    }
+
+    50% {
+        -webkit-transform: rotate(540deg);
+        transform: rotate(540deg);
+    }
+
+    62.5% {
+        -webkit-transform: rotate(675deg);
+        transform: rotate(675deg);
+    }
+
+    75% {
+        -webkit-transform: rotate(810deg);
+        transform: rotate(810deg);
+    }
+
+    87.5% {
+        -webkit-transform: rotate(945deg);
+        transform: rotate(945deg);
+    }
+
+    100% {
+        -webkit-transform: rotate(1080deg);
+        transform: rotate(1080deg);
+    }
+}
+
+@keyframes sporadic-rotate {
+    12.5% {
+        -webkit-transform: rotate(135deg);
+        transform: rotate(135deg);
+    }
+
+    25% {
+        -webkit-transform: rotate(270deg);
+        transform: rotate(270deg);
+    }
+
+    37.5% {
+        -webkit-transform: rotate(405deg);
+        transform: rotate(405deg);
+    }
+
+    50% {
+        -webkit-transform: rotate(540deg);
+        transform: rotate(540deg);
+    }
+
+    62.5% {
+        -webkit-transform: rotate(675deg);
+        transform: rotate(675deg);
+    }
+
+    75% {
+        -webkit-transform: rotate(810deg);
+        transform: rotate(810deg);
+    }
+
+    87.5% {
+        -webkit-transform: rotate(945deg);
+        transform: rotate(945deg);
+    }
+
+    100% {
+        -webkit-transform: rotate(1080deg);
+        transform: rotate(1080deg);
+    }
+}
+
+@-webkit-keyframes left-wobble {
+    0%, 100% {
+        -webkit-transform: rotate(130deg);
+        transform: rotate(130deg);
+    }
+
+    50% {
+        -webkit-transform: rotate(-5deg);
+        transform: rotate(-5deg);
+    }
+}
+
+@keyframes left-wobble {
+    0%, 100% {
+        -webkit-transform: rotate(130deg);
+        transform: rotate(130deg);
+    }
+}
+
+@-webkit-keyframes right-wobble {
+    0%, 100% {
+        -webkit-transform: rotate(-130deg);
+        transform: rotate(-130deg);
+    }
+
+    50% {
+        -webkit-transform: rotate(5deg);
+        transform: rotate(5deg);
+    }
+}
+
+@keyframes right-wobble {
+    0%, 100% {
+        -webkit-transform: rotate(-130deg);
+        transform: rotate(-130deg);
+    }
+
+    50% {
+        -webkit-transform: rotate(5deg);
+        transform: rotate(5deg);
+    }
+}
+
+.result-bet-icon {
+    width: 14px;
+    height: 15px;
+
+    display: inline-block;
+}
+
+.result-bet-icon.lost {
+    background: url(result-icon.png) no-repeat 0 -25px
+}
+
+.result-bet-icon.win {
+    background: url(result-icon.png) no-repeat 0 0
+}
+.result-bet-icon.watch {
+    background: url(result-icon.png) no-repeat 0 -49px
+}
+

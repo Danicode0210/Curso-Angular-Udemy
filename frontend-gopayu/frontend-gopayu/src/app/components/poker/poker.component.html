@@ -1,0 +1,118 @@
+<div>
+  <div
+    *ngIf="showRegistrationMessage"
+    class="row m-0 tabsPoker align-items-end"
+  >
+    <div
+      class="col-6 col-md-6 font-weight-bold"
+      (click)="page = 1"
+      [ngClass]="{ active: page == 1 }"
+    >
+      ENVIAR DINERO
+    </div>
+    <div
+      class="col-6 col-md-6 font-weight-bold"
+      (click)="page = 2"
+      [ngClass]="{ active: page == 2 }"
+    >
+      TRAER DINERO
+    </div>
+  </div>
+
+  <app-loadingspinner *ngIf="isLoading"></app-loadingspinner>
+
+  <div *ngIf="page == 1" class="p-3 rounded-lg">
+    <div class="alert alert-danger" *ngIf="errorSend != ''">
+      {{ errorSend }}
+    </div>
+
+    <div class="alert alert-success" *ngIf="successSend != ''">
+      {{ successSend }}
+    </div>
+
+    <p class="balance-label mb-0 font-weight-bold">
+      Saldo ${{ balanceBet | number }}
+    </p>
+    <form
+      class="position-relative d-block d-md-flex align-items-center"
+      [formGroup]="formData"
+      novalidate
+      autocomplete="off"
+      (ngSubmit)="sendMoney()"
+    >
+      <div class="p-3 text-white">
+        <p class="m-0">Ingresa cantidad</p>
+        <small>Min:$1.000/ Max:$1.000.000</small>
+      </div>
+      <!-- First name -->
+      <div class="mr-3">
+        <input
+          class="poker-input"
+          (keyup)="numberFormat('amount')"
+          formControlName="amount"
+          required
+        />
+
+        <div
+          class="text-danger"
+          *ngIf="
+            isSubmitedSend && formData.controls.amount.hasError('required')
+          "
+        >
+          Ingresa el valor a enviar
+        </div>
+      </div>
+
+      <button class="btn-white-poker mt-3 mt-md-0">
+        CONFIRMAR
+      </button>
+    </form>
+  </div>
+
+  <div *ngIf="page == 2" class="p-3 rounded-lg">
+    <div class="alert alert-danger" *ngIf="errorBring != ''">
+      {{ errorBring }}
+    </div>
+
+    <div class="alert alert-success" *ngIf="successBring != ''">
+      {{ successBring }}
+    </div>
+    <p class="balance-label mb-0 font-weight-bold">
+      Saldo ${{ balancePoker | number }}
+    </p>
+    <form
+      class="position-relative d-block d-md-flex align-items-center"
+      [formGroup]="formData"
+      novalidate
+      autocomplete="off"
+      (ngSubmit)="requestMoney()"
+    >
+      <div class="p-3 text-white">
+        <p class="m-0">Ingresa cantidad</p>
+        <small>Min:$1.000/ Max:$1.000.000</small>
+      </div>
+      <!-- First name -->
+      <div class="mr-3">
+        <input
+          class="poker-input"
+          (keyup)="numberFormat('amount')"
+          formControlName="amount"
+          required
+        />
+
+        <div
+          class="text-danger"
+          *ngIf="isSubmited && formData.controls.amount.hasError('required')"
+        >
+          Ingresa el valor a retirar
+        </div>
+      </div>
+
+      <div>
+        <button class="btn-white-poker mt-3 mt-md-0">
+          CONFIRMAR
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

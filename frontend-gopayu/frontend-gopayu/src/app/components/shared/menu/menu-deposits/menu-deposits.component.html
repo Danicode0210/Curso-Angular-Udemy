@@ -1,0 +1,106 @@
+<h5 class="text-right pr-3 pt-3 mb-0"><i class="fas fa-times cursor-pointer" (click)="closeModal()"></i></h5>
+<div class="p-3 text-center">
+  <p class="text-blue font-weight-bold">RECARGAR TU CUENTA</p>
+  <mat-divider class="white_divider"></mat-divider>
+  <br>
+  <div class="row m-0">
+    <p class="text-center w-100">ELIGE UN MÉTODO PARA REALIZAR LA RECARGA</p>  
+    <div class="text-center w-100">
+        <select (change) = "gaEventSelectRechargeMethod()" [(ngModel)]="methodId" class="form-control menu-select">
+            <option value="1">Recargar punto de venta</option>
+            <option value="2">Recarga vía Baloto</option>
+            <option value="3">Recarga con PayU</option>
+            <option *ngIf="activedBonuses" value="5">Redimir Cupón</option>
+            <option value="4">Recarga con Rappi</option>
+          </select>
+    </div>
+  </div>
+  <div *ngIf="methodId == 1">
+    <div class="contentImagesDeposit">
+      <img src="../../../../../../assets/img/deposits/supergiros.png" alt="">
+      <img src="../../../../../../assets/img/deposits/sured.png" alt="">
+    </div>
+    <div class="text-blue">Actualmente, el método de pago aceptado es el pago en punto de venta físico <a
+        href="https://www.supergiros.com.co/" target="_blank"><b><u>SuperGIROS</u></b></a> y <a
+        href="https://www.sured.com.co/" target="_blank"><b><u>SURED</u></b></a>.</div>
+  </div>
+  <app-bonnus *ngIf="methodId == 5"></app-bonnus>
+  <div *ngIf="methodId == 4" class="p-3 text-center">
+    <a href="https://widget.toplay.com.co/Wallets/Deposit?operatorId=6" target="_blank">
+      <button class="btn btn-orange pl-3 pr-3">Recarga desde la página de Rappi</button>
+    </a>
+  </div>
+  <div *ngIf="methodId == 2 || methodId == 3" class="text-left p-3">
+    <p class="m-0">Pasarela de pago que permite realizar pagos en internet y que funciona como un datáfono virtual.</p>
+    <p *ngIf="methodId == 3" class="m-0">Puedes pagar con todas las tarjetas de crédito.</p>
+    <p class="font-weight-bold">Importante:</p>
+    <p *ngIf="methodId == 2">Para realizar una recarga Vía Baloto primero debes generar un número de pago, el cual debes presentar en el punto físico junto con el número de convenio No. 950110 para realizar la recarga. Una vez generado el código tendrás 72 horas para usarlo.</p>
+    <p>- Monto mínimo ${{ minVal | number }} pesos</p>
+    <p *ngIf="methodId == 2">* A continuación ingresa el valor ingresa el valor que quieras recargar para generar el código en la plataforma de PAYU. </p>
+    <p *ngIf="methodId == 3">* <span class="text-blue">A continuación debes ingresar sólo los datos del titular de la tarjeta para evitar
+        problemas con tu transacción</span></p>
+    <p>Conoce más detalles sobre el pago con PayU <a target="_blank" href="https://www.payulatam.com/co/">aquí</a>.</p>
+    <img class="logoDeposit" src="../../../../../../assets/img/deposits/payu_logo.png" alt="">
+    <form class="formDepoPin" [formGroup]="formData" novalidate autocomplete="off" (ngSubmit)="getPayUParams()">
+      <mat-form-field class="w-100">
+        <input matInput
+               formControlName="value"
+               (keyup)="numberFormat('value')"
+               placeholder="Valor a recargar">
+               <mat-error *ngIf="formData.controls.value.hasError('required')">
+                  Ingresa el valor a recargar
+              </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="w-100">
+        <input matInput
+        readonly
+        formControlName="email"
+        placeholder="Email">
+        <mat-error *ngIf="formData.controls.email.hasError('required')">
+            Ingresa un correo
+        </mat-error>
+        <mat-error *ngIf="formData.controls.email.hasError('email') || formData.controls.email.hasError('pattern')">
+            Ingresa un correo válido
+        </mat-error>
+      </mat-form-field>
+      <div class="alert alert-danger" *ngIf="formError != ''">
+          {{ (texts$) ? texts$.playerValidationError[formError] : formError }}
+      </div>
+      <div class="row m-0 justify-content-space-between contentButtonsMenuOptions">
+          <div class="col-12 col-md-6 pl-0">
+            <button *ngIf="!isLoading" class="btn btn-orange pl-3 pr-3" color="primary">Proceder</button>
+            <button *ngIf="isLoading" class="btn btn-orange pl-3 pr-3" [ngClass]="{ 'disabled':isLoading }" [disabled]="isLoading" type="submit"> Cargando... <i *ngIf="isLoading" class="fas fa-circle-notch fa-spin"></i> </button>
+          </div>
+          <div class="col-12 col-md-6 ">
+          </div>
+      </div>
+    </form>
+
+
+    <!-- PayU Form -->
+    <form method="POST" [action]="URLPayU" id="payuForm">
+      <input name="merchantId" type="hidden" [value]="payuData.merchantId">
+      <input name="accountId" type="hidden" [value]="payuData.accountId">
+      <input name="description" type="hidden" [value]="payuData.description">
+      <input name="referenceCode" type="hidden" [value]="payuData.referenceCode">
+      <input name="amount" type="hidden" [value]="payuData.amount">
+      <input name="tax" type="hidden" [value]="payuData.tax">
+      <input name="taxReturnBase" type="hidden" [value]="payuData.taxReturnBase">
+      <input name="currency" type="hidden" [value]="payuData.currency">
+      <input name="signature" type="hidden" [value]="payuData.signature">
+      <input name="algorithmSignature" type="hidden" [value]="payuData.algorithmSignature">
+      <input name="test" type="hidden" [value]="payuData.test">
+      <input name="buyerEmail" type="hidden" [value]="payuData.buyerEmail">
+      <input name="buyerFullName" type="hidden" [value]="payuData.buyerFullName">
+      <input name="payerFullName" type="hidden" [value]="payuData.payerFullName">
+      <input name="payerMobilePhone" type="hidden" [value]="payuData.payerMobilePhone">
+      <input name="payerDocument" type="hidden" [value]="payuData.payerDocument">
+      <input name="payerDocumentType" type="hidden" [value]="payuData.payerDocumentType">
+      <input name="telephone" type="hidden" [value]="payuData.telephone">
+      <input name="responseUrl" type="hidden" [value]="payuData.responseUrl">
+      <input name="confirmationUrl" type="hidden" [value]="payuData.confirmationUrl">
+    </form>
+    <!-- PayU Form end -->
+  </div>
+</div>

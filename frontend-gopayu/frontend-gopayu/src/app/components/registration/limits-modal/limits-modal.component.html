@@ -1,0 +1,26 @@
+<div class="p-3 text-center">
+    <img
+    [src]="assets.logoHeader.path"
+    alt="Logo BetPlay"
+    style="width: 10rem; margin-bottom: 20px;"
+    />  
+    <br>
+    <div class="row m-0">
+      <p class="w-100" style="text-align: justify;">
+        Por defecto tienes asignados los siguientes límites de depósito:
+        <br>
+        <br>
+        $ {{data.day}} diarios (de las 00:00h a las 24:00h).
+        <br>
+        <br>
+        $ {{data.week}} semanales (de las 00:00h del lunes a las 24:00h del domingo).
+        <br>
+        <br>
+        $ {{data.month}} mensuales (de las 00:00h del primer día del mes a las 24:00h del último día del mes).
+        <br>
+        <br>
+        Esto significa que el límite máximo de dinero que puedes depositar en un día es de $ {{data.day}} , en una semana es de $ {{data.week}}0 y en un mes es de $ {{data.month}}. Si quieres depositar más dinero, el sistema no te dejará a menos que nos solicites una ampliación de estos límites o la eliminación de los mismos. Para ello, debes ir a la sección ‘Juego Responsable’, dentro de tu cuenta de usuario y seleccionar ‘Auto límites del jugador’.
+      </p>  
+    </div>
+    <button (click)="closeModal()" class="btn btn-orange" >ACEPTAR</button>
+  </div>

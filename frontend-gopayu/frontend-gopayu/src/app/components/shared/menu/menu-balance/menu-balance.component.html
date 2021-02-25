@@ -1,0 +1,76 @@
+<app-loadingspinner *ngIf="isLoading"></app-loadingspinner>
+<div *ngIf="!isLoading" class="p-3">
+<h5 class="text-right pr-3 pt-3 mb-0"><i class="fas fa-times cursor-pointer" (click)="closeModal()"></i></h5>
+<p class="text-blue font-weight-bold text-center">SALDO</p>
+    <div class="row m-0">
+        <div class="col-12 col-md-6">
+            <mat-form-field class="w-100">
+                <input matInput readonly placeholder="Saldo total" [value]="balance.totalBalance | number">
+            </mat-form-field>
+        </div>
+        <div class="col-12 col-md-6">
+            <mat-form-field class="w-100">
+                <input matInput readonly placeholder="Bonos activos" [value]="balance.bonusBalance  | number">
+            </mat-form-field>
+        </div>
+    </div>
+    <div class="row m-0">
+        <div class="col-12 col-md-6">
+            <mat-form-field class="w-100">
+                <input matInput readonly placeholder="Saldo real" [value]="balance.realBalance | number ">
+            </mat-form-field>
+        </div>
+        <div class="col-12 col-md-6">
+            <mat-form-field class="w-100">
+                <input matInput readonly placeholder="Bonos pendientes" [value]="balance.bonosPendientes  | number">
+            </mat-form-field>
+        </div>
+    </div>
+
+    <!-- <div *ngIf="bonuses.length > 0" style="text-align: left; padding: 1em 2em;">
+        <h4 class="align_left text_blue"><b>Bonos</b></h4>
+        <div style="margin-bottom: 1em;" class="bonus_content" *ngFor="let item of bonuses">
+          <p class="text_blue"><b>{{item.displayName}}</b></p>
+          <p>Activado el {{item.dateActivated | date:'dd-MM-yyyy H:m:s'}}, caduca en {{item.daysToExpiration}} días</p>
+          <p>Rollover completado: {{(item.moneyRedemptionCurrentValue/item.moneyRedemptionTargetValue)*100}} %</p>
+          <p>Quedan ${{(item.moneyRedemptionTargetValue - item.moneyRedemptionCurrentValue) | number}} $ para liberación</p>
+          <mat-progress-bar mode="determinate" [value]="(item.numberOfBetsRedemptionCurrentValue/item.numberOfBetsRedemptionTargetValue)*100"></mat-progress-bar>
+          <p>Rollover completado (número de apuestas): {{(item.numberOfBetsRedemptionCurrentValue/item.numberOfBetsRedemptionTargetValue)*100 | number}} %</p>
+          <mat-progress-bar mode="determinate" [value]="item.numberOfBetsRedemptionCurrentValue/item.numberOfBetsRedemptionTargetValue*100"></mat-progress-bar>
+          <p>Quedan ({{item.numberOfBetsRedemptionTargetValue-item.numberOfBetsRedemptionCurrentValue}}) apuestas para liberación</p>
+        </div>
+    </div> -->
+
+    <div>
+
+        <div class="p-3 mb-3 text-center">
+            <button (click)="screen = 1" class="btn-balance mr-md-3 mb-3 mb-md-0" [ngClass]="{'active':(screen == 1)}">Bono Casino
+
+                <div *ngIf="bonusNotifications" class="notification modal_notification">
+                    {{ bonusNotifications }}
+                </div>
+
+            </button>
+
+            <a href="/apuestas#bonus-offers">
+                <button class="btn-balance">
+                    Apuestas Gratis
+                </button>
+            </a>
+        </div>
+
+        <div *ngIf="screen == 1">
+            <div *ngFor="let item of bonuses" class="row m-0 justify-content-center">
+                <div *ngIf="item.status == 'Active'" class="text-center col-12 col-md-8">
+                    <h3 class="mb-0">Valor ${{ item.bonusBalance | number }}</h3>
+                    <p>Fecha Vencimiento: {{ item.dateClosed | date:'dd/MM/yyyy' }}</p>
+                    <p>Este bono solo se podrá usar en los juegos que se encuentren en la sección del Casino llamada "Promociones".</p>
+                    <a href="/slots#cat5f7f1c184839505bc88182e2">
+                        <button class="btn-balance active">¡Juega Ya!</button>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

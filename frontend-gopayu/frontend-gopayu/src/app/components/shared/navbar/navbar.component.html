@@ -1,0 +1,109 @@
+<nav>
+  <ul>
+    <a
+      [routerLink]="['/']"
+      [routerLinkActiveOptions]="{ exact: true }"
+      [routerLinkActive]="['active']"
+      (click) = "gaEventNavBar($event)"
+    >
+      <li>
+        <i class="mr-2 d-inline-block d-md-none beticon-inicio"></i> INICIO
+      </li>
+    </a>
+    <a
+      [routerLink]="['/apuestas']"
+      [routerLinkActiveOptions]="{ exact: true }"
+      [routerLinkActive]="['active']"
+      (click) = "gaEventNavBar($event)"
+    >
+      <li>
+        <i class="mr-2 d-inline-block d-md-none beticon-deportes"></i> DEPORTES
+      </li>
+    </a>
+    <a [routerLink]="['/live']" [routerLinkActive]="['active']" (click) = "gaEventNavBar($event)">
+      <li>
+        <i class="mr-2 d-inline-block d-md-none beticon-en-vivo-ahora"></i> EN
+        DIRECTO
+      </li>
+    </a>
+    <a
+      *ngIf="pokerActive"
+      [routerLink]="['/poker']"
+      [routerLinkActive]="['active']"
+      (click) = "gaEventNavBar($event)"
+    >
+      <li>
+        <i class="mr-2 d-inline-block d-md-none beticon-casino"></i> POKER
+      </li>
+    </a>
+
+    <a
+      *ngIf="virtualesActive"
+      [routerLink]="['/virtuales']"
+      [routerLinkActive]="['active']"
+      (click) = "gaEventNavBar($event)"
+    >
+      <li>
+        <i class="mr-2 d-inline-block d-md-none beticon-casino"></i> VIRTUALES
+      </li>
+    </a>
+    <a 
+    *ngIf="casinoActive"
+    [routerLink]="['/casino']" 
+    [routerLinkActive]="['active']"
+    (click) = "gaEventNavBar($event)"
+    >
+      <li>
+        <i class="mr-2 d-inline-block d-md-none beticon-casino"></i> CASINO LIVE
+      </li>
+    </a>
+
+    <a [routerLink]="['/slots']" [routerLinkActive]="['active']" (click) = "gaEventNavBar($event)"
+    >
+      <li>
+        <i class="mr-2 d-inline-block d-md-none beticon-casino"></i> CASINO
+      </li>
+    </a>
+    <a [routerLink]="['/promociones']" [routerLinkActive]="['active']" (click) = "gaEventNavBar($event)">
+      <li>
+        <i class="mr-2 d-inline-block d-md-none beticon-promociones"></i>
+        PROMOCIONES
+      </li>
+    </a>
+    <a [routerLink]="['/faq']" [routerLinkActive]="['active']" (click) = "gaEventNavBar($event)">
+      <li>
+        <i
+          class="mr-2 d-inline-block d-md-none beticon-preguntas-frecuentes"
+        ></i>
+        AYUDA
+      </li>
+    </a>
+    <a [routerLink]="['/blog']" (click) = "gaEventNavBar($event)">
+      <li>
+        <i class="mr-2 d-inline-block d-md-none beticon-blog"></i> COMUNIDAD
+      </li>
+    </a>
+    <a href="#">
+      <li class="d-block d-md-none" (click)="toggleChat()">
+        <i class="fas fa-comment-dots mr-2"></i> CHAT
+      </li>
+    </a>
+    <a  *ngIf="Callback" href="#">
+      <li class="d-block d-md-none" onclick="window['$']('#callbackCB').removeClass('d-none')">
+        <i class="fas fa-phone-volume mr-2"></i> QUIERO QUE ME LLAMEN
+      </li>
+    </a>
+    <a href="#">
+      <li class="d-block d-md-none" onclick="window['$']('#donwload-modal').removeClass('d-none')">
+        <i class="fas fa-phone-volume mr-2"></i> DESCARGAR LA APP DE BETPLAY
+      </li>
+    </a>
+    <a  *ngIf="Promotions" href="javascript:;">
+      <li class="d-block d-md-none" 
+      (click)="openPromotionsModal()"
+      >
+        <i class="fas fa-bullhorn mr-2"></i> REDIMIR PROMOCIONES
+      </li>
+    </a>
+  </ul>
+</nav>

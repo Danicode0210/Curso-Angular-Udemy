@@ -1,0 +1,16 @@
+
+User-agent: *
+
+Disallow: /?_escaped_fragment_*
+Disallow: /?gclid=*
+Disallow: /inicio
+Disallow: /inicio/
+Disallow: /?utm_source=*
+Disallow: /widgets/
+Disallow: /registrarse?*
+Disallow: /recuperacion-de-contrasena/
+Disallow: /filter
+Disallow: /*utm_medium=*
+Disallow: /politica-cookies
+
+Sitemap: https://betplay.com.co/sitemap.xml

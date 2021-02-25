@@ -1,0 +1,14 @@
+<div class="smartbanner smartbanner-android">
+    <div class="smartbanner-container">
+        <a href="javascript:void(0);" class="smartbanner-close" (click)="closeSmartBanner()">×</a>
+        <span class="smartbanner-icon" *ngIf="assets" [ngStyle]="{ 'background-image': 'url('+assets.logoHeader.path+')' }"></span>
+        <!-- <div class="smartbanner-info">
+            <div class="smartbanner-title">BetPlay</div>
+            <div></div>
+            <span>Android</span>
+        </div> -->
+        <button (click)="downloadAPK()" class="smartbanner-button">
+            <span class="smartbanner-button-text">Descarga aquí la APP</span>
+        </button>
+    </div>
+</div>

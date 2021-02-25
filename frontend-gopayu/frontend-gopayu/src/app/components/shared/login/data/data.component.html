@@ -1,0 +1,100 @@
+<div class="p-relative">
+    <app-loadingspinner *ngIf="isLoading"></app-loadingspinner>
+    <div class="text-left">
+    <h1 mat-dialog-title class="text-right"><mat-icon mat-button (click)="onNoClick()" class="mt-1 pointer"><i class="fas fa-times"></i></mat-icon></h1>
+      <mat-dialog-content class="p-3">
+        <form [formGroup]="formData" novalidate autocomplete="off" (ngSubmit)="sendData(file, file2)">
+          <div class="row mb-3 mr-0 ml-0 align-items-center">
+          <div class="col-12 col-md-2">
+            <img src="../../../../../assets/img/logos/logo-download.png">
+          </div>
+          <div class="col-12 col-md-8 text-center">
+            <p class="mb-0">{{ texts.VIPData.HeaderText }}</p>
+          </div>
+        </div>
+        <mat-divider></mat-divider>
+        <div class="row mb-3 mt-3 mr-0 ml-0 align-items-center">
+          <div class="col-12 col-md-6">
+            <p class="mb-0"><span><b>1.</b></span> {{ texts.VIPData.Input1 }}</p>
+          </div>
+          <div class="col-12 col-md-6">
+            <mat-form-field class="w-100">
+              <mat-select formControlName="profesion" placeholder="Selecciona una opción">
+                <mat-option *ngFor="let item of texts.VIPData.ComboBox1 " [value]="item">{{item}}</mat-option>
+                <mat-option value="other">Otros</mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <input formControlName="other" *ngIf="formData.value.profesion == 'other'" type="text" class="form-control" placeholder="Ingesa tu profesión">
+            
+          </div>
+        </div>
+        <div class="row mb-3 mr-0 ml-0 align-items-top">
+          <div class="col-12 col-md-6">
+            <p class="mb-0"><span><b>2.</b></span> {{ texts.VIPData.Input2 }}</p>
+            <p class="mb-0 labelDataForm">{{ texts.VIPData.Input2Info }}</p>
+          </div>
+          <div class="col-12 col-md-6">
+            <mat-radio-group formControlName="peps" aria-label="Select an option">
+              <mat-radio-button class="mr-3" value="1">Si</mat-radio-button>
+              <mat-radio-button value="0">No</mat-radio-button>
+            </mat-radio-group>
+          </div>
+        </div>
+        <div class="row mb-3 mr-0 ml-0 align-items-center">
+          <div class="col-12 col-md-12">
+            <p class="mb-0"><span class="mr-2"><b>3.</b></span> <mat-checkbox formControlName="procedinero"></mat-checkbox> {{ texts.VIPData.Input3 }}</p>
+          </div>
+        </div>
+        <div class="row mb-3 mr-0 ml-0 align-items-center">
+          <div class="col-12 col-md-6">
+            <p class="mb-0"><span><b>4.</b></span> {{ texts.VIPData.Input4 }}</p>
+          </div>
+          <div class="col-12 col-md-6">
+            <input type="file" accept="image/jpeg" (change)="fileChange($event)" class="hidden-input" #file>
+            <button mat-raised-button type="button" color="primary" (click)="file.click()">Cargar archivo</button>
+            <mat-error *ngIf="showErrorImage">
+                La imagen debe estar en formato JPG.
+            </mat-error>
+            <div class="photoContainer" *ngIf="getImageBase()">
+              <img [src]="getImageBase()">
+            </div>
+          </div>
+        </div>
+  
+        <div class="row mb-3 mr-0 ml-0 align-items-center">
+          <div class="col-12 col-md-6">
+            <p class="mb-0"><span><b>5.</b></span> {{ texts.VIPData.Input5 }}</p>
+          </div>
+          <div class="col-12 col-md-6">
+            <input type="file" accept="image/jpeg" (change)="file2Change($event)" class="hidden-input" #file2>
+            <button mat-raised-button type="button" color="primary" (click)="file2.click()">Cargar archivo</button>
+            <mat-error *ngIf="showErrorImage">
+                La imagen debe estar en formato JPG.
+            </mat-error>
+            <div class="photoContainer" *ngIf="getImage2Base()">
+              <img [src]="getImage2Base()">
+            </div>
+          </div>
+        </div>
+            <p class="mb-0 labelDataForm">{{ texts.VIPData.Input4Info }}</p>
+  
+        <div class="text-center mb-3">
+          <div *ngIf="formError != ''" class="alert alert-danger">
+            {{formError}}
+          </div>
+  
+          <div *ngIf="formSuccess != ''" class="alert alert-success">
+            {{formSuccess}}
+          </div>
+          <button [disabled]="(formSuccess != '')" color="primary" mat-raised-button class="mb-0">Enviar</button>
+        </div>
+        <mat-divider></mat-divider>
+        <div class="text-center p-3">
+          <p class="mb-0">{{ texts.VIPData.ThanksMessage }}</p>
+        </div>
+      </form>
+    </mat-dialog-content>
+    </div>
+  </div>
+  

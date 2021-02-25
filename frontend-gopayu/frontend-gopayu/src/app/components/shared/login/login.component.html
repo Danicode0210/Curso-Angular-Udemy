@@ -1,0 +1,143 @@
+<div *ngIf="!isRecovery" [ngClass]="{ 'd-block': (errorMessage != ''), 'd-none': (errorMessage == '') }">
+  <p class="text-center">
+    {{
+      i18n.Login.Errors[errorMessage]
+        ? i18n.Login.Errors[errorMessage]
+        : errorMessage
+    }}
+  </p>
+  <div class="text-center">
+    <button
+      class="btn btn-orange w-100 mb-2"
+      (click)="gaEventLoginTryAgain()"
+      type="submit"
+    >
+      Volver a intentar
+    </button>
+  </div>
+</div>
+<form
+  *ngIf="!isRecovery"
+  [ngClass]="{ 'd-none': (errorMessage != ''), 'd-block': (errorMessage == '') }"
+  [formGroup]="formData"
+  novalidate
+  autocomplete="off"
+  (ngSubmit)="login()"
+  id="formLogin"
+>
+  <div class="form-group">
+    <label class="mb-0" for="userName">{{ texts.Login.User }}</label>
+    <input
+      type="text"
+      id="userName"
+      formControlName="userName"
+      class="form-control"
+      [ngClass]="{
+        'is-invalid': hasError('userName'),
+        'is-valid': !hasError('userName') && isSubmited
+      }"
+      placeholder="{{ texts.Login.User }}"
+    />
+    <div class="invalid-feedback" *ngIf="hasError('userName', 'required')">
+      {{ texts.Login.Errors.EmptyUsername }}
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="mb-0" for="password">{{ texts.Login.Password }}</label>
+    <input
+      type="password"
+      id="password"
+      formControlName="password"
+      [ngClass]="{
+        'is-invalid': hasError('password'),
+        'is-valid': !hasError('password') && isSubmited
+      }"
+      class="form-control"
+      placeholder="{{ texts.Login.Password }}"
+    />
+    <div class="invalid-feedback" *ngIf="hasError('password', 'required')">
+      {{ texts.Login.Errors.EmptyPassword }}
+    </div>
+  </div>
+  <div class="text-center mb-3">
+    <button
+      id="btnLoginPrimary"
+      class="btn btn-orange w-100 mb-2 betplaycaptcha"
+      data-callback="successSubmit"
+      [ngClass]="{ disabled: isLoading }"
+      [disabled]="isLoading"
+      type="button"
+    >
+      {{ texts.Login.Login }}
+      <i *ngIf="isLoading" class="fas fa-circle-notch fa-spin"></i>
+    </button>
+    <button id="btnLoginReal" type="submit" style="position: fixed; left:-9999px"></button>
+    <a href="/registrarse">
+      <button (click) = "gaEventLogin()" type="button" class="btn btn-blue w-100">
+      {{ texts.Login.Register }}
+    </button>
+    </a>
+  </div>
+  <p class="text-center mb-0">
+    <span
+      (click)="gaEventRecovery()"
+      class="btn btn-link text-white cursor-pointer"
+      >{{ texts.Login.RecoveryPass }}</span
+    >
+  </p>
+</form>
+
+<form
+  *ngIf="isRecovery"
+  [formGroup]="formRecovery"
+  novalidate
+  id="loginForm"
+  autocomplete="off"
+  (ngSubmit)="recoveryPass()"
+>
+  <label class="mb-0" for="emailRecovery">{{
+    texts.RecoveryPassword.Email
+  }}</label>
+  <input
+    type="text"
+    id="emailRecovery"
+    formControlName="email"
+    [ngClass]="{
+      'is-invalid': hasErrorRecovery('email'),
+      'is-valid': !hasErrorRecovery('email') && isSubmited
+    }"
+    class="form-control"
+    placeholder="{{ texts.RecoveryPassword.Email }}"
+  />
+  <div class="invalid-feedback" *ngIf="hasErrorRecovery('email', 'required')">
+    {{ texts.RecoveryPassword.Errors.EmptyEmail }}
+  </div>
+  <div *ngIf="formError != ''" class="alert alert-danger mt-3" role="alert">
+    {{ texts.RecoveryPassword.Errors[formError] }}
+  </div>
+  <div *ngIf="formSuccess != ''" class="alert alert-success mt-3" role="alert">
+    {{ texts.RecoveryPassword.Success[formSuccess] }}
+  </div>
+  <div class="text-center mt-3">
+    <button
+      class="btn btn-orange w-100 mb-2"
+      [ngClass]="{ disabled: isLoading }"
+      [disabled]="isLoading"
+      type="submit"
+      id="recovery"
+      (click) = "gaEventRecoveryPass($event)"
+    >
+      {{ texts.RecoveryPassword.Recovery }}
+      <i *ngIf="isLoading" class="fas fa-circle-notch fa-spin"></i>
+    </button>
+    <button
+      (click)="isRecovery = false"
+      type="button"
+      id = "back"
+      class="btn btn-blue w-100"
+      (click) = "gaEventRecoveryPass($event)"
+    >
+      {{ texts.RecoveryPassword.Back }}
+    </button>
+  </div>
+</form>

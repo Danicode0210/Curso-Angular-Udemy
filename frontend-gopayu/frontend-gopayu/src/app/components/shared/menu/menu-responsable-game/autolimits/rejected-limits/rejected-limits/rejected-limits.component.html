@@ -1,0 +1,30 @@
+<div class="p-3 text-center">
+    <p class="text-blue font-weight-bold">SU SOLICITUD DE CAMBIO DE LÍMITES FUE RECHAZADA</p>
+    <mat-divider class="white_divider"></mat-divider>
+    <p class="w-100" style="text-align: justify;">
+        Su solicitud de cambio de limites no fue aceptada. Por favor contacte la mesa de servicio para obtener más información.
+        Sus límites seguiran siendo los mismos.
+    </p>
+    <table style = "margin-left: auto; margin-right: auto; width: 100%">
+        <tr>
+            <th>Tipo límite</th>
+            <th>Valor actual</th>
+            <th>Valor solicitado</th>
+            <th>Fecha de solicitud</th>
+        </tr>
+        <tr *ngFor = "let lim of rejectedLimits">
+            <td>{{ tipoLimites[lim.tiempoLimite] }}</td>
+            <td>${{ numberFormat(lim.valorActual) }}</td>
+            <td>${{ numberFormat(lim.valorSolicitud) }}</td>
+            <td>{{ dateFormat(lim.fechaSolicitud) }}</td>
+        </tr>
+    </table>
+    <br>
+    <div class="contentButtons row m-0">  
+        <div class="col-12">
+            <button (click)="rejectLimits()" [mat-dialog-close]="data.isVerified"type="button" class="w-50 btn btn-secondary">
+                Aceptar
+            </button>
+        </div>
+    </div>
+</div>

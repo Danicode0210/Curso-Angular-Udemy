@@ -1,0 +1,91 @@
+<div class="p-3 text-center" *ngIf="(exclusions && exclusions.length == 0) || (lastRequest && (lastRequest.cancellationEndDate || Date(lastRequest.requestedEndDate)))">
+    <p class="text-blue">Selecciona tu tiempo de autoexclusión:</p>
+    <mat-form-field>
+        <mat-label>Selecciona una opción</mat-label>
+        <mat-select [(ngModel)]="duration">
+          <mat-option *ngFor="let item of exclusionOptions" [value]="item.value">
+              {{item.text}}
+          </mat-option>
+        </mat-select>
+    </mat-form-field>
+    <p class="text-blue">Para solicitudes de autoexclusión ilimitadas, según la regulación actual no se podrá anular manualmente hasta pasados los primeros 6 meses de autoexclusión.</p>
+
+    <div class="text-right">
+        <div class="row m-0">
+            <div class="col-12 col-md-4">
+            </div>
+            <div class="col-12 col-md-8 p-0">
+                <div class="row m-0 p-0 justify-content-between">
+                    <div class="col-12 col-md-6 mt-3 pr-md-3 p-0">
+                        <button class="w-100 btn btn-secondary" (click)="goBack()" type="button">Cancelar</button>
+                    </div>
+                    <div class="col-12 col-md-6 mt-3 pl-md-3 p-0">
+                        <button *ngIf="!isLoading" class="w-100 btn btn-orange " (click)="makeExclusion()">Guardar</button>
+                        <button *ngIf="isLoading" class="btn btn-orange pl-3 pr-3" [ngClass]="{ 'disabled':isLoading }" [disabled]="isLoading" type="submit"> Cargando... <i *ngIf="isLoading" class="fas fa-circle-notch fa-spin"></i> </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="p-3">
+    <div class="alert alert-danger" *ngIf="formError != ''">
+      {{texts$.playerValidationError[formError]}}
+    </div>
+    <div class="alert alert-success" *ngIf="formSuccess != ''">
+        {{texts$.GeneralMessages[formSuccess]}}
+    </div>
+</div>
+
+<div *ngIf="exclusions && exclusions.length > 0">
+    <p class="text-blue text-center font-weight-bold">Historial de auto-exclusión</p>
+    <table class="table table-responsive text-white">
+        <tr>
+            <th>
+                Fecha de solicitud
+            </th>
+            <th>
+                Fecha inicio
+            </th>
+            <th>
+                Fecha fin
+            </th>
+            <th>
+                Fecha fin cancelación
+            </th>
+            <th>
+                Autoexcluido
+            </th>
+        </tr>
+        <tr *ngFor="let item of exclusions">
+            <td>
+                {{item.startDate | date:'dd-MM-yyyy hh:mm:ss a'}}
+            </td>
+            <td>
+                {{item.startDate | date:'dd-MM-yyyy hh:mm:ss a'}}
+            </td>
+            <td>
+                {{item.requestedEndDate | date:'dd-MM-yyyy hh:mm:ss a'}}
+            </td>
+            <td>
+                {{item.cancellationEndDate | date:'dd-MM-yyyy hh:mm:ss a'}}
+            </td>
+            <td>
+                <ng-template #noEndDate>
+                    <div style="min-width: 248px">
+                        n/a
+                    </div>
+                </ng-template>
+                <div *ngIf="(item.cancellationEndDate || Date(item.requestedEndDate)); else yesContent">
+                    No
+                </div>
+                <ng-template #yesContent>
+                    <div>
+                        Si
+                    </div>
+                </ng-template>
+            </td>
+        </tr>
+    </table>
+</div>

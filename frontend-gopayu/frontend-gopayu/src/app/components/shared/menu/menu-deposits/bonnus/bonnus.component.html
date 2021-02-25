@@ -1,0 +1,47 @@
+<div class="container p-3">
+
+    <div *ngIf="step == 0">
+        <h4 class="text-center">
+            REDIME TU OBSEQUIO EN TRES SENCILLOS PASOS 
+        </h4>
+        <ol class="text-left">
+            <li>Inicia tu sesión Betplay </li>
+            <li>En la pantalla principal haz click en INGRESAR CÒDIGO PROMOCIONAL </li>
+            <li>Ingresa tu código promocional y click en ACTIVAR</li>
+        </ol>
+        <h5 class="text-center">¡LISTO!</h5>
+        <h5 class="text-center">¡VALIDA TU NUEVO SALDO Y APUESTALE A TU PASION!</h5>
+
+        <div class="p-3 text-center">
+            <button (click)="step = 2" class="btn btn-orange">INGRESAR CÒDIGO PROMOCIONAL</button>
+        </div>
+    </div>
+
+    <form class="text-center" [formGroup]="formData" novalidate autocomplete="off" (ngSubmit)="validateCupon()" *ngIf="!requestSuccess && step == 2">
+
+        <mat-form-field class="mr-3">
+        <input matInput
+                formControlName="cuponCode"
+                placeholder="Código del cupón">
+                <mat-error *ngIf="formData.controls.cuponCode.hasError('required')">
+                    Ingresa el código del cupón
+                </mat-error>
+        </mat-form-field>
+        <br>
+        <div class="alert alert-danger" *ngIf="error != ''">
+        {{ error }}
+        </div>
+        <div class="loadingButtonContent">
+        <button class="btn btn-orange" *ngIf="!isLoading && !requestSuccess" type="submit" style="min-width: 200px;">ACTIVAR</button>
+        <button class="btn btn-info" *ngIf="isLoading" type="button">  <i class="fas fa-sync fa-spin"></i> Validando Cupón </button>
+        <button class="btn btn-success" *ngIf="!isLoading && requestSuccess" type="button"> <i class="fas fa-check"></i> successMessage </button>
+        </div>
+    </form>
+
+    <div class="text-center d-flex align-items-center justify-content-center" *ngIf="!isLoading && requestSuccess && step == 2">
+        <h1>
+            {{ successMessage }
+        </h1>
+    </div>
+
+</div>

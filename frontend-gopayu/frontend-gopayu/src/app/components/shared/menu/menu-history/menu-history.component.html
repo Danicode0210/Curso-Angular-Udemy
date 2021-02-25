@@ -1,0 +1,319 @@
+<h5 class="text-right pr-3 pt-3 mb-0"><i class="fas fa-times cursor-pointer" (click)="closeModal()"></i></h5>
+<div class="p-3 text-center">
+    <p class="text-blue font-weight-bold">AQUÍ PODRÁS VER TUS TRANSACCIONES Y APUESTAS.</p>
+    <div class="row m-0 mb-3">
+        <div class="col-12 col-md-4">
+            <button id="button1" class="btn mb-3 w-100" (click)="onClickHistoryOptions($event)"
+                [ngClass]="{'btn-orange':(type == 1), 'btn-secondary':(type != 1)}">Transacciones</button>
+        </div>
+        <div class="col-12 col-md-4">
+            <button id="button2" class="btn mb-3 w-100" (click)="onClickHistoryOptions($event)"
+                [ngClass]="{'btn-orange':(type == 2), 'btn-secondary':(type != 2)}">Gestión de juegos</button>
+        </div>
+        <div class="col-12 col-md-4">
+            <button  id="button3" class="btn mb-3 w-100" (click)="onClickHistoryOptions($event)"
+            [ngClass]="{'btn-orange':(type == 3), 'btn-secondary':(type != 3)}">Resumen anual</button>
+        </div>
+    </div>
+
+    <!-- Games filter -->
+    <div class="gameFilterContent p-3" *ngIf="type == 2">
+        <p class="text-blue font-weight-bold m-0">Tipo de juego</p>
+        <mat-form-field class="w-100">
+            <mat-select [(ngModel)]="gameType">
+                <mat-option value="">Todos</mat-option>
+                <mat-option value="Casino">Casino</mat-option>
+                <mat-option value="CasinoJackpot">CasinoJackpot</mat-option>
+                <mat-option value="Poker">Poker</mat-option>
+                <mat-option value="PokerJackpot">PokerJackpot</mat-option>
+                <mat-option value="PokerTournament">PokerTournament</mat-option>
+                <mat-option value="PokerTournamentJackpot">PokerTournamentJackpot</mat-option>
+                <mat-option value="Sportbook">Sportbook</mat-option>
+                <mat-option value="LiveSportbook">LiveSportbook</mat-option>
+                <mat-option value="Bingo">Bingo</mat-option>
+                <mat-option value="SkillGames">SkillGames</mat-option>
+                <mat-option value="Lottery">Lottery</mat-option>
+                <mat-option value="Contest">Contest</mat-option>
+                <mat-option value="Slots">Slots</mat-option>
+                <mat-option value="Tournament">Tournament</mat-option>
+                <mat-option value="FreeBet">FreeBet</mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+
+    <!-- Transacciones -->
+    <div *ngIf="type == 1 || type == 2">
+        <div class="row m-0">
+            <div class="col-12 col-md-4">
+                <p class="text-blue text-left font-weight-bold m-0">Tipo de transacción:</p>
+                <mat-form-field class="w-100">
+                    <mat-label>Selecciona un tipo</mat-label>
+                    <mat-select [(ngModel)]="transactionType">
+                        <mat-option value="">Todas las transacciones</mat-option>
+                        <mat-option value="Bet">Apuesta</mat-option>
+                        <mat-option value="BonusGrant">Asignación de bono</mat-option>
+                        <mat-option value="FreeBetGrant">Asignación de freebet</mat-option>
+                        <mat-option value="PointsGrant">Asignación de puntos</mat-option>
+                        <mat-option value="BetCancelation">Cancelación de apuesta</mat-option>
+                        <mat-option value="BonusCancelation">Cancelación de bono</mat-option>
+                        <mat-option value="DepositCancelation">Cancelación de depositos</mat-option>
+                        <mat-option value="FreeBetCancelation">Cancelación de freebet</mat-option>
+                        <mat-option value="WithdrawalCancelation">Cancelación de retiro</mat-option>
+                        <mat-option value="BonusConversion">Conversión de bono</mat-option>
+                        <mat-option value="Deposit">Depositos</mat-option>
+                        <mat-option value="WinningCancelation">Ganancia cancelada</mat-option>
+                        <mat-option value="Winning">Ganancias</mat-option>
+                        <mat-option value="PointsExchange">Intercambio de puntos</mat-option>
+                        <mat-option value="WithdrawalRejection">Rechazo de retiro</mat-option>
+                        <mat-option value="Withdrawal">Retiros</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+
+
+            <!-- Per Page Field -->
+            <div class="col-12 col-md-4">
+                <p class="text-blue text-left font-weight-bold m-0">Transacciones por página:</p>
+                <mat-form-field class="w-100">
+                    <mat-select [(ngModel)]="paginationOptions.pageSize" [(value)]="paginationOptions.pageSize">
+                        <mat-option [value]="5">5</mat-option>
+                        <mat-option [value]="10">10</mat-option>
+                        <mat-option [value]="15">15</mat-option>
+                        <mat-option [value]="20">20</mat-option>
+                        <mat-option [value]="25">25</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+
+            <!-- Monedero -->
+            <div class="col-12 col-md-4">
+                <p class="text-blue text-left font-weight-bold m-0">Monedero:</p>
+                <mat-form-field class="w-100">
+                    <mat-label>Selecciona una opción</mat-label>
+                    <mat-select [(ngModel)]="money">
+                        <mat-option value="">-- Selecciona una opción</mat-option>
+                        <mat-option value="real">Real</mat-option>
+                        <mat-option value="bonus">Bono</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row m-0 mb-3">
+            <div class="col-12 col-md-4">
+                <button id="button4" class="btn mb-3 w-100" (click)="onClickHistoryOptions($event)"
+                [ngClass]="{'btn-orange':(filter == 1), 'btn-secondary':(filter != 1)}">Último mes</button>
+            </div>
+            <div class="col-12 col-md-4">
+                <button id="button5" class="btn mb-3 w-100" (click)="onClickHistoryOptions($event)"
+                    [ngClass]="{'btn-orange':(filter == 2), 'btn-secondary':(filter != 2)}">Específico</button>
+            </div>
+            <div class="col-12 col-md-4">
+                <button id="button6" class="btn mb-3 w-100" (click)="onClickHistoryOptions($event)"
+                    [ngClass]="{'btn-orange':(filter == 3), 'btn-secondary':(filter != 3)}">Todos los datos</button>
+            </div>
+        </div>
+
+
+        <!-- Especific filters -->
+        <div *ngIf="filter == 2">
+            <div class="row m-0" *ngIf="filter == 2">
+                <div class="col-6">
+                    <p class="m-0 text-blue text-left">Fecha inicial:</p>
+                </div>
+                <div class="col-6">
+                    <p class="m-0 text-blue text-left">Fecha final:</p>
+                </div>
+            </div>
+            <div class="row m-0">
+                <div class="col-6 p-0">
+                    <div class="row m-0">
+                        <div class="col-12 col-md-4">
+                            <mat-form-field class="w-100">
+                                <mat-label>DD</mat-label>
+                                <mat-select [(ngModel)]="fechaIniDay">
+                                    <mat-option *ngFor="let day of days" [value]="day">{{day}}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-12 col-md-4">
+                            <mat-form-field class="w-100">
+                                <mat-label>MM</mat-label>
+                                <mat-select [(ngModel)]="fechaIniMonth">
+                                    <mat-option *ngFor="let month of months" [value]="month">{{month}}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-12 col-md-4">
+                            <mat-form-field class="w-100">
+                                <mat-label>AAAA</mat-label>
+                                <mat-select [(ngModel)]="fechaIniYear">
+                                    <mat-option *ngFor="let year of years" [value]="year">{{year}}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6 p-0">
+                    <div class="row m-0">
+                        <div class="col-12 col-md-4">
+                            <mat-form-field class="w-100">
+                                <mat-label>DD</mat-label>
+                                <mat-select [(ngModel)]="fechaFinDay">
+                                    <mat-option *ngFor="let day of days" [value]="day">{{day}}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-12 col-md-4">
+                            <mat-form-field class="w-100">
+                                <mat-label>MM</mat-label>
+                                <mat-select [(ngModel)]="fechaFinMonth">
+                                    <mat-option *ngFor="let month of months" [value]="month">{{month}}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-12 col-md-4">
+                            <mat-form-field class="w-100">
+                                <mat-label>AAAA</mat-label>
+                                <mat-select [(ngModel)]="fechaFinYear">
+                                    <mat-option *ngFor="let year of years" [value]="year">{{year}}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="type == 3">
+        <div class="gameFilterContent p-3">
+            <mat-form-field class="w-100">
+                <mat-label>AAAA</mat-label>
+                <mat-select [(ngModel)]="year">
+                    <mat-option *ngFor="let year of years" [value]="year">{{year}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+    </div>
+    <!-- Transacciones -->
+    <div class="text-right">
+        <button *ngIf="type != 0 && !isLoading" class="btn btn-orange mb-3" (click)="showTransactions(paginationOptions)">VER TRANSACCIONES</button>
+        <button *ngIf="isLoading" class="btn btn-orange pl-3 pr-3 mb-3" [ngClass]="{ 'disabled':isLoading }" [disabled]="isLoading" type="submit"> Cargando... <i *ngIf="isLoading" class="fas fa-circle-notch fa-spin"></i> </button>
+    </div>
+
+    <div *ngIf="transactions" class="contentTransactions">
+        
+        <div *ngIf="type == 3">
+            
+            <table class="tableTx text-white table table-responsive mt-3">
+                <tr>
+                    <th>
+                        Año
+                    </th>
+                    <th>
+                        Balance inicial
+                    </th>
+                    <th>
+                        Balance final
+                    </th>
+                    <th>
+                        Apuesta total
+                    </th>
+                    <th>
+                        Total Bono
+                    </th>
+                    <th>
+                        Total Depositos
+                    </th>
+                    <th>
+                        Total Ganancias
+                    </th>
+                    <th>
+                        Total Retiros
+                    </th>
+                </tr>
+                <tr>
+                    <td>
+                        {{ transactions.year }}
+                    </td>
+                    <td>
+                        ${{ transactions.initialBalance | number }}
+                    </td>
+                    <td>
+                        ${{ transactions.finalBalance | number }}
+                    </td>
+                    <td>
+                        ${{ transactions.betTotal | number }}
+                    </td>
+                    <td>
+                        ${{ transactions.bonusTotal | number }}
+                    </td>
+                    <td>
+                        ${{ transactions.depositTotal | number }}
+                    </td>
+                    <td>
+                        ${{ transactions.winningTotal | number }}
+                    </td>
+                    <td>
+                        ${{ transactions.withdrawalTotal | number }}
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div *ngIf="type != 3">
+            <mat-paginator 
+                *ngIf="transactions.items.length > 0"
+                [length]="paginationOptions.length"
+                [pageSize]="paginationOptions.pageSize"
+                [pageIndex]="paginationOptions.pageIndex"
+                [hidePageSize]="true"
+                (page)="showTransactions($event)"
+                >
+            </mat-paginator>
+            <table class="tableTx text-white table table-responsive mt-3">
+                <tr>
+                    <th>
+                        Fecha
+                    </th>
+                    <th>
+                        Tipo de transacción	
+                    </th>
+                    <th>
+                        Método de pago
+                    </th>
+                    <th>
+                        Código de la transacción	
+                    </th>
+                    <th>
+                        Valor
+                    </th>
+                    <th>
+                        Tipo de moneda
+                    </th>
+                </tr>
+                <tr *ngIf="transactions.items.length == 0">
+                    <td colspan="6" class="text-center">No se encontraron resultados</td>
+                </tr>
+                <tr *ngFor="let item of transactions.items">
+                    <td>
+                        {{ item.dateTime | date:'dd-MM-yyyy hh:mm:ss a' }}
+                    </td>
+                    <td>
+                        {{ item.transactionType }}
+                    </td>
+                    <td>
+                        {{ (item.paymentMethod) ? item.paymentMethod : 'N/A' }}
+                    </td>
+                    <td>
+                        {{ item.transactionCode }}
+                    </td>
+                    <td>
+                        ${{ item.amount | number }}
+                    </td>
+                    <td>
+                        {{ item.moneyType }}
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>

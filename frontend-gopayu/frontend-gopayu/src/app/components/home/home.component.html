@@ -1,0 +1,143 @@
+<div class="home">
+  <div class="bg-home-image">
+    <div class="content-first-carousel">
+      <app-carousel *ngIf="images" type="home" [images]="images"></app-carousel>
+    </div>
+    <div class="container content-carouseles home-info">
+      <div class="row m-0 justify-content-center">
+        <div class="col-12 col-md mb-3">
+          <app-carousel
+            [images]="sportsSlide"
+            *ngIf="sportsSlide"
+            (currentImageIndex)="setIndex($event, 'DEPORTES')"
+          ></app-carousel>
+          <div class="content-carousel-desc">
+            <h4 class="mb-0 text-white text-center"><b>DEPORTES</b></h4>
+            <button
+              [routerLink]="['/apuestas']"
+              (click) = "gaEventBanner(bannerDeportes)"
+              class="btn btn-orange entra-ya pl-3 pr-3"
+            >
+              <span *ngIf="!virtualesActive">¡ENTRA YA!</span>
+              <span *ngIf="virtualesActive">¡JUEGA YA!</span>
+            </button>
+          </div>
+        </div>
+        <div class="col-12 col-md mb-3" style="margin: 0 2em;">
+          <app-carousel
+            [images]="casinoSlide"
+            *ngIf="casinoSlide"
+            (currentImageIndex)="setIndex($event, 'CASINO')"
+          ></app-carousel>
+          <div class="content-carousel-desc">
+            <h4 class="mb-0 text-white text-center"><b>POKER</b></h4>
+            <button [routerLink]="['/poker']" (click) = "gaEventBanner(bannerPoker)" class="btn btn-orange entra-ya pl-3 pr-3">
+              <span *ngIf="!virtualesActive">¡ENTRA YA!</span>
+              <span *ngIf="virtualesActive">¡JUEGA YA!</span>
+            </button>
+          </div>
+        </div>
+        <div class="col-12 col-md mb-3">
+          <app-carousel [images]="slotsSlide" *ngIf="slotsSlide" (currentImageIndex)="setIndex($event, 'SLOTS')"></app-carousel>
+          <div class="content-carousel-desc">
+            <h4 class="mb-0 text-white text-center"><b>CASINO</b></h4>
+            <button [routerLink]="['/slots']" (click) = "gaEventBanner(bannerCasino)" class="btn btn-orange entra-ya pl-3 pr-3">
+              <span *ngIf="!virtualesActive">¡ENTRA YA!</span>
+              <span *ngIf="virtualesActive">¡JUEGA YA!</span>
+            </button>
+          </div>
+        </div>
+        <div class="col-12 col-md mb-3" *ngIf="virtualesActive">
+          <app-carousel [images]="virtualSlide" *ngIf="slotsSlide" (currentImageIndex)="setIndex($event, 'VIRTUALES')"></app-carousel>
+          <div class="content-carousel-desc">
+            <h4 class="mb-0 text-white text-center"><b>VIRTUALES</b></h4>
+            <button [routerLink]="['/virtuales']" (click) = "gaEventBanner(bannerVirtuales)" class="btn btn-orange entra-ya pl-3 pr-3">
+              <span *ngIf="!virtualesActive">¡ENTRA YA!</span>
+              <span *ngIf="virtualesActive">¡JUEGA YA!</span>
+            </button>
+          </div>
+        </div>
+      </div>
+      <br />
+      <!-- <hr class="dividder-home-new" /> -->
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <div class="content-pat">
+        <h3 class="text-white text-center mb-3 font-weight-bold title-responsive">
+          BETPLAY LE APUESTA AL FÚTBOL COLOMBIANO
+        </h3>
+        <br />
+        <div class="row m-0 content-patro">
+          <div class="col-12 col-md-6 mb-3 mb-md-0">
+            <div class="row m-0 content-dimayor-logos">
+              <ng-container *ngFor="let item of homeImages">
+                <div
+                  class="col-4 p-1 p-md-3 text-center col-md mb-3 mb-md-0"
+                  *ngIf="item.type == 'DIMAYOR'"
+                >
+                  <a
+                    (click) = "gaEventFooterSponsor('DIMAYOR')"
+                    [attr.href]="item.link"
+                    target="_blank"
+                    *ngIf="item.link != '-'"
+                  >
+                    <img class="w-100" [src]="item.path" alt="Dimayor" />
+                  </a>
+                  <img
+                    *ngIf="!item.link || item.link == '-'"
+                    class="w-100"
+                    [src]="item.path"
+                    alt="Dimayor"
+                  />
+                </div>
+              </ng-container>
+            </div>
+            <h5 style="font-size: 1.5em;" class="text-white text-center title-responsive">
+              <b
+                >SOMOS EL PRINCIPAL PATROCINADOR DEL FÚTBOL PROFESIONAL
+                COLOMBIANO</b
+              >
+            </h5>
+          </div>
+          <div class="col-12 col-md-6">
+            <div *ngFor="let item of homeImages" class="text-center">
+              <a
+                (click) = "gaEventFooterSponsor('Federacion Colombiana De Futbol')"
+                [attr.href]="item.link"
+                target="_blank"
+                *ngIf="item.link != '-' && item.type == 'SELECCION'"
+              >
+                <img
+                  style="
+                        max-width: 145px;
+                        margin-top: .7em;
+                  "
+                  class="w-100 ico-colombia-logo"
+                  [src]="item.path"
+                  alt="Selección colombia"
+                />
+              </a>
+              <img
+                *ngIf="
+                  (!item.link || item.link == '-') && item.type == 'SELECCION'
+                "
+                style="max-width: 250px;"
+                class="w-100"
+                [src]="item.path"
+                alt="Selección colombia"
+              />
+            </div>
+            <br />
+            <h5 style="font-size: 1.5em;" class="text-white text-center text-select-colombia title-responsive">
+              <b>SOMOS LA JUGADA OFICIAL DE LA SELECCIÓN COLOMBIA</b>
+            </h5>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+</div>

@@ -1,0 +1,90 @@
+<app-loadingspinner *ngIf="isLoading"></app-loadingspinner>
+<div class="promotions">
+
+    <div class="container">
+        <div class="row m-0">
+            <div class="col-12 col-md p-0">
+                <app-loading *ngIf="isLoading"></app-loading>
+                <div class="blog container" *ngIf="background" [style.background-image]="bkRoute">
+                    <app-navblog></app-navblog>
+                    <div class="row m-0 p-3 contentPosts mb-3">
+                            <div *ngIf="lastPost" [ngStyle]="{'background-image': 'url(\' ' + lastPost.image + ' \')'}" class="col col-12 col-md-7 mb-3 mb-md-0">
+                            <a (click)="gaEventCommunityBanner('Ultimo Post')" [routerLink]="'/blog/'+generateSlug(lastPost.title)+'/'+lastPost._id">
+                                    <div class="blueMask"></div>
+                                    <div class="contentTextsTitles">
+                                    <h4 class="mb-0">{{lastPost.title}}</h4>
+                                    <p class="mb-0 subtitle">{{lastPost.subtitle}}</p>
+                                    </div>
+                            </a>
+                            </div>
+                        <div class="col col-12 col-md-5 pr-0">
+                            <app-blogcarousel [time]="6000" id="featuredCarousel" *ngIf="featured" [data]="featured"></app-blogcarousel>
+                        </div>
+                    </div>
+                
+                    <div class="row m-0">
+                        <!-- Twitter timeline  -->
+                        <div class="col-12 col-md-4 p-0 contentTwitter">
+                            <a class="twitter-timeline" target="_blank" href="https://twitter.com/BetPlayCO?ref_src=twsrc%5Etfw">Tweets by BetPlayCO</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+                        </div>
+                        <div class="col-12 col-md-8 pr-0">
+                            <div class="row m-0">
+                                <div class="col-12 col-md-8 mb-3 mb-md-0">
+                                    <mat-card *ngIf="mostPopular">
+                                        <a [routerLink]="'/blog/'+generateSlug(mostPopular.title)+'/'+mostPopular._id">
+                                        <div class="mostPopularImageContent" [ngStyle]="{'background-image':'url(\''+mostPopular.image+'\')'}">
+                                        </div>
+                                        </a>
+                                    <mat-card-actions class="p-3 uppercase text-blue-dark">
+                                            <b>LO MAS POPULAR</b>
+                                        </mat-card-actions>
+                                    </mat-card>
+                                </div>
+                                <div class="col-12 col-md-4 pr-0">
+                                    <div class="contentSocialNetworks">
+                                    <a (click) = "gaEventCommunitySocialMedia('Facebook')" target="_blank" href="https://es-la.facebook.com/BetPlayCO/">
+                                        <div class="row m-0">
+                                            <div class="col-3">
+                                            <i class="fab fa-facebook-f"></i>
+                                            </div>
+                                            <div class="col-9">
+                                            Facebook
+                                            </div>
+                                        </div>
+                                    </a>
+                                    <a (click) = "gaEventCommunitySocialMedia('Twitter')" target="_blank" href="https://twitter.com/betplayco?lang=es">
+                                        <div class="row m-0">
+                                            <div class="col-3">
+                                            <i class="fab fa-twitter"></i>
+                                            </div>
+                                            <div class="col-9">
+                                            Twitter
+                                            </div>
+                                        </div>
+                                    </a>
+                                    <a (click) = "gaEventCommunitySocialMedia('Instagram')" target="_blank" href="https://www.instagram.com/betplayco/">
+                                        <div class="row m-0">
+                                            <div class="col-3">
+                                            <i class="fab fa-instagram"></i>
+                                            </div>
+                                            <div class="col-9">
+                                            Instagram
+                                            </div>
+                                        </div>
+                                    </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="videos mt-3">
+                            <div class="relative">
+                                <app-blogcarousel id="videosCarousel" [activateTimer]="false" *ngIf="videos" [data]="videos"></app-blogcarousel>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</div>

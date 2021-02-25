@@ -1,0 +1,33 @@
+<div class="bet-carousel" [id]="id">
+    <div class="bc-content-images" *ngIf="data">
+        <div class="bc-carousel-item" *ngFor="let item of data">
+        <a [attr.href]="item.link" [target]="item.target">
+            <div class="d-flex" *ngIf="item.image">
+            <div class="fakeImage" [ngStyle]="{'background-image':'url(\''+item.image+'\')'}"></div>
+            <img [src]="sanitizer.bypassSecurityTrustResourceUrl(item.image)">
+            <div class="bc-text-content" *ngIf="item.text">
+                <h4 class="mb-0">{{item.text}}</h4>
+            </div>
+            </div>
+        </a>
+        <div style="z-index: 1;" class="d-flex videoContent" *ngIf="item.video">
+            <img class="playButton" *ngIf="whatchId != item._id" (click)="gaEventCommunityPlayVideo(item)" src="../../assets/images/play.png" alt="">
+            <!-- <img *ngIf="whatchId != item._id" (click)="whatchId = item._id" class="pointer imagePrev" src="{{ item.url + item.preview}}"> -->
+            <video class="bc-video" *ngIf="whatchId == item._id && (!item.tipo || item.tipo == 'carga')" controls autoplay>
+                <source  src="{{item.video}}" type="video/mp4">
+                Your browser does not support HTML5 <video src=""></video>.
+            </video>
+            <iframe *ngIf="item.tipo == 'youtube'" class="video-iframe" [src]="item.video" frameborder="0"></iframe>
+        </div>
+        <div class="controls" >
+            <div class="control" (click) = "this.gaEventCommunityCarrousel('Last', item)">
+            <i class="fas fa-caret-left" (click)="back()"></i>
+            </div>
+            <div class="control right" (click) = "this.gaEventCommunityCarrousel('Next', item)">
+            <i class="fas fa-caret-right" (click)="next()"></i>
+            </div>
+        </div>
+        </div>
+    </div>
+</div>
+      

@@ -1,0 +1,65 @@
+<h5 class="text-right pr-3 pt-3 mb-0"><i class="fas fa-times cursor-pointer" (click)="closeModal()"></i></h5>
+<div class="p-3 text-center">
+    <p class="text-blue font-weight-bold">RETIRAR SALDO</p>
+    <mat-divider class="white_divider"></mat-divider>
+    <br>
+    <p *ngIf="!selectIsHidden" class="text-blue">ELIGE UN MÉTODO CON EL QUE DESEAS REALIZAR EL RETIRO</p>
+    <select *ngIf="!selectIsHidden" [(ngModel)]="methodId" class="form-control menu-select">
+        <option value="1">Retiro en punto de venta - Código PIN</option>
+        <option value="2" *ngIf="accountWithdrawalActivated">Retiro por cuenta bancaria</option>
+    </select>
+    <br>
+    <app-accountwithdrawal (hideSelect)="selectIsHidden = true" *ngIf="methodId == 2"></app-accountwithdrawal>
+    <div *ngIf="methodId == 1" class="text-left">
+        <p class="text-blue">Por favor para realizar su retiro, acérquese a punto de venta físico de SUPERGIROS o SURED con el Código PIN que se mostrará a continuación, también lo recibirá a través de su Correo y celular registrados.</p>
+        <p class="m-0 font-weight-bold">Importante:</p>
+        <p class="m-0">- Los retiros deben ser a partir de $2.000 pesos.</p>
+        <p class="m-0">- El Código PIN expira en 24 horas.</p>
+        <p class="m-0">- Solo podrá retirar en el punto de venta la cantidad solicitada en el campo "Importe".</p>
+        <p class="m-0">- Inmediatamente después de solicitar su Código PIN, el monto colocado en el campo "Importe" será deducido de su saldo disponible.</p>
+        <p>- Si en el lapso de 24 horas no se finaliza la transacción de retiro, el valor solicitado en el campo "importe" será devuelto como saldo disponible a la cuenta del usuario.</p>
+
+        <p><b>Ten en cuenta:</b></p>
+        <ul>
+            <li>
+                Las Apuestas no deben estar pendientes
+            </li>
+            <li>
+                Se debe haber jugado al menos 50% del saldo de en la cuenta. 
+            </li>
+            <li>
+                Máximo 3 retiros diarios
+            </li>
+            <li>
+                Máximo 1.700.000 en retiros diarios. 
+            </li>
+        </ul>
+        
+        <form class="formDepoPin" [formGroup]="formData" novalidate autocomplete="off" (ngSubmit)="makeWithdraw()">
+            <mat-form-field class="w-100">
+              <input matInput
+                     formControlName="value"
+                     (keyup)="numberFormat('value')"
+                     placeholder="Importe">
+                     <mat-error *ngIf="formData.controls.value.hasError('required')">
+                        Ingresa el valor del importe
+                    </mat-error>
+            </mat-form-field>
+            <div class="alert alert-danger" *ngIf="formError != ''">
+                {{ (texts$.Withdrawals && texts$.Withdrawals[formError]) ? texts$.Withdrawals[formError] : formError }}
+                <!-- {{formError}} -->
+            </div>
+            <div class="alert alert-success" *ngIf="formSuccess != ''">
+                {{ (texts$.Withdrawals && texts$.Withdrawals[formSuccess]) ? texts$.Withdrawals[formSuccess] : formSuccess }}
+            </div>
+            <div class="row m-0 justify-content-space-between contentButtonsMenuOptions">
+                <div class="col-12 col-md-4 pl-0">
+                    <button *ngIf="!isLoading" class="w-100" mat-raised-button color="primary">PROCEDER</button>
+                    <button *ngIf="isLoading" class="btn btn-orange pl-3 pr-3" [ngClass]="{ 'disabled':isLoading }" [disabled]="isLoading" type="submit"> Cargando... <i *ngIf="isLoading" class="fas fa-circle-notch fa-spin"></i> </button>
+                </div>
+                <div class="col-12 col-md-6 ">
+                </div>
+            </div>
+          </form>
+    </div>
+</div>
